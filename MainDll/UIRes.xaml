@@ -1,0 +1,667 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:Main"
+    xmlns:mainCtrl="clr-namespace:Main.Controls" 
+    xmlns:MetroCtrl="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"    >
+
+    <KeySpline x:Key="KeySplineMain" ControlPoint1="0.09,1.05" ControlPoint2="0.78,1"/>
+    <SolidColorBrush x:Key="clrSfondoPopupErr" Color="#E52914"/>
+    <SolidColorBrush x:Key="clrScrittaPopupErr" Color="White"/>
+    <SolidColorBrush x:Key="clrGenericBorder">#D8EFFF</SolidColorBrush>
+    <!--<SolidColorBrush x:Key="clrGenericBorder">#C1E5FF</SolidColorBrush>-->
+    
+    <!--#region Styles -->
+
+    <Style x:Key="stlTxtMain" TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="stlTxbMain" TargetType="mainCtrl:TextBlockM">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    
+    <!--<Style x:Key="stlBtnMainNoHighlith" TargetType="mainCtrl:ButtonM" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="mainCtrl:ButtonM">
+                    --><!-- I need a grid to fill the button dimension and then TextBlock set it position with Horizontal/vertical ContentAlignment, otherwise doesn't work--><!--
+                    <Grid Background="{TemplateBinding Background}"> 
+                        <TextBlock Text="{TemplateBinding Content}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}"
+                                   TextWrapping="{TemplateBinding TextWrapping}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    --><!--HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"--><!--
+                --><!--</ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+    <Style x:Key="stlBtnMenu" TargetType="mainCtrl:MenuButton">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0,7,0,7" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="#EAEAEA" />
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="#262626" />
+            </Trigger>
+            <Trigger Property="Selected" Value="True">
+                <Setter Property="Foreground" Value="{Binding ForegroundSelectedColor, RelativeSource={RelativeSource Mode=Self}}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="stlGpbChkMain" TargetType="mainCtrl:GroupBoxCheck">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="mainCtrl:GroupBoxCheck">
+                    <Grid>
+                        <!--Header="{TemplateBinding Text}"-->
+                        <GroupBox x:Name="gpbMain" Content="{TemplateBinding Content}" IsEnabled="{TemplateBinding GpbIsEnabled}" Padding="{TemplateBinding Padding}" >
+                            <GroupBox.Header>
+                                <TextBlock Text="{TemplateBinding Text}" Margin="21,0,0,0" />
+                            </GroupBox.Header>
+                        </GroupBox>
+
+
+                        <mainCtrl:ToggleButton x:Name="tbtIsEnabled" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,1,0,0"  
+                                      IsChecked="{Binding GpbIsEnabled, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+
+                        <!--<CheckBox x:Name="chkIsEnabled" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,2,0,0"  
+                                      IsChecked="{Binding GpbIsEnabled, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>-->
+
+                        <Rectangle x:Name="rctOverText" Width="{Binding Header.ActualWidth, ElementName=gpbMain}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                   Margin="27,5,0,0" MinWidth="8" Height="11" Fill="Transparent" Cursor="Hand" />
+                        <!--<Rectangle.Style> <Style TargetType="Rectangle"> <Style.Triggers> <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </Trigger> </Style.Triggers> </Style> </Rectangle.Style>-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="0,5,0,0" />
+    </Style>
+
+    <Style x:Key="stlTxtErrorTemplate" TargetType="{x:Type mainCtrl:TextBoxM}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border x:Name="brdCella" BorderBrush="#FFF55A01" BorderThickness="1" IsHitTestVisible="False"/>
+                        <AdornedElementPlaceholder x:Name="plhMain" />
+                        <Popup AllowsTransparency="True" HorizontalAlignment="Right" HorizontalOffset="0" VerticalOffset="0" PopupAnimation="Fade" Placement="Right" 
+                                   PlacementTarget="{Binding ElementName=brdCella}" IsOpen="{Binding ElementName=plhMain, Path=AdornedElement.IsFocused, Mode=OneWay}" >
+                            <StackPanel Orientation="Horizontal">
+                                <Polygon  VerticalAlignment="Center" Points="0,4 4,0 4,8" Stretch="Fill" StrokeThickness="0" 
+                                              Fill="{StaticResource clrSfondoPopupErr}" />
+                                <Border Background="{StaticResource clrSfondoPopupErr}" 
+                                            CornerRadius="4" Padding="4">
+                                    <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="2,0,0,0"
+                                                   Foreground="{StaticResource clrScrittaPopupErr}"
+                                                    Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors)[0].ErrorContent, Mode=OneWay}" />
+                                    <!--Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors).las .ErrorContent, Mode=OneWay}" />-->
+                                </Border>
+                            </StackPanel>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="stlTxtErrorTemplate2" TargetType="{x:Type mainCtrl:TextBoxM}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border x:Name="brdCella" BorderBrush="#FFF55A01" BorderThickness="1" IsHitTestVisible="False"/>
+                        <AdornedElementPlaceholder x:Name="plhMain" />
+                        <Popup AllowsTransparency="True" HorizontalAlignment="Right" HorizontalOffset="0" VerticalOffset="0" PopupAnimation="Fade" Placement="Right" 
+                                   PlacementTarget="{Binding ElementName=brdCella}" IsOpen="{Binding ElementName=plhMain, Path=AdornedElement.IsFocused, Mode=OneWay}" >
+                            <StackPanel Orientation="Horizontal">
+                                <Polygon  VerticalAlignment="Center" Points="0,4 4,0 4,8" Stretch="Fill" StrokeThickness="0" 
+                                              Fill="{StaticResource clrSfondoPopupErr}" />
+                                <Border Background="{StaticResource clrSfondoPopupErr}" 
+                                            CornerRadius="4" Padding="4">
+                                    <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="2,0,0,0"
+                                                   Foreground="{StaticResource clrScrittaPopupErr}"
+                                                    Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors)[0].ErrorContent, Mode=OneWay}" />
+                                    <!--Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors).las .ErrorContent, Mode=OneWay}" />-->
+                                </Border>
+                            </StackPanel>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#region DataGrid, celle e righe -->
+
+    <Style x:Key="stlDtgClmHeader" TargetType="DataGridColumnHeader">
+        <Setter Property="Margin" Value="0,-3,0,0" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+
+    <Style x:Key="stlDtgMain" TargetType="DataGrid">
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="VerticalGridLinesBrush" Value="#E5F7FF" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#E5F7FF" />
+        <Setter Property="ColumnHeaderHeight" Value="24" />
+        <Style.Resources>
+            <!-- Sfondo area vuota (dove non ci sono le celle) -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" />
+            <!-- Testo non evidenziato -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#1E1E1E" />
+            <!-- Evidenziazione -->
+            <!--<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#EFF9FF" />-->
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+            <!-- Testo evidenziato -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+            <Style TargetType="{x:Type DataGridCell}">
+                <Style.Triggers>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="BorderBrush" Value="#AAD7FF"/>
+                        <!--<Setter Property="FocusVisualStyle" Value="{x:Null}" />-->
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="stlDtgCllTxtEditing" TargetType="{x:Type TextBox}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border x:Name="brdCella" BorderBrush="#FFF55A01" BorderThickness="1" IsHitTestVisible="False"/>
+                        <AdornedElementPlaceholder x:Name="plhMain" />
+                        <Popup AllowsTransparency="True" HorizontalAlignment="Right" HorizontalOffset="0" VerticalOffset="0" PopupAnimation="Fade" Placement="Right" 
+                                   PlacementTarget="{Binding ElementName=brdCella}" IsOpen="{Binding ElementName=plhMain, Path=AdornedElement.IsFocused, Mode=OneWay}" >
+                            <StackPanel Orientation="Horizontal">
+                                <Polygon  VerticalAlignment="Center" Points="0,4 4,0 4,8" Stretch="Fill" StrokeThickness="0" 
+                                              Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreSfondoPopupErr}" />
+                                <Border Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreSfondoPopupErr}" 
+                                            CornerRadius="4" Padding="4">
+                                    <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="2,0,0,0"
+                                                   Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreScrittaPopupErr}"
+                                                    Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors)[0].ErrorContent, Mode=OneWay}" />
+                                    <!--Text="{Binding ElementName=plhMain, Path=AdornedElement.(Validation.Errors).las .ErrorContent, Mode=OneWay}" />-->
+                                </Border>
+                            </StackPanel>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="stlDtgCllTxt" TargetType="{x:Type TextBlock}">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="Background" Value="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreCellaInErr}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="stlDtgRowValidErr" TargetType="{x:Type DataGridRow}" >
+        <Style.Triggers>
+            <!--ATTENZIONE: IsSelected deve stare prima di Validation.HasError perchè così quest'ultimo sovrascrive il valore Background di IsSelected, nello stile del DGV SystemColors.HighlightBrushKey deve essere transparent-->
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#EFF9FF"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreRigaInErr}"/>
+                <!--<Setter Property="{x:Static SystemColors.HighlightBrushKey}" Value="{Binding  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}, Path=ColoreRigaInErr}" />-->
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                <!--<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />-->
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--<ControlTemplate x:Key="ctrTplDtgRowValidErr">
+        <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors)[0].ErrorContent}">
+            <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}" />
+            <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+        </Grid>
+    </ControlTemplate>-->
+
+    <!--#endregion-->
+
+    <Style x:Key="stlPsbMain" TargetType="PasswordBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Data or Control Templates -->
+
+    <DataTemplate x:Key="dttVoid" />
+
+    <ControlTemplate x:Key="cttProgressRing" TargetType="Button">
+        <Viewbox Stretch="Uniform">
+            <MetroCtrl:ProgressRing IsLarge="True" EllipseDiameterScale="1.3" Foreground="{TemplateBinding Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="cttStartSymbol" TargetType="Button">
+        <Viewbox Stretch="Uniform">
+            <Polygon Points="0,0 8,5, 0,10" Fill="{TemplateBinding Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="cttStopSymbol" TargetType="Button">
+        <Viewbox Stretch="Uniform">
+            <Rectangle StrokeThickness="0" Margin="5,5,5,5" Width="100" Height="100" Fill="{TemplateBinding Foreground}" />
+        </Viewbox>
+    </ControlTemplate>
+
+    <!--#endregion-->
+
+    <!--#region Storyboard -->
+
+    <Trigger x:Key="trgHiddenOnOpacity0" Property="Control.Opacity" Value="0">
+        <Setter Property="Control.Visibility" Value="Hidden"/>
+    </Trigger>
+    
+    <Storyboard x:Key="stbSoftOpenInHorizontal" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleX)" From="0" To="1" Duration="0:0:0.4" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0.2" Duration="0:0:0.8" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+    <Storyboard x:Key="stbSoftCloseInHorizontal" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.4" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleX)" From="1" To="0" BeginTime="0:0:0.2"  Duration="0:0:0.9" >
+            <DoubleAnimation.EasingFunction >
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="stbSoftOpenInVertical" x:Shared="False">
+        <!--Il cambiamento della visibility serve per non renderizzare eventuali margini impostati sul sontrollo quando invisibile-->
+        <!--<ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}"/>
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.0000001" Value="{x:Static Visibility.Visible}"/>
+        </ObjectAnimationUsingKeyFrames>-->
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleY)" From="0" To="1" Duration="0:0:0.4" >
+            <!--<DoubleAnimation Storyboard.TargetProperty="(LayoutTransform).(ScaleTransform.ScaleY)" From="0" To="1" Duration="0:0:0.4" >-->
+                <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0.25" Duration="0:0:0.8" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+    <Storyboard x:Key="stbSoftCloseInVertical" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleY)" To="0" BeginTime="0:0:0.2"  Duration="0:0:0.9" >
+            <!--<DoubleAnimation Storyboard.TargetProperty="(LayoutTransform).(ScaleTransform.ScaleY)" To="0" BeginTime="0:0:0.2"  Duration="0:0:0.9" >-->
+                <DoubleAnimation.EasingFunction >
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <!--Il cambiamento della visibility serve per non renderizzare eventuali margini impostati sul sontrollo quando invisibile-->
+        <!--<ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.9" Value="{x:Static Visibility.Collapsed}"/>
+        </ObjectAnimationUsingKeyFrames>-->
+    </Storyboard>
+
+    <Storyboard x:Key="stbZoom2x" x:Shared="False">
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleX)" To="2" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleY)" To="2" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="stbZoom1_2x" x:Shared="False">
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleX)" To="1.2" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleY)" To="1.2" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="stbZoom1x" x:Shared="False">
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleX)" To="1" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.LayoutTransform).(ScaleTransform.ScaleY)" To="1" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+
+    <Storyboard x:Key="stbSetOpacity100" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.8"  >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+    <Storyboard x:Key="stbSetOpacity80" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.8" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+    <Storyboard x:Key="stbSetOpacity0" x:Shared="False" >
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.8" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="stbEnterRotate180" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(RotateTransform.Angle)" From="0" To="180" Duration="0:0:0.8" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <!--<DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0.2" Duration="0:0:1.2" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>-->
+    </Storyboard>
+    <Storyboard x:Key="stbExitRotate180" x:Shared="False">
+        <DoubleAnimation Storyboard.TargetProperty="(Control.LayoutTransform).(RotateTransform.Angle)" From="180" To="0" Duration="0:0:0.9" >
+            <DoubleAnimation.EasingFunction>
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+        <!--<DoubleAnimation Storyboard.TargetProperty="(ScrollViewer.LayoutTransform).(ScaleTransform.ScaleX)" From="1" To="0" BeginTime="0:0:0.2"  Duration="0:0:0.9" >
+            <DoubleAnimation.EasingFunction >
+                <CubicEase />
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>-->
+    </Storyboard>
+
+    <!--#endregion-->
+    
+    <!-- UTILIZZO Content="{StaticResource vctImgKeyRootIcon}" -->
+    <Viewbox x:Key="vctImgKeyRootIcon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+        <Canvas Width="250" Height="300" Margin="-30,1,15,-2">
+            <Canvas.Resources/>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4485" Fill="#FFB56D00" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 194.12 5.06 C 210.70 -0.53 232.08 -2.97 245.74 10.27 C 258.83 23.93 259.48 46.18 250.02 62.03 C 248.08 67.69 238.26 73.21 244.99 79.03 C 264.32 102.16 260.58 138.05 240.50 159.51 C 234.62 165.16 232.47 173.07 229.30 180.30 C 231.08 187.26 239.04 188.50 244.49 191.53 C 253.60 207.04 253.03 225.81 247.20 242.23 C 251.17 244.81 255.99 245.77 260.34 247.62 C 267.87 263.02 261.07 277.13 261.21 292.95 C 243.68 306.86 223.72 293.88 207.84 284.15 C 201.72 279.51 200.97 271.66 199.31 264.75 C 193.67 237.64 188.05 210.59 182.54 183.45 C 182.41 171.17 166.39 172.41 159.79 164.63 C 157.40 162.78 155.09 160.83 152.92 158.73 C 150.49 156.30 148.27 153.66 146.21 150.92 C 128.54 128.35 129.46 92.81 151.24 73.22 C 161.96 63.05 176.15 57.45 190.41 54.44 C 195.33 54.54 200.26 54.43 205.17 54.76 C 212.48 56.69 219.94 58.48 226.40 62.56 C 236.80 51.41 243.30 27.74 226.36 19.56 C 205.61 14.40 186.30 29.38 171.81 42.60 C 171.09 43.27 170.36 43.93 169.64 44.60 C 165.71 44.99 161.78 45.32 157.88 45.94 C 173.34 28.79 194.48 15.43 218.02 14.12 C 226.45 13.47 235.80 16.23 240.33 23.87 C 247.03 49.33 227.30 73.49 206.30 85.31 C 197.31 91.27 178.45 88.82 181.22 104.50 C 209.39 99.30 234.72 79.63 246.71 53.62 C 250.69 44.37 253.07 33.21 248.16 23.83 C 234.64 2.36 204.25 5.33 184.34 15.37 C 168.10 22.97 153.66 34.78 143.20 49.35 C 140.07 50.38 137.01 51.64 134.11 53.22 C 147.45 30.65 169.43 13.63 194.12 5.06 M 142.80 105.74 C 138.76 126.24 149.25 148.35 165.79 160.03 C 172.17 166.32 181.78 167.87 188.14 173.80 C 196.70 206.39 202.45 239.86 211.80 272.24 C 218.99 281.16 230.34 287.50 241.14 291.09 C 246.36 292.88 251.14 287.94 255.02 284.97 L 254.13 284.50 C 254.29 277.44 256.02 270.56 258.40 263.96 C 256.60 257.94 254.52 251.12 247.83 249.01 C 240.84 246.40 243.22 238.07 244.47 232.56 C 248.51 217.70 243.28 199.50 229.89 191.10 C 223.98 186.54 223.25 178.59 223.71 171.69 C 224.47 163.14 229.41 156.15 236.13 151.13 C 250.32 139.05 256.75 117.45 245.81 101.09 C 243.75 93.58 240.31 86.28 234.51 80.92 C 234.38 81.43 234.10 82.44 233.97 82.95 C 226.38 89.36 219.04 96.09 210.57 101.36 C 201.75 106.78 195.57 117.95 183.49 112.80 C 173.37 106.44 168.74 90.85 177.79 81.75 C 183.85 74.80 194.21 76.25 200.96 81.40 C 206.41 78.79 211.84 75.94 216.29 71.78 C 217.86 70.95 219.19 69.77 220.57 68.67 C 190.86 49.66 147.06 70.93 142.80 105.74 M 176.90 95.93 C 182.45 91.20 187.66 85.81 194.74 83.38 C 186.01 79.21 177.09 87.04 176.90 95.93 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4488" Fill="#FFFFF892" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="m 184.34 15.37 c 19.91 -10.04 50.3 -13.01 63.82 8.46 0.55453 1.370905 -0.55091 4.542676 -0.74091 5.762676 -7.83623 0.905379 -2.84916 -1.936217 -7.08909 -5.722676 -4.53 -7.64 -13.88 -10.4 -22.31 -9.75 -23.54 1.31 -44.68 14.67 -60.14 31.82 -4.91 1.04 -9.85 2 -14.68 3.41 10.46 -14.57 24.9 -26.38 41.14 -33.98 z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4491" Fill="#FFFF9B36" Opacity="1">
+                    <Path.Data>
+                        <PathGeometry Figures="m 240.33 23.87 c 3.54023 -0.02667 5.6909 0.872933 6.56093 3.459095 C 247.98636 26.335453 248.41272 25.05 248.16 23.83 c 4.91 9.38 2.53 20.54 -1.45 29.79 -11.99 26.01 -37.32 45.68 -65.49 50.88 -2.77 -15.68 16.09 -13.23 25.08 -19.19 21 -11.82 40.73 -35.98 34.03 -61.44 z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas >
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4494" Fill="#FF505094" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 169.64 44.60 C 170.36 43.93 171.09 43.27 171.81 42.60 C 183.95 43.15 195.30 47.83 205.17 54.76 C 200.26 54.43 195.33 54.54 190.41 54.44 C 167.50 44.33 141.51 54.88 125.97 72.91 C 111.25 84.10 111.00 105.27 118.38 120.79 C 124.75 132.62 121.03 151.33 108.11 156.96 C 91.23 158.91 77.55 173.62 75.25 190.23 C 75.23 199.53 67.15 204.17 58.64 202.71 C 55.53 205.46 52.52 208.31 49.58 211.24 C 49.07 218.56 47.49 225.86 43.82 232.29 C 45.67 236.49 48.14 240.49 51.72 243.45 C 63.95 245.18 78.40 244.63 89.18 238.20 C 111.40 212.55 130.63 184.34 152.92 158.73 C 155.09 160.83 157.40 162.78 159.79 164.63 C 134.90 189.20 117.47 221.60 93.62 247.65 C 85.00 254.51 73.11 250.86 63.00 252.29 C 50.96 254.24 40.48 245.84 34.54 236.15 C 38.98 228.46 41.44 219.89 41.85 211.01 C 46.26 205.94 50.64 200.85 54.77 195.56 C 59.85 195.05 69.06 200.04 70.03 191.90 C 70.63 175.70 80.28 161.35 92.83 151.66 C 98.62 151.20 105.07 152.80 110.36 150.06 C 111.55 143.74 112.48 137.33 112.28 130.89 C 101.31 103.95 109.00 69.55 134.11 53.22 C 137.01 51.64 140.07 50.38 143.20 49.35 C 148.03 47.94 152.97 46.98 157.88 45.94 C 161.78 45.32 165.71 44.99 169.64 44.60 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4497" Fill="#FFD2D4FF" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 125.97 72.91 C 141.51 54.88 167.50 44.33 190.41 54.44 C 176.15 57.45 161.96 63.05 151.24 73.22 C 129.46 92.81 128.54 128.35 146.21 150.92 C 143.93 152.23 141.64 153.53 139.35 154.84 C 138.92 153.43 138.49 152.02 138.06 150.61 C 115.95 172.05 96.86 196.36 75.95 218.92 C 72.03 222.95 66.03 220.95 61.17 220.43 C 84.13 193.34 108.45 167.40 131.03 140.00 C 114.55 121.58 115.46 94.01 125.97 72.91 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4500" Fill="#FFFFFCFA" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 142.80 105.74 C 147.06 70.93 190.86 49.66 220.57 68.67 C 219.19 69.77 217.86 70.95 216.29 71.78 C 182.04 56.36 137.47 89.95 148.66 127.46 C 153.29 145.10 169.57 158.42 187.53 160.49 C 213.15 164.61 240.41 146.29 244.35 120.28 C 247.42 106.65 240.88 94.10 233.97 82.95 C 234.10 82.44 234.38 81.43 234.51 80.92 C 240.31 86.28 243.75 93.58 245.81 101.09 C 250.43 119.87 244.53 141.01 229.90 153.90 C 212.79 170.06 185.86 171.43 165.79 160.03 C 149.25 148.35 138.76 126.24 142.80 105.74 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4503" Fill="#FFFFF279" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 148.66 127.46 C 137.47 89.95 182.04 56.36 216.29 71.78 C 211.84 75.94 206.41 78.79 200.96 81.40 C 194.21 76.25 183.85 74.80 177.79 81.75 C 168.74 90.85 173.37 106.44 183.49 112.80 C 195.57 117.95 201.75 106.78 210.57 101.36 C 204.98 114.10 189.63 119.69 177.89 111.33 C 178.93 113.59 179.95 115.87 181.13 118.07 C 170.63 122.20 159.71 125.20 148.66 127.46 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4506" Fill="#FFA7ACD9" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 118.38 120.79 C 111.00 105.27 111.25 84.10 125.97 72.91 C 115.46 94.01 114.55 121.58 131.03 140.00 C 108.45 167.40 84.13 193.34 61.17 220.43 C 66.03 220.95 72.03 222.95 75.95 218.92 C 96.86 196.36 115.95 172.05 138.06 150.61 C 138.49 152.02 138.92 153.43 139.35 154.84 C 141.64 153.53 143.93 152.23 146.21 150.92 C 148.27 153.66 150.49 156.30 152.92 158.73 C 130.63 184.34 111.40 212.55 89.18 238.20 C 78.40 244.63 63.95 245.18 51.72 243.45 C 63.66 241.04 75.81 239.90 87.84 238.00 C 103.30 216.77 120.87 197.17 136.17 175.83 C 132.23 174.96 127.36 173.65 124.35 177.29 C 109.19 193.52 96.14 211.76 81.15 228.08 C 69.32 232.15 56.11 229.82 43.82 232.29 C 47.49 225.86 49.07 218.56 49.58 211.24 C 52.52 208.31 55.53 205.46 58.64 202.71 C 67.15 204.17 75.23 199.53 75.25 190.23 C 77.55 173.62 91.23 158.91 108.11 156.96 C 121.03 151.33 124.75 132.62 118.38 120.79 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4509" Fill="#FFF9DC6B" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 176.90 95.93 C 177.09 87.04 186.01 79.21 194.74 83.38 C 187.66 85.81 182.45 91.20 176.90 95.93 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4512" Fill="#FFFFD94F" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 210.57 101.36 C 219.04 96.09 226.38 89.36 233.97 82.95 C 240.88 94.10 247.42 106.65 244.35 120.28 C 244.42 116.23 244.09 112.20 243.80 108.18 C 232.92 111.33 222.10 114.66 211.11 117.41 C 210.49 116.64 209.87 115.88 209.25 115.11 C 211.11 110.77 211.13 105.97 210.57 101.36 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4515" Fill="#FFF4C639" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 245.81 101.09 C 256.75 117.45 250.32 139.05 236.13 151.13 C 229.41 156.15 224.47 163.14 223.71 171.69 C 221.78 182.83 223.43 194.18 226.04 205.07 C 225.17 203.87 224.31 202.67 223.45 201.47 C 220.97 201.35 218.49 201.24 216.02 201.12 C 216.66 205.36 217.33 209.60 218.25 213.79 C 216.86 213.20 215.47 212.62 214.07 212.05 C 211.79 220.32 213.73 228.81 214.98 237.08 C 212.93 230.05 210.73 223.05 207.80 216.33 C 205.91 216.35 204.02 216.37 202.12 216.39 C 203.66 234.68 208.81 252.51 212.82 270.32 C 220.50 279.11 232.26 283.45 241.14 291.09 C 230.34 287.50 218.99 281.16 211.80 272.24 C 202.45 239.86 196.70 206.39 188.14 173.80 C 181.78 167.87 172.17 166.32 165.79 160.03 C 185.86 171.43 212.79 170.06 229.90 153.90 C 244.53 141.01 250.43 119.87 245.81 101.09 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4518" Fill="#FFFFFFF7" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 210.57 101.36 C 211.13 105.97 211.11 110.77 209.25 115.11 C 202.90 123.93 189.00 126.08 181.13 118.07 C 179.95 115.87 178.93 113.59 177.89 111.33 C 189.63 119.69 204.98 114.10 210.57 101.36 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4521" Fill="#FFFFBA1A" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 211.11 117.41 C 222.10 114.66 232.92 111.33 243.80 108.18 C 244.09 112.20 244.42 116.23 244.35 120.28 C 240.41 146.29 213.15 164.61 187.53 160.49 C 169.57 158.42 153.29 145.10 148.66 127.46 C 159.71 125.20 170.63 122.20 181.13 118.07 C 189.00 126.08 202.90 123.93 209.25 115.11 C 209.87 115.88 210.49 116.64 211.11 117.41 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4524" Fill="#FFF0A407" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 226.04 205.07 C 223.43 194.18 221.78 182.83 223.71 171.69 C 223.25 178.59 223.98 186.54 229.89 191.10 C 243.28 199.50 248.51 217.70 244.47 232.56 C 243.22 238.07 240.84 246.40 247.83 249.01 C 254.52 251.12 256.60 257.94 258.40 263.96 C 256.02 270.56 254.29 277.44 254.13 284.50 C 244.05 278.73 233.23 273.98 223.82 267.19 C 218.54 258.14 218.25 246.98 214.98 237.08 C 213.73 228.81 211.79 220.32 214.07 212.05 C 215.47 212.62 216.86 213.20 218.25 213.79 C 222.63 230.25 227.27 246.65 232.19 262.96 C 236.09 264.53 240.02 266.03 243.99 267.41 C 238.53 246.49 231.62 225.96 226.04 205.07 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4527" Fill="#FFDFDFF7" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 124.35 177.29 C 127.36 173.65 132.23 174.96 136.17 175.83 C 120.87 197.17 103.30 216.77 87.84 238.00 C 75.81 239.90 63.66 241.04 51.72 243.45 C 48.14 240.49 45.67 236.49 43.82 232.29 C 56.11 229.82 69.32 232.15 81.15 228.08 C 96.14 211.76 109.19 193.52 124.35 177.29 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4530" Fill="#FFFFED88" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 216.02 201.12 C 218.49 201.24 220.97 201.35 223.45 201.47 C 224.31 202.67 225.17 203.87 226.04 205.07 C 231.62 225.96 238.53 246.49 243.99 267.41 C 240.02 266.03 236.09 264.53 232.19 262.96 C 227.27 246.65 222.63 230.25 218.25 213.79 C 217.33 209.60 216.66 205.36 216.02 201.12 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4533" Fill="#FFFBEC91" Opacity="1.00">
+                    <Path.Data>
+                        <PathGeometry Figures=" M 202.12 216.39 C 204.02 216.37 205.91 216.35 207.80 216.33 C 210.73 223.05 212.93 230.05 214.98 237.08 C 218.25 246.98 218.54 258.14 223.82 267.19 C 233.23 273.98 244.05 278.73 254.13 284.50 L 255.02 284.97 C 251.14 287.94 246.36 292.88 241.14 291.09 C 232.26 283.45 220.50 279.11 212.82 270.32 C 208.81 252.51 203.66 234.68 202.12 216.39 Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+
+    <DataTemplate x:Key="vctImgDeleteDtgRow" >
+        <!--x:Key="vctImgDeleteDtgRow"-->
+        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+            <Canvas Name="svg32" Width="289" Height="163" Margin="0,-2,0,-2">
+                <!--Unknown tag: metadata-->
+                <!--Unknown tag: sodipodi:namedview-->
+                <Canvas>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path5" Fill="#FF1F6DA7" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 0.00 7.13 C 28.84 7.19 57.68 6.99 86.51 7.21 C 83.74 9.94 81.02 12.72 78.21 15.42 C 55.16 15.44 32.12 15.50 9.07 15.37 C 8.62 59.34 9.04 103.34 8.97 147.32 C 31.77 147.30 54.57 147.55 77.36 147.17 C 80.27 150.08 83.17 153.00 86.11 155.89 C 57.41 155.89 28.70 155.86 0.00 155.88 L 0.00 7.13 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path7" Fill="#FF1F6DA7" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 100.84 7.11 C 130.58 7.09 160.32 7.18 190.07 7.09 C 187.32 9.82 184.58 12.57 181.80 15.27 C 170.67 15.68 159.52 15.41 148.38 15.41 C 148.55 26.41 148.46 37.42 148.52 48.42 C 147.54 49.42 146.56 50.42 145.59 51.42 C 143.90 49.83 142.22 48.24 140.58 46.60 C 140.82 36.28 140.58 25.96 140.72 15.65 C 130.35 15.48 119.98 15.42 109.61 15.68 C 106.67 12.84 103.80 9.93 100.84 7.11 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path9" Fill="#FF1F6DA7" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 204.40 7.23 C 232.60 6.93 260.80 7.21 289.00 7.12 L 289.00 155.89 C 260.94 155.84 232.88 155.94 204.82 155.87 C 207.79 152.98 210.73 150.07 213.63 147.12 C 235.94 147.35 258.28 147.46 280.58 147.06 C 280.45 103.19 280.58 59.32 280.58 15.45 C 257.97 15.54 235.37 15.61 212.77 15.49 C 209.95 12.77 207.25 9.93 204.40 7.23 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path11" Fill="#FF1F6DA7" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 145.39 111.95 C 146.50 113.06 147.61 114.18 148.73 115.28 C 148.19 125.90 148.65 136.53 148.39 147.16 C 159.14 147.35 169.91 147.50 180.65 147.04 C 183.65 149.92 186.62 152.85 189.58 155.78 C 160.17 155.93 130.74 155.97 101.32 155.78 C 104.30 152.85 107.27 149.93 110.29 147.05 C 120.44 147.63 130.61 147.26 140.76 147.25 C 140.69 137.07 140.80 126.88 140.71 116.69 C 142.27 115.12 143.83 113.53 145.39 111.95 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Canvas >
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path14" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 9.07 15.37 C 32.12 15.50 55.16 15.44 78.21 15.42 C 73.86 19.77 69.34 24.03 66.01 29.25 C 51.63 28.48 37.20 29.04 22.80 28.90 C 22.64 63.71 22.70 98.53 22.92 133.34 C 37.18 134.11 51.46 133.07 65.74 133.36 C 68.80 138.60 73.26 142.77 77.36 147.17 C 54.57 147.55 31.77 147.30 8.97 147.32 C 9.04 103.34 8.62 59.34 9.07 15.37 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path16" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 109.61 15.68 C 119.98 15.42 130.35 15.48 140.72 15.65 C 140.58 25.96 140.82 36.28 140.58 46.60 C 130.30 36.25 119.98 25.94 109.61 15.68 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path18" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 148.38 15.41 C 159.52 15.41 170.67 15.68 181.80 15.27 C 170.63 26.25 159.64 37.39 148.52 48.42 C 148.46 37.42 148.55 26.41 148.38 15.41 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path20" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 212.77 15.49 C 235.37 15.61 257.97 15.54 280.58 15.45 C 280.58 59.32 280.45 103.19 280.58 147.06 C 258.28 147.46 235.94 147.35 213.63 147.12 C 217.68 142.76 222.02 138.60 225.26 133.56 C 239.07 132.98 252.91 133.76 266.73 133.10 C 266.59 98.49 266.67 63.88 266.74 29.26 C 252.83 28.79 238.88 28.59 224.98 29.21 C 221.63 24.03 217.10 19.83 212.77 15.49 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path22" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 148.39 147.16 C 148.65 136.53 148.19 125.90 148.73 115.28 C 159.44 125.79 169.99 136.47 180.65 147.04 C 169.91 147.50 159.14 147.35 148.39 147.16 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path24" Fill="#FFD9EEFF" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 110.29 147.05 C 120.43 136.93 130.59 126.84 140.71 116.69 C 140.80 126.88 140.69 137.07 140.76 147.25 C 130.61 147.26 120.44 147.63 110.29 147.05 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Canvas>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path27" Fill="#FF7DC3F9" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="m 22.8 28.9 c 14.4 0.14 28.83 -0.42 43.21 0.35 0.64 3.41 3.17 5.87 5.44 8.28 14.38 14.95 29.24 29.42 43.75 44.23 -14.39 14.41 -28.019174 29.16541 -43.09 43.33 -2.262293 2.66956 -4.296009 5.37257 -6.37 8.27 -14.28 -0.29 -28.56 0.75 -42.82 -0.02 C 22.7 98.53 22.64 63.71 22.8 28.9 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path29" Fill="#FF7DC3F9" Opacity="1.00">
+                        <Path.Data>
+                            <PathGeometry Figures=" M 224.98 29.21 C 238.88 28.59 252.83 28.79 266.74 29.26 C 266.67 63.88 266.59 98.49 266.73 133.10 C 252.91 133.76 239.07 132.98 225.26 133.56 C 223.63 130.69 221.69 127.98 219.33 125.66 C 205.01 110.83 190.32 96.34 175.73 81.78 C 190.03 67.06 204.78 52.77 219.06 38.03 C 221.45 35.41 224.34 32.89 224.98 29.21 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Canvas>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#FFFF0000" Opacity="1">
+                        <Path.Data>
+                            <PathGeometry Figures="m 86.51 7.21 c 2.1 -2.19 4.55034 -4.8756943 7.53 -4.82 2.758713 0.051564 4.84 2.75 6.8 4.72 2.96 2.82 5.83 5.73 8.77 8.57 10.37 10.26 20.69 20.57 30.97 30.92 1.64 1.64 3.32 3.23 5.01 4.82 0.97 -1 1.95 -2 2.93 -3 11.12 -11.03 22.11 -22.17 33.28 -33.15 2.78 -2.7 5.52 -5.45 8.27 -8.18 1.94 -2.08 4.15689 -4.7018607 6.96 -4.72 2.94266 -0.019042 5.25 2.78 7.37 4.86 2.85 2.7 5.55 5.54 8.37 8.26 4.33 4.34 11.99898 9.459356 12.21 13.72 0.17515 3.536519 -3.53 6.2 -5.92 8.82 -14.28 14.74 -29.03 29.03 -43.33 43.75 14.59 14.56 29.28 29.05 43.6 43.88 2.36 2.32 5.72507 4.47027 5.93 7.9 0.16494 2.76043 -7.58 9.2 -11.63 13.56 -2.9 2.95 -5.84 5.86 -8.81 8.75 -2.06 1.92 -4.06433 4.83701 -6.89 4.95 -3.24846 0.1299 -5.95 -2.87 -8.35 -5.04 -2.96 -2.93 -5.93 -5.86 -8.93 -8.74 -10.66 -10.57 -21.21 -21.25 -31.92 -31.76 -1.12 -1.1 -2.23 -2.22 -3.34 -3.33 -1.56 1.58 -3.12 3.17 -4.68 4.74 -10.12 10.15 -20.28 20.24 -30.42 30.36 -3.02 2.88 -5.99 5.8 -8.97 8.73 -2.02 1.86 -3.502788 4.31824 -6.61 4.97 -3.107212 0.65176 -6.16 -2.73 -8.6 -4.86 C 83.17 153 71.219484 140.87979 68.529733 138.21221 65.839983 135.54462 65.71782 134.94761 65.74 133.36 c 0.02218 -1.58761 2.741558 -4.35128 4.555779 -6.31064 C 72.11 125.09 99.503761 97.476239 115.2 81.76 100.69 66.95 85.83 52.48 71.45 37.53 c -2.27 -2.41 -5.552045 -5.850501 -5.44 -8.28 0.112045 -2.429499 7.978997 -9.360882 12.2 -13.83 2.672054 -2.82912 5.53 -5.48 8.3 -8.21 z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="vctImgCloseIcon" >
+        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+            <Canvas Width="51" Height="51" Background="Transparent">
+                <Canvas Background="Transparent">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="-246"/>
+                    </Canvas.RenderTransform>
+                    <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="352,340.3 267.6,256 352,171.8 340.2,160 255.8,244.3 171.8,160.4 160,172.2 244,256 160,339.9 171.8,351.6 255.8,267.8 340.2,352 " FillRule="NonZero" Fill="Black">
+                        <Polygon.RenderTransform>
+                            <MatrixTransform Matrix="0.26458333 0 0 0.26458333 -42.219939 203.75328"/>
+                        </Polygon.RenderTransform>
+                    </Polygon>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </DataTemplate>
+    
+    
+    
+    <!--#region Controlli metro -->
+    
+    <!--<Style x:Key="pgrMain" TargetType="mainCtrl:ProgressRingM">
+        <Setter Property="Foreground" Value="#0061FF" />
+    </Style>-->
+    <!--#endregion-->
+
+
+</ResourceDictionary>

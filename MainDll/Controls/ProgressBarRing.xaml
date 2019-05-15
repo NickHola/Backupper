@@ -1,0 +1,23 @@
+﻿<local:ProgressBarBase x:Class="Main.Controls.ProgressBarRing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Main.Controls"
+             xmlns:MetroCtrl="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100" x:Name="uscMain" Foreground="{Binding DefaultColor, RelativeSource={RelativeSource Self}}"  >
+    <!--DataContext="{Binding RelativeSource={RelativeSource Self}}" ATTENZIONE non va usato poichè quando utilizzo il controllo in window o userControl non mi eredita il datacontext -->
+ 
+        <local:ProgressBarBase.ContentTemplate>
+            <DataTemplate>
+                <Viewbox >
+                <Grid >
+                    <MetroCtrl:ProgressRing  />
+                    <TextBlock x:Name="txbPercentuale" Margin="10,18,8,0" FontSize="15" TextAlignment="Center" Visibility="{Binding PercVisibility, ElementName=uscMain}"
+                               Text="{Binding Value, ElementName=uscMain, StringFormat={}{0:#,0.#}%}" />
+                </Grid>
+            </Viewbox>
+        </DataTemplate>
+    </local:ProgressBarBase.ContentTemplate>
+</local:ProgressBarBase>

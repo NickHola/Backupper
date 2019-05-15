@@ -1,0 +1,244 @@
+﻿<UserControl x:Class="Main.Schedulers.SrcSchedulerV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Main.Schedulers"
+             xmlns:mainBind="clr-namespace:Main.Binds"
+             xmlns:mainCtrl="clr-namespace:Main.Controls"
+             xmlns:mainDataOre="clr-namespace:Main.DataOre"
+             mc:Ignorable="d"
+             d:DesignHeight="180" d:DesignWidth="900" Loaded="UserControl_Loaded" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../UIRes.xaml" />
+                <ResourceDictionary Source="../../BindingRes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:WeekDaysFilterConv x:Key="cnvWeekDaysFilterConv" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--Width="839"-->
+    <Grid x:Name="grdMain" HorizontalAlignment="Center" >
+        <Grid x:Name="grdSettings" Panel.ZIndex="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"  />
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid x:Name="grdTopSide" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="90" />
+                </Grid.ColumnDefinitions>
+                <mainCtrl:StackPanelM Orientation="Horizontal" Margin="0,2,0,2" >
+                    <mainCtrl:ToggleButton TextOn="On" TextOff="Off" IsChecked="{Binding SchedulerM.IsEnabled, Mode=TwoWay}" Margin="0,0,0,0" VerticalAlignment="Center" MinWidth="50" />
+                    <mainCtrl:TextBlockM x:Name="txbWeekStart" Text="Week start:" Margin="18,0,0,0" >
+                        <!--<mainCtrl:TextBlockM.Style>
+                            <Style TargetType="mainCtrl:TextBlockM">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </mainCtrl:TextBlockM.Style>-->
+                    </mainCtrl:TextBlockM>
+                    <mainCtrl:ComboBoxM ItemsSource="{Binding Source={mainBind:EnumBind mainDataOre:WeekDay}}" SelectedItem="{Binding SchedulerM.WeekStartsDay}" Margin="5,0,0,0" />
+                </mainCtrl:StackPanelM>
+                <mainCtrl:ButtonM x:Name="btnTestScheduler" Grid.Column="1" Content="Test scheduler" Click="btnTestScheduler_Click" />
+            </Grid>
+            <mainCtrl:StackPanelM Grid.Row="1" Orientation="Horizontal">
+                <mainCtrl:GroupBoxCheck x:Name="gpbPeriodicCycle" Text="Periodic cycle" GpbIsEnabled="{Binding SchedulerM.IsPeriodicCycleEnabled, Mode=TwoWay}" VerticalAlignment="Stretch" Margin="0,0,5,0">
+                    <Grid x:Name="grdPeriodicCycleMain">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <mainCtrl:TextBlockM Text="Unit:" HorizontalAlignment="Left" Margin="1,5,0,0"  />
+                        <mainCtrl:ComboBoxM Grid.Row="1" ItemsSource="{Binding Source={mainBind:EnumBind local:PeriodicUnit}}" SelectedItem="{Binding SchedulerM.PeriodicCycle.Unit}" Margin="0,0,0,5" />
+                        <mainCtrl:StackPanelM Grid.Row="2" Orientation="Horizontal">
+                            <mainCtrl:GroupBoxCheck x:Name="gpbEvery" Margin="0,0,4,0" Text="Every" GpbIsEnabled="{Binding SchedulerM.PeriodicCycle.IsEveryFewUnitEnabled, Mode=TwoWay}" >
+                                <mainCtrl:TextBoxM VerticalAlignment="Top" Text="{Binding SchedulerM.PeriodicCycle.EveryFewUnit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions='True'}" AddStyle="{StaticResource stlTxtErrorTemplate}" />
+                            </mainCtrl:GroupBoxCheck>
+                            <mainCtrl:GroupBoxCheck x:Name="gpbPatternOnOff" Text="Pattern on off" GpbIsEnabled="{Binding SchedulerM.PeriodicCycle.IsOnOffUnitSeriesEnabled, Mode=TwoWay}" VerticalAlignment="Stretch" >
+                                <mainCtrl:DataGridM ItemsSource="{Binding SchedulerM.PeriodicCycle.OnOffUnitSeries, Mode=TwoWay, ValidatesOnExceptions=True}" MostraEliminaRiga="True" >
+                                    <mainCtrl:DataGridM.Columns>
+                                        <mainCtrl:DtgTextClm Header="On" Width="30" Binding="{Binding On, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+                                        <mainCtrl:DtgTextClm Header="Off" Width="30" Binding="{Binding Off, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+                                    </mainCtrl:DataGridM.Columns>
+                                </mainCtrl:DataGridM>
+                            </mainCtrl:GroupBoxCheck>
+                        </mainCtrl:StackPanelM>
+                    </Grid>
+                </mainCtrl:GroupBoxCheck>
+
+                <mainCtrl:GroupBoxCheck x:Name="gpbHourlyPeriods" Text="Hourly periods" GpbIsEnabled="{Binding SchedulerM.IsHourlyPeriodsEnabled, Mode=TwoWay}" VerticalAlignment="Stretch">
+                    <mainCtrl:DataGridM ItemsSource="{Binding SchedulerM.HourlyPeriods, Mode=TwoWay, ValidatesOnExceptions=True}" MostraEliminaRiga="True" >
+                         <mainCtrl:DataGridM.Columns>
+                            <mainCtrl:DtgTextClm Header="From" Binding="{Binding Da.StrOrario, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=Explicit}" Width="52" Format="HH:mm:ss" />
+                            <mainCtrl:DtgTextClm Header="To" Binding="{Binding A.StrOrario, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=Explicit}" Width="52" Format="HH:mm:ss" />
+                        </mainCtrl:DataGridM.Columns>
+                    </mainCtrl:DataGridM>
+                </mainCtrl:GroupBoxCheck>
+
+                <mainCtrl:GroupBoxCheck x:Name="gpbWeekDays" Text="Week days" GpbIsEnabled="{Binding SchedulerM.IsWeekDaysEnabled, Mode=TwoWay}" VerticalAlignment="Stretch">
+                    <mainCtrl:DataGridM MostraEliminaRiga="True" ItemsSource="{Binding SchedulerM.WeekDays, Mode=TwoWay, ValidatesOnExceptions=True}">
+                        <DataGrid.Columns >
+                            <!--ATTENZIONE: Non si può fare il binding sul parametro ConvertParameter, quindi se si vogliono fare i binding l'unica è usare il multibinding-->
+                            <!--ItemsSource="{Binding Source={mainBind:EnumBind mainDataOre:WeekDay}, Converter={StaticResource cnvWeekDaysFilterConv}}"-->
+                            <mainCtrl:DtgComboBoxClm Header="Day" Width="95" SelectedItemBinding="{Binding SelectedDay, Mode=TwoWay}"  >
+                                <!--ATTENZIONE: Non si può usare direttamente l'ItemsSource del DataGridComboBoxColumn poichè ha un suo datacontext e non si riesce a risalire allo UserControl-->
+                                <!--<DataGridComboBoxColumn.ItemsSource>
+                                <MultiBinding Converter="{StaticResource cnvWeekDaysFilterConv}">
+                                    <Binding Source="{mainBind:EnumBind mainDataOre:WeekDay}" />
+                                    <Binding Path="IsEnabled" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}" />
+                                </MultiBinding>
+                            </DataGridComboBoxColumn.ItemsSource>-->
+                                <mainCtrl:DtgComboBoxClm.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding Source={mainBind:EnumBind mainDataOre:WeekDay, true}}" />
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </mainCtrl:DtgComboBoxClm.ElementStyle>
+                                <mainCtrl:DtgComboBoxClm.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" >
+                                            <Setter.Value>
+                                                <MultiBinding Converter="{StaticResource cnvWeekDaysFilterConv}">
+                                                    <Binding Source="{mainBind:EnumBind mainDataOre:WeekDay, true}" />
+                                                    <Binding Path="DataContext" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" />
+                                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type mainCtrl:DataGridM}}" />
+                                                </MultiBinding>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <!--<EventSetter Event="Loaded" Handler="ComboBox_Loaded" />-->
+                                    </Style>
+                                </mainCtrl:DtgComboBoxClm.EditingElementStyle>
+                            </mainCtrl:DtgComboBoxClm>
+                        </DataGrid.Columns>
+                    </mainCtrl:DataGridM>
+                </mainCtrl:GroupBoxCheck>
+
+                <mainCtrl:GroupBoxCheck x:Name="gpbMonthsAndDays" Text="Months/days" GpbIsEnabled="{Binding SchedulerM.IsMonthsAndDaysEnabled, Mode=TwoWay}" VerticalAlignment="Stretch">
+                    <mainCtrl:DataGridM MostraEliminaRiga="True" ItemsSource="{Binding SchedulerM.MonthsAndDays, Mode=TwoWay}">
+                        <mainCtrl:DataGridM.Columns>
+                            <mainCtrl:DtgTextClm Header="Month/Day" Binding="{Binding StrMonthDay, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=Explicit}" Width="70" Format="MM/dd" />
+                        </mainCtrl:DataGridM.Columns>
+                    </mainCtrl:DataGridM>
+                </mainCtrl:GroupBoxCheck>
+
+                <mainCtrl:GroupBoxCheck x:Name="gpbYearWeeks" Text="Year weeks" GpbIsEnabled="{Binding SchedulerM.IsYearWeeksEnabled, Mode=TwoWay}" VerticalAlignment="Stretch">
+                    <mainCtrl:DataGridM MostraEliminaRiga="True" ItemsSource="{Binding SchedulerM.YearWeeks, Mode=TwoWay, ValidatesOnExceptions=True}">
+                        <mainCtrl:DataGridM.Columns>
+                            <!--UpdateSourceTrigger=LostFocus e non PropertyChanged poichè all'inizio si valorizza con 0 dato che non è un int e va subito in errore-->
+                            <DataGridTextColumn Header="Year week" Binding="{Binding Week, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Width="63" />
+                        </mainCtrl:DataGridM.Columns>
+                    </mainCtrl:DataGridM>
+                </mainCtrl:GroupBoxCheck>
+
+                <mainCtrl:GroupBoxCheck x:Name="YearDays" Text="Year days" GpbIsEnabled="{Binding SchedulerM.IsYearDaysEnabled, Mode=TwoWay}" VerticalAlignment="Stretch">
+                    <mainCtrl:DataGridM MostraEliminaRiga="True" ItemsSource="{Binding SchedulerM.YearDays, Mode=TwoWay}">
+                        <mainCtrl:DataGridM.Columns>
+                            <!--UpdateSourceTrigger=LostFocus e non PropertyChanged poichè all'inizio si valorizza con 0 dato che non è un int e va subito in errore-->
+                            <DataGridTextColumn Header="Year Days" Binding="{Binding Day, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Width="61" />
+                        </mainCtrl:DataGridM.Columns>
+                    </mainCtrl:DataGridM>
+                </mainCtrl:GroupBoxCheck>
+            </mainCtrl:StackPanelM>
+        </Grid>
+        <Rectangle x:Name="rctLayer2" Fill="White" Panel.ZIndex="20"  >
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Style.Triggers>
+                        <!--trgHiddenOnOpacity0 Serve poichè se metto il Setter hidden semplice quando viewState non ricade nelle condizioni dei datatrigger, xaml setta subito visibility a hidden e non viene eseguita
+                        l'effetto opacity a 0 poichè l'elemento va a hidden subito-->
+                        <StaticResource ResourceKey="trgHiddenOnOpacity0"/>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestCalculation}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="stbEnterAction2" />
+                                <BeginStoryboard x:Name="stbEnterAction1" Storyboard="{StaticResource stbSetOpacity80}"/>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestResultShowing}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard x:Name="stbEnterAction2" Storyboard="{StaticResource stbSetOpacity0}" />
+                                <StopStoryboard BeginStoryboardName="stbEnterAction1" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+        <mainCtrl:ProgressBarRing Panel.ZIndex="30" PercVisibility="Hidden" Width="80" >
+            <mainCtrl:ProgressBarRing.Style>
+                <Style TargetType="mainCtrl:ProgressBarRing">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Style.Triggers>
+                        <StaticResource ResourceKey="trgHiddenOnOpacity0"/>
+                        <DataTrigger Binding="{Binding DataContext.ViewState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Static local:ViewStates.InTestCalculation}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSetOpacity100}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSetOpacity0}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </mainCtrl:ProgressBarRing.Style>
+        </mainCtrl:ProgressBarRing>
+        <Grid x:Name="grdTestResult" Panel.ZIndex="40" HorizontalAlignment="Right" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Width" Value="0"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestResultShowing}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard >
+                                    <BeginStoryboard.Storyboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Width" To="250" Duration="0:0:0.8" >
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard.Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard >
+                                    <BeginStoryboard.Storyboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Width" To="0" Duration="0:0:0.8" >
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard.Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="25" />
+            </Grid.ColumnDefinitions>
+            <mainCtrl:ButtonM x:Name="btnCloseTest" Grid.Column="1" HorizontalAlignment="Stretch" Content="&#xE970;" FontFamily="Segoe MDL2 Assets" Click="btnCloseTest_Click" />
+            <ScrollViewer >
+                <Border BorderThickness="1" BorderBrush="{StaticResource clrGenericBorder}" >
+                    <TextBlock Background="White" Text="{Binding TestResult, Mode=OneWay}" Padding="10,2,2,2" />
+                </Border>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+
+</UserControl>

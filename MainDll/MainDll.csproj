@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E18B63D-A3BB-434D-BB38-4FA14AD1D673}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Main</RootNamespace>
+    <AssemblyName>MainDll</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MahApps.Metro">
+      <HintPath>dll\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Risorse\dll\Scelte\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SevenZipSharp">
+      <HintPath>dll\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Anags\Tabella.cs" />
+    <Compile Include="Anim.cs" />
+    <Compile Include="Apps\App.cs" />
+    <Compile Include="Apps\AppConfigFile.cs" />
+    <Compile Include="Apps\SharedCodeWithApp.cs" />
+    <Compile Include="Binds\BindList.cs" />
+    <Compile Include="Binds\BindListEventArgs.cs" />
+    <Compile Include="Binds\Converters\CheckIfSameObjs.cs" />
+    <Compile Include="Binds\Converters\CreateVmFromM.cs" />
+    <Compile Include="Binds\Converters\IsNull.cs" />
+    <Compile Include="Binds\Converters\CompareTwoTypes.cs" />
+    <Compile Include="Binds\Converters\ObjTypeIs.cs" />
+    <Compile Include="Binds\Converters\ObjIsNotValuedWith.cs" />
+    <Compile Include="Binds\NameOfTypeIs.cs" />
+    <Compile Include="Configs\ConfigFileExtension.cs" />
+    <Compile Include="Controls\ButtonM.xaml.cs">
+      <DependentUpon>ButtonM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DtgComboBoxClm.cs" />
+    <Compile Include="Controls\ComboBoxM.cs" />
+    <Compile Include="Controls\DtgTextClm.cs" />
+    <Compile Include="Controls\Format.cs" />
+    <Compile Include="Controls\GroupBoxCheck.cs" />
+    <Compile Include="Controls\MenuButton.xaml.cs">
+      <DependentUpon>MenuButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Old\ToggleButtonOld2.xaml.cs">
+      <DependentUpon>ToggleButtonOld2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressBarFlat.xaml.cs">
+      <DependentUpon>ProgressBarFlat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressBarRing.xaml.cs">
+      <DependentUpon>ProgressBarRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBlockM.xaml.cs">
+      <DependentUpon>TextBlockM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToggleButton.xaml.cs">
+      <DependentUpon>ToggleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DotNetClassExtension\Binding.cs" />
+    <Compile Include="DotNetClassExtension\String.cs" />
+    <Compile Include="FSes\PathFilter\RegexPathFilter\RegexPathFilterVM.cs" />
+    <Compile Include="FSes\PathFilter\StringMatchPathFilter\SrcStringMatchPathFilterV.xaml.cs">
+      <DependentUpon>SrcStringMatchPathFilterV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FSes\PathFilter\StringMatchPathFilter\StringMatchPathFilterVM.cs" />
+    <Compile Include="FSes\ViewStates.cs" />
+    <Compile Include="MsgBxes\MsgBxButton.cs" />
+    <Compile Include="MsgBxes\WndCustomMsgBx\WndCustomMsgBxV.xaml.cs">
+      <DependentUpon>WndCustomMsgBxV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MsgBxes\WndCustomMsgBx\WndCustomMsgBxVM.cs" />
+    <Compile Include="MsgBxes\WndMsgBx\WndMsgBxVM.cs" />
+    <Compile Include="MsgBxes\WndMsgBx\WndMsgBxV.xaml.cs">
+      <DependentUpon>WndMsgBxV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Salvable\ISavable.cs" />
+    <Compile Include="Salvable\ISavableExtension.cs" />
+    <Compile Include="Schedulers\Scheduler\SchedulerVM.cs" />
+    <Compile Include="Schedulers\Scheduler\SrcSchedulerV.xaml.cs">
+      <DependentUpon>SrcSchedulerV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Schedulers\ViewStates.cs" />
+    <Compile Include="Schedulers\WeekDays.cs" />
+    <Compile Include="Schedulers\WeekDaysFilterConv.cs" />
+    <Compile Include="Schedulers\YearDays.cs" />
+    <Compile Include="Schedulers\YearWeeks.cs" />
+    <Compile Include="Serializes\SerializerType.cs" />
+    <Compile Include="Validations\ValidationOfObject.cs" />
+    <Compile Include="Validations\ValidationOfSortableObject.cs" />
+    <Compile Include="Validations\ValidationOfDataGridRow.cs" />
+    <Compile Include="Validations\ValidationOfDataGridRowOfSortableObj.cs" />
+    <Compile Include="Binds\Converters\BooleanToVisible.cs" />
+    <Compile Include="Binds\Converters\ObjTypeNameIs.cs" />
+    <Compile Include="Binds\Converters\Converters.cs" />
+    <Compile Include="Binds\Converters\EnumToStringa.cs" />
+    <Compile Include="Binds\Converters\InvertiBoolean.cs" />
+    <Compile Include="Binds\Converters\NullToCollapsed.cs" />
+    <Compile Include="Binds\Converters\ParamEnumToStringa.cs" />
+    <Compile Include="Binds\EnumBindExtension.cs" />
+    <Compile Include="Binds\ISortBindObj.cs" />
+    <Compile Include="Binds\SincroValidazioneRiordino.cs" />
+    <Compile Include="Binds\SortBindList.cs" />
+    <Compile Include="Configs\SaveLocation.cs" />
+    <Compile Include="Cryptoes\Crypto.cs" />
+    <Compile Include="Cryptoes\DES.cs" />
+    <Compile Include="DataOre\WeekDay.cs" />
+    <Compile Include="DBTabs\GruppiUtente.cs" />
+    <Compile Include="DBTabs\ImpostApp.cs" />
+    <Compile Include="DBTabs\Utenti.cs" />
+    <Compile Include="DBTabs\UtentiGruppi.cs" />
+    <Compile Include="DBs\Colonna.cs" />
+    <Compile Include="DBs\DBUtil.cs" />
+    <Compile Include="DBs\DBBase.cs" />
+    <Compile Include="DBs\ForeignKey.cs" />
+    <Compile Include="DBs\StrConn.cs" />
+    <Compile Include="DBs\TabBase.cs" />
+    <Compile Include="DBs\TipiColonna.cs" />
+    <Compile Include="dll\dll.cs" />
+    <Compile Include="Excep.cs" />
+    <Compile Include="DotNetClassExtension\Object.cs" />
+    <Compile Include="FSes\FileSelector\FilesSelectorVM.cs" />
+    <Compile Include="FSes\PathFilter\PathFilterBase.cs" />
+    <Compile Include="FSes\FileSelector\SrcFilesSelectorV.xaml.cs">
+      <DependentUpon>SrcFilesSelectorV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FSes\PathFilter\RegexPathFilter\RegexPathFilterM.cs" />
+    <Compile Include="FSes\CheckExistenceOf.cs" />
+    <Compile Include="FSes\DirectoryDepth.cs" />
+    <Compile Include="FSes\PathFilter\RegexPathFilter\SrcRegexPathFilter.xaml.cs">
+      <DependentUpon>SrcRegexPathFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FSes\PathFilter\StringMatchPathFilter\StringMatchPathFilterM.cs" />
+    <Compile Include="FSes\PathFilter\StringMatchType.cs" />
+    <Compile Include="FSes\PathScope.cs" />
+    <Compile Include="FSes\FileSelector\FilesSelectorM.cs" />
+    <Compile Include="FSes\InitialSelection.cs" />
+    <Compile Include="FSes\PathFilter\PathWithFilters.cs" />
+    <Compile Include="Logs\ConfigLog.cs" />
+    <Compile Include="Logs\ConfigMess.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\Mess.cs" />
+    <Compile Include="Logs\Tipi.cs" />
+    <Compile Include="Logs\TipiUscMessaggi.cs" />
+    <Compile Include="Logs\UscMessaggi.cs" />
+    <Compile Include="Logs\WndMessaggi.cs" />
+    <Compile Include="MsgBxes\MsgBxM.cs" />
+    <Compile Include="MsgBxes\MsgBxButtonSet.cs" />
+    <Compile Include="MsgBxes\MsgBxPicture.cs" />
+    <Compile Include="Ordinamenti.cs" />
+    <Compile Include="Regexes\Regex.cs" />
+    <Compile Include="Root.cs" />
+    <Compile Include="SelectionBehavior.cs" />
+    <Compile Include="Serializes\Serialize.cs" />
+    <Compile Include="Concur.cs" />
+    <Compile Include="Configs\ConfigBase.cs" />
+    <Compile Include="Configs\ConfigurazioneSuFile.cs" />
+    <Compile Include="Configs\ConfigFile.cs" />
+    <Compile Include="Controls\Old\ButtonMOld.cs" />
+    <Compile Include="Controls\Old\MenuButtonOld.cs" />
+    <Compile Include="Controls\Old\ToggleButtonOld.cs" />
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\DataGridM.cs" />
+    <Compile Include="Controls\Old\MessageDialogMOld.cs" />
+    <Compile Include="Controls\ProgressBarBase.cs" />
+    <Compile Include="Controls\Old\ProgressBarFlatOld.cs" />
+    <Compile Include="Controls\Old\ProgressBarRingOld.cs" />
+    <Compile Include="Controls\StackPanelM.cs" />
+    <Compile Include="Controls\Old\TextBlockMOld.cs" />
+    <Compile Include="Controls\TextBoxM.cs" />
+    <Compile Include="DataOre\DataOra.cs" />
+    <Compile Include="DataOre\HourlyPeriods.cs" />
+    <Compile Include="DataOre\Orario.cs" />
+    <Compile Include="FSes\FS.cs" />
+    <Compile Include="Num.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Schedulers\MonthsAndDays.cs" />
+    <Compile Include="Schedulers\Periodicity.cs" />
+    <Compile Include="Schedulers\Scheduler\SchedulerM.cs" />
+    <Compile Include="Schedulers\OnOffSeries.cs" />
+    <Compile Include="Sqles\CommitRoll.cs" />
+    <Compile Include="Sqles\ConfigSql.cs" />
+    <Compile Include="Sqles\NuovaConn.cs" />
+    <Compile Include="Sqles\QryOut.cs" />
+    <Compile Include="Sqles\Sql.cs" />
+    <Compile Include="Sqles\SqlObj.cs" />
+    <Compile Include="Str.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="Thrs\Thr.cs" />
+    <Compile Include="Thrs\ParallelThr.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Validations\IValidation.cs" />
+    <Compile Include="Validations\Validation.cs" />
+    <Compile Include="Windows\test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WndAppConfigFile.xaml.cs">
+      <DependentUpon>WndAppConfigFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wnds\Base.cs" />
+    <Compile Include="Www\ConfigBase.cs" />
+    <Compile Include="Www\ConfigDownload.cs" />
+    <Compile Include="Www\ConfigUpload.cs" />
+    <Compile Include="Www\DownLoad.cs" />
+    <Compile Include="Www\DownLoadOld.cs" />
+    <Compile Include="Www\ElementoBase.cs" />
+    <Compile Include="Www\DownloadItem.cs" />
+    <Compile Include="Www\UploadItem.cs" />
+    <Compile Include="Www\OperazioneBase.cs" />
+    <Compile Include="Www\UpLoad.cs" />
+    <Compile Include="Www\Www.cs" />
+    <Compile Include="Zips\CompressionLevel.cs" />
+    <Compile Include="Zips\Zip.cs" />
+    <Compile Include="Zips\TipiArchivio.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KeyRootIcon.ico" />
+    <EmbeddedResource Include="dll\7z-x64.dll" />
+    <EmbeddedResource Include="dll\7z.dll" />
+    <EmbeddedResource Include="dll\MahApps.Metro.dll" />
+    <EmbeddedResource Include="dll\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="dll\SevenZipSharp.dll" />
+    <Content Include="dll\System.Windows.Interactivity.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="BindingRes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ButtonM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Old\StiliOld.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Old\ToggleButtonOld2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProgressBarFlat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProgressBarRing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TextBlockM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FSes\FileSelector\SrcFilesSelectorV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FSes\PathFilter\RegexPathFilter\SrcRegexPathFilter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FSes\PathFilter\StringMatchPathFilter\SrcStringMatchPathFilterV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MsgBxes\WndCustomMsgBx\WndCustomMsgBxV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MsgBxes\WndMsgBx\WndMsgBxV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Schedulers\Scheduler\SrcSchedulerV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIRes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WndAppConfigFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,30 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Main"
+    xmlns:mainBinds="clr-namespace:Main.Binds"
+    xmlns:sys.win="clr-namespace:System.Windows;assembly=PresentationCore">
+
+    <sys.win:Visibility x:Key="Visibility.Visible">0</sys.win:Visibility>
+    <sys.win:Visibility x:Key="Visibility.Hidden">1</sys.win:Visibility>
+    <sys.win:Visibility x:Key="Visibility.Collapsed">2</sys.win:Visibility>
+    <!--ATTENZIONE i parametri per il convertitore, nello xaml vanno scritti a mano poichè concatenare più stringhe tra di loro comporta la scrittura di più righe,...
+    ...quindi qui saranno definiti solo i convertitori e non i possibili parametri che dovranno essere scitti a mano nello xaml, tipo possibile parametro: <sys:String x:Key="cnvParTipoLog">TipoLog</sys:String>  -->
+
+    <!--#region Binding Converter -->
+
+    <mainBinds:InvertiBoolean x:Key="cnvInvertiBoolean" />
+    <mainBinds:BooleanToVisible x:Key="cnvBooleanToVisible" />
+    <mainBinds:NullToCollapsed x:Key="cnvNullToCollapsed" />
+    <mainBinds:ObjTypeIs x:Key="cnvObjTypeIs" />
+    <!--<mainBinds:ObjTypeNameIs x:Key="cnvObjTypeNameIs" />-->
+    <mainBinds:ObjIsNotValuedWith x:Key="cnvObjIsNotValuedWith" />
+    <mainBinds:CheckIfSameObjs x:Key="cnvCheckIfSameObjs" />
+    <mainBinds:CompareTwoTypes x:Key="cnvCompareTwoTypes" />
+    <mainBinds:IsNull x:Key="cnvIsNull"/>
+    <mainBinds:CreateVmFromM x:Key="cnvCreateVmFromM" />
+
+    <!--#endregion-->
+
+    <!--<local:EnumToStringaFormattata x:Key="cnvEnumToStringaFormattata" />-->
+</ResourceDictionary>

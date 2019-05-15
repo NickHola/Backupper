@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="Main.FSes.SrcFilesSelectorV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Main.FSes"
+             xmlns:main="clr-namespace:Main"
+             xmlns:mainBinds="clr-namespace:Main.Binds"
+             xmlns:mainCtrl="clr-namespace:Main.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="400" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../UIRes.xaml" />
+                <ResourceDictionary Source="../../BindingRes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="dttStringMatchPathFilter">
+                <local:SrcStringMatchPathFilterV DataContext="{Binding SelectedPath.StringMatchFilters, Converter={StaticResource cnvCreateVmFromM}, ConverterParameter={x:Type local:StringMatchPathFilterVM}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="dttRegexPathFilter">
+                <local:SrcRegexPathFilter DataContext="{Binding SelectedPath.RegexFilters, Converter={StaticResource cnvCreateVmFromM}, ConverterParameter={x:Type local:RegexPathFilterVM}}" />
+            </DataTemplate>
+
+            <Style x:Key="stlPathFilter" TargetType="ContentPresenter">
+                <Setter Property="ContentTemplate" Value="{StaticResource dttVoid}"/>
+                <!--<Setter Property="Visibility" Value="Collapsed" />-->
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=FilesSelectorM.FilterType, Mode=OneWay, Converter={StaticResource cnvCompareTwoTypes}, ConverterParameter={x:Type local:StringMatchPathFilterM}}" Value="True">
+                        <Setter Property="ContentTemplate" Value="{StaticResource dttStringMatchPathFilter}"/>
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=FilesSelectorM.FilterType, Mode=OneWay, Converter={StaticResource cnvCompareTwoTypes}, ConverterParameter={x:Type local:RegexPathFilterM}}" Value="True">
+                        <Setter Property="ContentTemplate" Value="{StaticResource dttRegexPathFilter}"/>
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+
+    <Grid x:Name="grdMain" >
+
+        <Grid x:Name="grdFilesSelector" Panel.ZIndex="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="grdFolders">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <mainCtrl:DataGridM x:Name="dtgPaths" ItemsSource="{Binding Path=FilesSelectorM.PathsWithFilters, Mode=TwoWay}" Margin="3" SelectionMode="Single" AutoGenerateColumns="False" MostraEliminaRiga="true" 
+                    SelectedItem="{Binding SelectedPath, Mode=OneWayToSource}" MouseDoubleClick="DtgPaths_MouseDoubleClick" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="txtPath" Header="Path" Binding="{Binding Path=Path, Mode=TwoWay}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="IsReadOnly" Value="true" />
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <!--<DataGridTextColumn.Binding>-->
+                        <!--<Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >-->
+                        <!-- TODO UpdateSourceTrigger="PropertyChanged" verificare che serva -->
+                        <!--<Binding.ValidationRules>
+                                    <mainValidations:ValidationOfObject ValidationStep="CommittedValue"/>
+                                </Binding.ValidationRules>-->
+                        <!--</Binding>
+                        </DataGridTextColumn.Binding>-->
+                        <!--<DataGridTemplateColumn x:Name="tmpSelectFolderOrFile" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnSelectFolderOrFile" Content=".." Click="BtnSelectFolderOrFile_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                        <DataGridComboBoxColumn x:Name="txtDepth" Header="Depth" ItemsSource="{Binding Source={mainBinds:EnumBind local:DirectoryDepth}}" SelectedItemBinding="{Binding Depth, Mode=TwoWay}"  >
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsFilePath, Mode=OneWay}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <DataGridComboBoxColumn x:Name="txtInitialSelection" Header="Initial selection" ItemsSource="{Binding Source={mainBinds:EnumBind local:InitialSelection}}" SelectedItemBinding="{Binding InitialSelection, Mode=TwoWay}" >
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsFilePath, Mode=OneWay}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                    </DataGrid.Columns>
+                </mainCtrl:DataGridM>
+
+                <mainCtrl:StackPanelM Grid.Row="1" Orientation="Horizontal" Margin="2,0,2,2" ChildMargin="2,0,2,0" >
+                    <mainCtrl:ButtonM x:Name="btnTestPaths" Content="Test paths" Click="btnTestPaths_Click" />
+                    <mainCtrl:ButtonM x:Name="btnTestPath" Content="Test path" Click="btnTestPath_Click">
+                        <mainCtrl:ButtonM.Style >
+                            <Style TargetType="mainCtrl:ButtonM">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=SelectedPath, Converter={StaticResource cnvIsNull}}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </mainCtrl:ButtonM.Style>
+                    </mainCtrl:ButtonM>
+                    <!--<mainCtrl:ButtonM x:Name="btnTestPathNoRegex" Content="Test path no regex" Click="btnTestPathNoRegex_Click"/>-->
+                </mainCtrl:StackPanelM>
+            </Grid>
+
+            <!--<TextBlock Text="fwefwef" Grid.Column="1" />-->
+            <ContentPresenter Grid.Column="1" Content="{Binding}"  >
+                <ContentPresenter.Style>
+                    <Style TargetType="ContentPresenter" BasedOn="{StaticResource stlPathFilter}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectedPath.IsFilePath, Mode=OneWay}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentPresenter.Style>
+            </ContentPresenter>
+        </Grid>
+
+        <Rectangle x:Name="rctLayer2" Fill="White" Panel.ZIndex="20"  >
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Style.Triggers>
+                        <!--trgHiddenOnOpacity0 Serve poichè se metto il Setter hidden semplice quando viewState non ricade nelle condizioni dei datatrigger, xaml setta subito visibility a hidden e non viene eseguita
+                        l'effetto opacity a 0 poichè l'elemento va a hidden subito-->
+                        <StaticResource ResourceKey="trgHiddenOnOpacity0"/>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestCalculation}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="stbEnterAction2" />
+                                <BeginStoryboard x:Name="stbEnterAction1" Storyboard="{StaticResource stbSetOpacity80}"/>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestResultShowing}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard x:Name="stbEnterAction2" Storyboard="{StaticResource stbSetOpacity0}" />
+                                <StopStoryboard BeginStoryboardName="stbEnterAction1" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+        
+        <mainCtrl:ProgressBarRing Panel.ZIndex="30" PercVisibility="Hidden" Width="80" >
+            <mainCtrl:ProgressBarRing.Style>
+                <Style TargetType="mainCtrl:ProgressBarRing">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Style.Triggers>
+                        <StaticResource ResourceKey="trgHiddenOnOpacity0"/>
+                        <DataTrigger Binding="{Binding DataContext.ViewState, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Static local:ViewStates.InTestCalculation}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSetOpacity100}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSetOpacity0}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </mainCtrl:ProgressBarRing.Style>
+        </mainCtrl:ProgressBarRing>
+        
+        <Grid x:Name="grdTestResult" Panel.ZIndex="40" HorizontalAlignment="Right" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ViewState}" Value="{x:Static local:ViewStates.InTestResultShowing}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSoftOpenInHorizontal}" />
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbSoftCloseInHorizontal}" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="25" />
+            </Grid.ColumnDefinitions>
+            <mainCtrl:ButtonM x:Name="btnCloseTest" Grid.Column="1" HorizontalAlignment="Stretch" Content="&#xE970;" FontFamily="Segoe MDL2 Assets" Click="btnCloseTest_Click" />
+            <ScrollViewer >
+                <Border BorderThickness="1" BorderBrush="{StaticResource clrGenericBorder}" >
+                    <TextBlock Background="White" Text="{Binding TestResult, Mode=OneWay}" Padding="10,2,2,2" />
+                </Border>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    
+</UserControl>

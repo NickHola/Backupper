@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Main.FSes.SrcRegexPathFilter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Main.FSes"
+             xmlns:main="clr-namespace:Main"
+             xmlns:mainBinds="clr-namespace:Main.Binds"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:mainCtrl="clr-namespace:Main.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="800" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../UIRes.xaml" />
+                <ResourceDictionary Source="../../../BindingRes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <!--Visibility="{Binding Path=cartellaCriteriSelez, Mode=OneWay, Converter={StaticResource cnvNullToCollapsed}}"-->
+    <Grid x:Name="grdCriteri" Grid.Column="1">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <mainCtrl:DataGridM x:Name="dtgCriteri" ItemsSource="{Binding Path=cartellaCriteriSelez.listaCriteri}" Margin="3" SelectionMode="Single" AutoGenerateColumns="False" MostraEliminaRiga="true" >
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="txtNum" Header="N°" Binding="{Binding indiceOrd}" />
+                <DataGridComboBoxColumn x:Name="txtSelectionBehavior" Header="Behavior" ItemsSource="{Binding Source={mainBinds:EnumBind main:SelectionBehavior}}" SelectedItemBinding="{Binding tipoRegex, Mode=TwoWay}" />
+                <DataGridTextColumn x:Name="txtRegex" Header="Regex" Binding="{Binding regex, Mode=TwoWay}" />
+                <DataGridComboBoxColumn x:Name="txtPathScope" Header="Path scope" ItemsSource="{Binding Source={mainBinds:EnumBind local:PathScope}}" SelectedItemBinding="{Binding tipoAnalisi, Mode=TwoWay}" />
+            </DataGrid.Columns>
+        </mainCtrl:DataGridM>
+
+        <mainCtrl:StackPanelM Grid.Row="1" Orientation="Horizontal" Margin="2,0,2,2" ChildMargin="1,0,1,0" >
+            <mainCtrl:ButtonM x:Name="btnTestRegex" Content="Test regex" Click="btnTestRegex_Click" />
+        </mainCtrl:StackPanelM>
+    </Grid>
+
+</UserControl>

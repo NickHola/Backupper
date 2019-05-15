@@ -1,0 +1,131 @@
+﻿<Button x:Class="Main.Controls.ButtonM"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Main.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="100" 
+             x:Name="btnMain"  >
+
+    <Button.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../UIRes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--<Style TargetType="Button" x:Key="stlDefault">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="{StaticResource clrGenericBorder}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True" >
+                        <Setter Property="Cursor" Value="Hand" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False" >
+                        <Setter Property="Foreground" Value="{Binding DisabledForegroundColor, RelativeSource={RelativeSource Mode=Self}}" />
+
+                        --><!--<Setter Property="Background" Value="#F9F9F9" />--><!--
+
+                    </Trigger>
+                </Style.Triggers>
+            </Style>-->
+
+            <Style TargetType="Button" x:Key="stlDefault">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="{StaticResource clrGenericBorder}" />
+                <Setter Property="BorderThickness" Value="1" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="MainContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True" >
+                        <Setter Property="Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <Setter Property="Cursor" Value="Hand" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="{Binding DisabledBackground, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <Setter Property="BorderBrush" Value="{Binding DisabledBorderBrush, RelativeSource={RelativeSource Mode=Self}}" />
+                        <Setter Property="Foreground" Value="{Binding DisabledForegroundColor, RelativeSource={RelativeSource Mode=Self}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+
+
+        </ResourceDictionary>
+    </Button.Resources>
+
+    <!--<Button.Template>
+        <ControlTemplate>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver}" Value="True" >
+                    <Setter Property="Cursor" Value="Hand" />
+                </DataTrigger>
+                <Trigger Property="IsEnabled" Value="False" >
+                    <Setter Property="Foreground" Value="{Binding DisabledForegroundColor}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Button.Template>-->
+
+
+    <!--<Button.ContentTemplate>
+        <DataTemplate DataType="{x:Type Button}">
+
+            <DataTemplate.Triggers>
+
+
+
+
+
+                <DataTrigger Binding="{Binding Path=.}">
+                    <DataTrigger.Value>
+                        <local:ButtonM>IsEnabled</local:ButtonM>
+                    </DataTrigger.Value>
+                    <Setter TargetName="uscMain" Property="Foreground" Value="Yellow"/>
+                </DataTrigger>
+
+
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Button.ContentTemplate>-->
+
+    <!--<Button.ContentTemplate>
+        <DataTemplate >
+    
+
+        </DataTemplate>
+    </Button.ContentTemplate>-->
+
+    <!--<Button.Style>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{Binding DisabledForegroundColor, RelativeSource={RelativeSource Mode=Self}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Button.Style>-->
+    <!--<UserControl.ContentTemplate>
+        <DataTemplate>
+            
+        </DataTemplate>
+    </UserControl.ContentTemplate>-->
+</Button>

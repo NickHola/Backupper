@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="Main.Controls.Old.ToggleButtonOld2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Main.Controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" MouseLeftButtonUp="ToggleButton_MouseLeftButtonUp">
+    
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="../../UIRes.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                    <sys:Double x:Key="dimensioniStelo">75</sys:Double>
+                </ResourceDictionary>
+            </Style.Resources>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+
+            <Setter Property="Foreground" Value="#515151"/>
+            
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate x:Name="cttMain" TargetType="UserControl">
+                        <!--I controlli sono dentro un Viewbox, quindi tutti i Width e Height danno solamente la proporzione e non l'effettiva grandezza in pixel...
+                        ...del controllo, che invece si adatta alla dimensioni del controllo che userà questo stile-->
+                        <Grid x:Name="grdMain" >
+                            <Grid.ColumnDefinitions>
+                                <!---->
+                            <ColumnDefinition x:Name="grdMainCln0" Width="22"/>
+                            <ColumnDefinition x:Name="grdMainCln1" Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox x:Name="vwbToggle" Stretch="Uniform" Width="20" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid x:Name="grdToggle" Width="190" Height="120" Margin="0,16,0,0">
+                                <Ellipse x:Name="llpSinistra" Width="{StaticResource dimensioniStelo}" Height="{StaticResource dimensioniStelo}" Margin="-84,-4,0,0" StrokeThickness="2" 
+                                             Fill="{Binding ColoreStelo, RelativeSource={RelativeSource TemplatedParent}}" Stroke="{Binding ColoreBordo, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                                <Ellipse x:Name="llpDestra" Width="{StaticResource dimensioniStelo}" Height="{StaticResource dimensioniStelo}" Margin="84,-4,0,0" StrokeThickness="2" 
+                                             Fill="{Binding ColoreStelo, RelativeSource={RelativeSource TemplatedParent}}" Stroke="{Binding ColoreBordo, RelativeSource={RelativeSource TemplatedParent}}" />
+                                <!--Ho usato questi 3 elementi al posto del Border commentato sotto poichè c'è una sbavatura grafica nello stelo che renderizza-->
+                                <Grid Width="85" Height="{StaticResource dimensioniStelo}" Margin="0,-4,0,0">
+                                    <Border VerticalAlignment="Top" Height="2" Background="{Binding ColoreBordo, RelativeSource={RelativeSource TemplatedParent}}" Panel.ZIndex="1" />
+                                    <Border Background="{Binding ColoreStelo, RelativeSource={RelativeSource TemplatedParent}}" Panel.ZIndex="0" />
+                                    <Border VerticalAlignment="Bottom" Height="2" Background="{Binding ColoreBordo, RelativeSource={RelativeSource TemplatedParent}}" Panel.ZIndex="1"/>
+                                </Grid>
+
+                                <Border x:Name="borderMiddlePart" Width="85" Height="{StaticResource dimensioniStelo}" Margin="0,-4,0,0" BorderThickness="0,2,0,2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" />
+                                <Ellipse x:Name="llpToggle" Width="100" Height="100" Margin="-75,3,0,10" StrokeThickness="1.5" 
+                                             Fill="{Binding ColoreToggle, RelativeSource={RelativeSource TemplatedParent}}" Stroke="{Binding ColoreBordo, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform X="0" Y="0" />
+                                    </Ellipse.RenderTransform>
+                                    <Ellipse.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.7" ShadowDepth="5" Direction="270" Color="#BBBBBB"/>
+                                    </Ellipse.BitmapEffect>
+                                </Ellipse>
+                        </Grid>
+                        </Viewbox>
+                        <!--Ho usato Text="{Binding Text...} poichè TemplateBinding con le custom DependenciesProperty non funziona"-->
+                        <TextBlock x:Name="txbMain" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="{TemplateBinding FontSize}" 
+                                   FontFamily="{TemplateBinding FontFamily}" TextWrapping="Wrap" Foreground="{TemplateBinding Foreground}" >
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding TextOff, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                            <Setter Property="Text" Value="{Binding TextOn, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="llpToggle">
+                                                <SplineDoubleKeyFrame KeyTime="0:0:0.35" Value="75" KeySpline="{StaticResource KeySplineMain}"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="llpToggle">
+                                                <SplineDoubleKeyFrame KeyTime="0:0:0.45" Value="0" KeySpline="{StaticResource KeySplineMain}"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PrimaTesto, RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter TargetName="txbMain" Property="Grid.Column" Value="0" />
+                                <Setter TargetName="txbMain" Property="Margin" Value="0,0,5,0" />
+                                <Setter TargetName="vwbToggle" Property="Grid.Column" Value="1" />
+                                <Setter TargetName="grdMainCln0" Property="Width" Value="auto" />
+                                <Setter TargetName="grdMainCln1" Property="Width" Value="24" />
+                            </DataTrigger>
+                            <!-- Animazione dei colori presenti nel code behind-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Style>
+</UserControl>
