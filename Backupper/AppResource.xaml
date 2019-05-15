@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Backupper"
+                    xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll" >
+
+    <SolidColorBrush x:Key="clrDefaultGray">#FF7F7F7F</SolidColorBrush>
+    <!--<SolidColorBrush x:Key="clrHighLightsItem">#FFB2E2FF</SolidColorBrush>-->
+    <SolidColorBrush x:Key="clrHighLightsItem">#FF8CD4FF</SolidColorBrush>
+    
+</ResourceDictionary>

@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Backupper.SrcSimpleBackupV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Backupper"
+             xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="200" MaxWidth="180">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../AppResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <Trigger  Property="IsMouseDirectlyOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <Border  BorderThickness="1" BorderBrush="{StaticResource clrBorderColor}" Background="{StaticResource clrBackgroundColor}" Padding="4,4,4,0" >
+
+        <!--<Grid x:Name="grdMain">-->
+        <mainCtrl:StackPanelM x:Name="stpMain" Orientation="Vertical" Margin="0" >
+            <local:SrcBackupBaseHeader Margin="0,0,0,3" HorizontalAlignment="Stretch" />
+
+            <mainCtrl:StackPanelM x:Name="stpCollapsible" Orientation="Vertical" Margin="0,10,0,0"  >
+                <mainCtrl:StackPanelM.Style>
+                    <Style TargetType="mainCtrl:StackPanelM">
+                        <Setter Property="Opacity" Value="0"/>
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleY="0"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewModes.Full}">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource stbSoftOpenInVertical}" />
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource stbSoftCloseInVertical}"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </mainCtrl:StackPanelM.Style>
+                <local:SrcBackupBaseFooter Margin="3,0,0,3" HorizontalAlignment="Stretch" />
+            </mainCtrl:StackPanelM>
+            <local:SrcBackupBaseSwitchViewMode HorizontalAlignment="Stretch" Margin="-4,3,-4,0" />
+        </mainCtrl:StackPanelM>
+        <!--</Grid>-->
+    </Border>
+</UserControl>

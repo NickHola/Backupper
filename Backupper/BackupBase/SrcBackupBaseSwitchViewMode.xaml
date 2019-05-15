@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Backupper.SrcBackupBaseSwitchViewMode"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Backupper"
+             xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll"
+             mc:Ignorable="d" 
+             d:DesignWidth="100">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../AppResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="auto" />-->
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <!--<Rectangle x:Name="rctSwitchSeparator" Height="1" Fill="{StaticResource clrDefaultGray}" VerticalAlignment="top" />-->
+        <mainCtrl:ButtonM x:Name="btnSwitchViewMode" Height="12" Width="14" HorizontalContentAlignment="left" VerticalContentAlignment="Top" Padding="0" FontSize="14" 
+                          FontFamily="Segoe MDL2 Assets" BorderThickness="0" Click="BtnSwitchViewMode_Click" MouseOverBackground="Transparent" >
+            <mainCtrl:ButtonM.Style>
+                <Style TargetType="mainCtrl:ButtonM" >
+                    <Setter Property="Content" Value="&#xE96E;"/>
+                    <Setter Property="Foreground" Value="{StaticResource clrDefaultGray}"/>
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <RotateTransform Angle="0"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource clrHighLightsItem}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewModes.Full}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbEnterRotate180}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource stbExitRotate180}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </mainCtrl:ButtonM.Style>
+        </mainCtrl:ButtonM>
+    </Grid>
+</UserControl>

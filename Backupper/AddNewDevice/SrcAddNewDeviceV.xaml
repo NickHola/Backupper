@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="Backupper.SrcAddNewDeviceV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Backupper"
+             xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll"
+             mc:Ignorable="d" 
+             d:DesignHeight="106" d:DesignWidth="110">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../AppResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border  BorderThickness="1" BorderBrush="{StaticResource clrBorderColor}" Background="{StaticResource clrBackgroundColor}" Padding="2" >
+        <Grid>
+
+            <TextBlock x:Name="txbAddNew" Padding="0,3,0,5" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonUp="TxbAddNew_MouseLeftButtonUp"
+                   FontFamily="Segoe UI Symbol" Text="&#xE0C5;" Cursor="Hand">
+                <!--<Run />-->
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Setter Property="LayoutTransform" >
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="LightBlue" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelectionNewDevice}" Value="true">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                            <EventTrigger RoutedEvent="MouseEnter" >
+                                <BeginStoryboard Storyboard="{StaticResource stbZoom1_2x}" />
+                                <BeginStoryboard>
+                                    <Storyboard  >
+                                        <ColorAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.Foreground).Color" To="LightGreen" >
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave" >
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard Storyboard="{StaticResource stbZoom1x}" />
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Control.Foreground).Color" To="LightBlue" >
+                                                <ColorAnimation.EasingFunction>
+                                                    <CubicEase />
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+
+            <ScrollViewer x:Name="sclVwrSelectNewBackUp" Grid.Column="1" Grid.RowSpan="5" VerticalScrollBarVisibility="Auto" Padding="2,0,2,0" >
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelectionNewDevice}" Value="true" >
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock TextWrapping="Wrap" Text="Select the backup type to create" TextAlignment="Center" Margin="0,0,0,12"/>
+                    <ItemsControl x:Name="itemsControlDevicesSettings" ItemsSource="{Binding Converter={StaticResource cnvGetBackupsTypeUserName}}" Grid.Row="1" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <mainCtrl:ButtonM Content="{Binding Path=.}" Click="BtnBackupsType_Click" Margin="0,2,0,2"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!--<ItemsControl x:Name="itemsControlDevicesSettings" ItemsSource="{Binding Path=BackupTypesName}" Grid.Row="1" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Converter={StaticResource cnvGetBackupsTypeUserName}}" Click="btnBackupsType_Click" Margin="0,2,0,2"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>-->
+                    <mainCtrl:ButtonM x:Name="btnAbortSelection" Content="Cancel" Grid.Row="2" Width="80" Click="BtnAbortSelection_Click" HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                </Grid>
+                <!--<local:UserControlSelectNewDevice x:Name="userControlSelectNewDevice"  />-->
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

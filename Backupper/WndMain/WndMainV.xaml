@@ -1,0 +1,162 @@
+﻿<Window x:Class="Backupper.WndMainV"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Backupper"
+        xmlns:mainMsgBx="clr-namespace:Main.MsgBxes;assembly=MainDll"
+        xmlns:mainWnd="clr-namespace:Main.Wnds;assembly=MainDll"
+        xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll"
+        mc:Ignorable="d"
+        Title="Backupper" d:DesignWidth="150"  DataContext="{Binding RelativeSource={RelativeSource Self}}" Height="500" Closed="Window_Closed">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../AppResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="grdMain">
+        <Grid.LayoutTransform>
+            <!--<ScaleTransform ScaleX="1.3" ScaleY="1.3" />-->
+            <ScaleTransform ScaleX="{Binding Path=WndMainVM.WndMainM.ZoomLevel}" ScaleY="{Binding Path=WndMainVM.WndMainM.ZoomLevel}" />
+        </Grid.LayoutTransform>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="clnMenu" Width="auto" />
+            <ColumnDefinition x:Name="clnContent" Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--I used DockPanel instead StackPanel because in SP the last element can't be stretched to fill the entire final space-->
+        <DockPanel x:Name="stpMenu"  Width="30" Background="#4C4C4C" Panel.ZIndex="1" >
+            <mainCtrl:MenuButton DockPanel.Dock="Top" x:Name="btnBackups" Content="&#xE792;" Click="BtnBackups_Click" ForegroundSelectedColor="{StaticResource clrHighLightsItem}" Selected="True" />
+            <mainCtrl:MenuButton DockPanel.Dock="Top" x:Name="btnSettings" Content="&#xE713;" Click="BtnSettings_Click" ForegroundSelectedColor="{StaticResource clrHighLightsItem}" />
+            <mainCtrl:MenuButton DockPanel.Dock="Top" x:Name="btnZoom" Content="&#xE8A3;" Click="BtnZoom_Click" IndipendentBehavior="True" >
+                <mainCtrl:MenuButton.Style>
+                    <Style TargetType="mainCtrl:MenuButton">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WndMainVM.ShowZoomLevel}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource clrHighLightsItem}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </mainCtrl:MenuButton.Style>
+            </mainCtrl:MenuButton>
+            <mainCtrl:MenuButton DockPanel.Dock="Top" x:Name="btnInfo" Content="&#xE946;" Click="BtnInfo_Click" ForegroundSelectedColor="{StaticResource clrHighLightsItem}" />
+            <Grid x:Name="grdZoomLevel" DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.4*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <mainCtrl:ButtonM x:Name="btnDefaultZoomLevel" Panel.ZIndex="1" Background="Transparent" ToolTip="Imposta lo zoom standard" OverridesDefaultStyle="True" Cursor="Hand" Width="12" 
+                                  Grid.Row="1" Click="BtnDefaultZoomLevel_Click" HorizontalAlignment="left" VerticalAlignment="Top" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Setter Property="Template" >
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Canvas HorizontalAlignment="Left" Height="8" Width="12" Background="Transparent" >
+                                            <Polygon Canvas.Left="1" Points="0,0 8,4, 0,8" Fill="LightGray" Height="8" />
+                                        </Canvas>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=WndMainVM.ShowZoomLevel}" Value="True" >
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </mainCtrl:ButtonM>
+                <Slider Grid.RowSpan="3" x:Name="sliderZoomLevel" Panel.ZIndex="0" Margin="5,0,0,0" Value="{Binding Path=WndMainVM.WndMainM.ZoomLevel, Mode=TwoWay}" 
+                        VerticalAlignment="Stretch" SmallChange="0.01" Minimum="0.8" Maximum="2" Orientation="Vertical" TickPlacement="TopLeft" TickFrequency="0">
+                    <Slider.Style>
+                        <Style TargetType="Slider">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=WndMainVM.ShowZoomLevel}" Value="True" >
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Slider.Style>
+                </Slider>
+            </Grid>
+        </DockPanel>
+
+        <!--I don't use the ContentPresenter because when I change the Content with a different DataTemplate, the DataTemplate content is reloaded each time.--> 
+        <!--<ContentPresenter x:Name="ctpContent" Content="{Binding}" Grid.Column="1"  Panel.ZIndex="1" >
+            <ContentPresenter.Resources>
+                <DataTemplate x:Key="dttSrcBackupsV">
+                    <local:SrcBackupsV DataContext="{Binding WndMainVM.SelectedContent}"/>
+                </DataTemplate>
+                <DataTemplate x:Key="dttSrcSettingsV">
+                    <local:SrcSettingsV DataContext="{Binding WndMainVM.SelectedContent}"/>
+                </DataTemplate>
+                <DataTemplate x:Key="dttSrcInfoV">
+                    <local:SrcInfoV />
+                </DataTemplate>
+            </ContentPresenter.Resources>
+            <ContentPresenter.Style>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="ContentTemplate" Value="{StaticResource dttVoid}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:BackupsVM}}" Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource dttSrcBackupsV}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:SettingsVM}}" Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource dttSrcSettingsV}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:SrcInfoV}}" Value="True">
+                            <Setter Property="ContentTemplate" Value="{StaticResource dttSrcInfoV}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentPresenter.Style>
+        </ContentPresenter>-->
+
+        <local:SrcBackupsV Grid.Column="1" DataContext="{x:Static local:BackupsVM.Instance}" >
+            <local:SrcBackupsV.Style>
+                <Style TargetType="local:SrcBackupsV">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:BackupsVM}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:SrcBackupsV.Style>
+        </local:SrcBackupsV>
+        <local:SrcSettingsV Grid.Column="1" DataContext="{x:Static local:SettingsVM.Instance}" >
+            <local:SrcSettingsV.Style>
+                <Style TargetType="local:SrcSettingsV">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:SettingsVM}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:SrcSettingsV.Style>
+        </local:SrcSettingsV>
+        <local:SrcInfoV Grid.Column="1" DataContext="{x:Static local:InfoVM.Instance}" >
+            <local:SrcInfoV.Style>
+                <Style TargetType="local:SrcInfoV">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding WndMainVM.SelectedContent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Converter={StaticResource cnvObjTypeIs}, ConverterParameter={x:Type local:InfoVM}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:SrcInfoV.Style>
+        </local:SrcInfoV>
+
+    </Grid>
+</Window>

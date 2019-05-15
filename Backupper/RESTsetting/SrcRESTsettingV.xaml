@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Backupper.SrcRESTsettingV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Backupper"
+             xmlns:mainCtrl="clr-namespace:Main.Controls;assembly=MainDll"
+             mc:Ignorable="d" 
+             d:DesignHeight="185" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../AppResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
+                <ResourceDictionary Source="../Settings/SettingsResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+    <Grid x:Name="grdMain">
+        <GroupBox x:Name="gpbMain" Header="RESTful parameter">
+            <mainCtrl:StackPanelM x:Name="stpMain" Orientation="Vertical">
+                <mainCtrl:TextBlockM x:Name="txbRootAddressTitle" Text="Root address:" Style="{StaticResource stlTxbTitle}"  />
+                <mainCtrl:TextBoxM x:Name="txtRootAddressValue" AddStyle="{StaticResource stlTxtErrorTemplate}" 
+                               Text="{Binding Path=RESTsettingM.RootAddress, Mode=TwoWay, ValidatesOnExceptions='True'}" AddStyle2="{StaticResource stlTxtValue}" />
+
+                <mainCtrl:TextBlockM x:Name="txbRoutePrefixTitle" Text="Route prefix:" Style="{StaticResource stlTxbTitle}"  />
+                <mainCtrl:TextBoxM x:Name="txtRoutePrefixValue" AddStyle="{StaticResource stlTxtErrorTemplate}" 
+                               Text="{Binding Path=RESTsettingM.RoutePrefix, Mode=TwoWay, ValidatesOnExceptions='True'}" AddStyle2="{StaticResource stlTxtValue}" />
+
+                <mainCtrl:TextBlockM x:Name="txbRouteOfGetBackupsTitle" Text="Route of get backups:" Style="{StaticResource stlTxbTitle}"  />
+                <mainCtrl:TextBoxM x:Name="txtRouteOfGetBackupsValue" AddStyle="{StaticResource stlTxtErrorTemplate}" 
+                               Text="{Binding Path=RESTsettingM.RouteOfGetBackups, Mode=TwoWay, ValidatesOnExceptions='True'}" AddStyle2="{StaticResource stlTxtValue}" />
+
+                <mainCtrl:TextBlockM x:Name="txbRouteOfPutBackupsTitle" Text="Route of put backups:" Style="{StaticResource stlTxbTitle}"  />
+                <mainCtrl:TextBoxM x:Name="txbRouteOfPutBackupsValue" AddStyle="{StaticResource stlTxtErrorTemplate}" 
+                               Text="{Binding Path=RESTsettingM.RouteOfPutBackups, Mode=TwoWay, ValidatesOnExceptions='True'}" AddStyle2="{StaticResource stlTxtValue}" />
+            </mainCtrl:StackPanelM>
+        </GroupBox>
+    </Grid>
+</UserControl>
