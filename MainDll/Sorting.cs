@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Main
 {
-    public class Ordinamenti {
+    public class Sorting {
         public string nomeProprietà;
         public ListSortDirection direzione; 
 
-        public Ordinamenti(string nomeProprietà, ListSortDirection direzione) {
+        public Sorting(string nomeProprietà, ListSortDirection direzione) {
             this.nomeProprietà = nomeProprietà;
             this.direzione = direzione;
         }

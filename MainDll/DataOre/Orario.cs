@@ -24,7 +24,7 @@ namespace Main.DataOre
             {
                 Validation.CtrlValue(value);
                 if (value <0 || value > 23)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "L'ora deve essere compresa tra 0 e 23", "Ricevuto value non compreso tra 0 e 23, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "L'ora deve essere compresa tra 0 e 23", "Ricevuto value non compreso tra 0 e 23, value:<" + value + ">")));
 
                 time = new DateTime(1,1,1, value, time.Minute, time.Second, time.Millisecond);
                 ImpostaStringaDaProprietà();
@@ -37,7 +37,7 @@ namespace Main.DataOre
             {
                 Validation.CtrlValue(value);
                 if (value < 0 || value > 59)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "I minuti devono essere compresi tra 0 e 59", "Ricevuto value non compreso tra 0 e 59, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "I minuti devono essere compresi tra 0 e 59", "Ricevuto value non compreso tra 0 e 59, value:<" + value + ">")));
 
                 time = new DateTime(1, 1, 1, time.Hour, value, time.Second, time.Millisecond);
                 ImpostaStringaDaProprietà();
@@ -50,7 +50,7 @@ namespace Main.DataOre
             {
                 Validation.CtrlValue(value);
                 if (value < 0 || value > 59)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "I secondi devono essere compresi tra 0 e 59", "Ricevuto value non compreso tra 0 e 59, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "I secondi devono essere compresi tra 0 e 59", "Ricevuto value non compreso tra 0 e 59, value:<" + value + ">")));
 
                 time = new DateTime(1, 1, 1, time.Hour, time.Minute, value, time.Millisecond);
                 ImpostaStringaDaProprietà();
@@ -63,7 +63,7 @@ namespace Main.DataOre
             {
                 Validation.CtrlValue(value);
                 if (value < 0 || value > 999)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "I millisecondi devono essere compresi tra 0 e 999", "Ricevuto value non compreso tra 0 e 999, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "I millisecondi devono essere compresi tra 0 e 999", "Ricevuto value non compreso tra 0 e 999, value:<" + value + ">")));
 
                 time = new DateTime(1, 1, 1, time.Hour, time.Minute, time.Second, value);
                 ImpostaStringaDaProprietà();
@@ -77,7 +77,7 @@ namespace Main.DataOre
             {
                 Validation.CtrlValue(value);
 
-                Mess logMess = new Mess(Tipi._Nothing, Log.main.errUserText);
+                Mess logMess = new Mess(LogType._Nothing, Log.main.errUserText);
                 if (ChkSintassiStringa(value, aggiornaProprietà: true, logMess: logMess) == false)
                 {
                     bool logFound;
@@ -97,10 +97,10 @@ namespace Main.DataOre
         }
         public Orario(string strOrario)
         {
-            Mess logMess = new Mess(Tipi._Nothing, Log.main.errUserText);
+            Mess logMess = new Mess(LogType._Nothing, Log.main.errUserText);
             if (ChkSintassiStringa(strOrario, aggiornaProprietà: true, logMess: logMess) == false)
             {
-                logMess.tipo = Tipi.ERR;
+                logMess.tipo = LogType.ERR;
                 throw new Exception(Excep.ScriviLogInEx(logMess));
             }
         }
@@ -119,7 +119,7 @@ namespace Main.DataOre
             }
             catch (Exception ex)
             {
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, ex.Message)));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, ex.Message)));
             }
         }
 
@@ -127,7 +127,7 @@ namespace Main.DataOre
         /// <returns></returns>
         private bool ChkSintassiStringa(string strOrario, Orario orario = null, bool aggiornaProprietà = false, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi._Nothing, "");
+            if (logMess == null) logMess = new Mess(LogType._Nothing, "");
 
             string[] splitProp, splitSecMilli;
             if (orario == null)

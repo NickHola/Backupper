@@ -18,8 +18,8 @@ namespace Main.Validations
         {
             if (ctrlNothing == true && value == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto " + nomeVar + " a nothing"));
-                if (throwEx == true) throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi._Nothing, "")));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto " + nomeVar + " a nothing"));
+                if (throwEx == true) throw new Exception(Excep.ScriviLogInEx(new Mess(LogType._Nothing, "")));
                 return false;
             }
             if (value != null && ctrlVoid == true)
@@ -28,8 +28,8 @@ namespace Main.Validations
                 {
                     if ((string)value == "")
                     {
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto " + nomeVar + " vuoto"));
-                        if (throwEx == true) throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi._Nothing, "")));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto " + nomeVar + " vuoto"));
+                        if (throwEx == true) throw new Exception(Excep.ScriviLogInEx(new Mess(LogType._Nothing, "")));
                         return false;
                     }
                 }

@@ -76,19 +76,19 @@ namespace Main.Logs2
                     break;
 
                 default:
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "tipo UscMessaggi disatteso, tipo:<" + tipoUscMess.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "tipo UscMessaggi disatteso, tipo:<" + tipoUscMess.ToString() + ">"));
                     return false;
             }
 
             switch (mess.tipo)
             {
-                case Tipi.info:
+                case LogType.info:
                     tipoMess = "info";
                     break;
-                case Tipi.Warn:
+                case LogType.Warn:
                     tipoMess = "Avvertenza";
                     break;
-                case Tipi.ERR:
+                case LogType.ERR:
                     tipoMess = "ERRORE";
                     break;
                 default:

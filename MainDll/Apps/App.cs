@@ -80,7 +80,7 @@ namespace Main
 
             if (codiceApp == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuto codiceApp a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuto codiceApp a null"));
                 return false;
             }
             App.SharedCodeApp = codiceApp;
@@ -99,7 +99,7 @@ namespace Main
 
             if (Thread.CurrentThread.ManagedThreadId != 1)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "l'id del thread non è 1 richiamare Inizializza con il thread dell'UI"));
+                Log.main.Add(new Mess(LogType.ERR, "", "l'id del thread non è 1 richiamare Inizializza con il thread dell'UI"));
                 return false;
             }
 
@@ -138,7 +138,7 @@ namespace Main
 
                 if (esito == false)
                 {
-                    Log.main.Add(Tipi.ERR, "", listaErr);
+                    Log.main.Add(LogType.ERR, "", listaErr);
                     //TODO -10 open errors list window with options: try recovery or close.
                 }
 
@@ -249,7 +249,7 @@ namespace Main
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
                 return false;
             }
             return true;
@@ -277,12 +277,12 @@ namespace Main
             }
             catch (InvalidOperationException ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
                 esito = false;
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
                 esito = false;
             }
             finally

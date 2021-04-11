@@ -3,7 +3,7 @@ using Main.Logs;
 
 namespace Main.DBs
 {
-    public static class TipiColonna
+    public static class ColumnTypes
     {
         
         public abstract class Base {
@@ -30,12 +30,12 @@ namespace Main.DBs
             { //Lunghezza è una stringa poichè posso ricevere come valore anche MAX
 
                 if (lunghezza == null) {
-                    Log.main.Add(new Mess(Tipi.ERR, "", "ricevuto lunghezza a nothing"));
+                    Log.main.Add(new Mess(LogType.ERR, "", "ricevuto lunghezza a nothing"));
                     App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                 }
 
                 if (lunghezza.Trim() == "") {
-                    Log.main.Add(new Mess(Tipi.ERR, "", "ricevuto lunghezza vuota"));
+                    Log.main.Add(new Mess(LogType.ERR, "", "ricevuto lunghezza vuota"));
                     App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                 }
 
@@ -46,13 +46,13 @@ namespace Main.DBs
             public NVarChar(Formati formato, string lunghezza = "") : base(true) //Lunghezza è una stringa poichè posso ricevere come valore anche MAX
             {
                 if (lunghezza == null) {
-                    Log.main.Add(new Mess(Tipi.ERR, "", "ricevuto lunghezza a nothing"));
+                    Log.main.Add(new Mess(LogType.ERR, "", "ricevuto lunghezza a nothing"));
                     App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                 }
 
                 switch (formato) {
                     case Formati.Nessuno:
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto formato con valore nessuno"));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto formato con valore nessuno"));
                         App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                         break;
                     case Formati.OoDpMm:
@@ -62,7 +62,7 @@ namespace Main.DBs
                         this.lunghezza = "MAX"; //Poichè se viene criptata si allunga
                         break;
                     default:
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto valore disatteso per il parametro formato:<" + formato.ToString() + ">"));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto valore disatteso per il parametro formato:<" + formato.ToString() + ">"));
                         App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                         break;
                 }

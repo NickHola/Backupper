@@ -112,13 +112,13 @@ namespace Main.FSes
 
         public void CalculateFileList(Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi._Nothing, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType._Nothing, Log.main.warnUserText);
             this.filesSelected = CalculateFileListCore(logMess);
         }
 
         private BindingList<string> CalculateFileListCore(Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi._Nothing, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType._Nothing, Log.main.warnUserText);
             BindingList<string> filesSelected = new BindingList<string>();
 
             foreach (PathWithFilters PathWithFilter in pathsWithFilters)

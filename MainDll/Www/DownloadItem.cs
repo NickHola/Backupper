@@ -47,8 +47,8 @@ namespace Main.Www
 
         /// <param name="idSubsetOperaz">Serve per far scatenare l'evento downloadListaTerminato, quando tutti gli elementi di download con un certo id sono terminati</param>  
         /// <param name="timeoutSec">Se omesso o 0 si prende il valore defaultTimeoutSec dell'oggetto di tipo ConfigDownload, non può essere infinito</param>
-        public DownloadItem(string url, byte priority = 128, string idSubsetOperaz = "", int timeoutSec = 0, bool convertiInTesto = true, Tipi tipoLogTimeout = Tipi.Warn,
-                   Tipi tipoLogEccezione = Tipi.ERR, Progressione progressione = null) : base(url, priority, idSubsetOperaz, timeoutSec, progressione, tipoLogTimeout, tipoLogEccezione)
+        public DownloadItem(string url, byte priority = 128, string idSubsetOperaz = "", int timeoutSec = 0, bool convertiInTesto = true, LogType tipoLogTimeout = LogType.Warn,
+                   LogType tipoLogEccezione = LogType.ERR, Progressione progressione = null) : base(url, priority, idSubsetOperaz, timeoutSec, progressione, tipoLogTimeout, tipoLogEccezione)
         { this.translateDataInText = convertiInTesto; }
 
     }

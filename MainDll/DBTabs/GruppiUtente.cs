@@ -7,12 +7,12 @@ using Main.DBs;
 
 namespace Main.DBTabs
 {
-    public class GruppiUtente : Anags.Tabella
+    public class GruppiUtente : Anags.Table
     {
-        public Colonna nome;
+        public Column nome;
         internal GruppiUtente() : base(nomeUtente: "gruppi di utenti") //Non istanziabile fuori dall'assembly
         {
-            nome = new Colonna(this, "nome", new TipiColonna.NVarChar("100"));
+            nome = new Column(this, "nome", new ColumnTypes.NVarChar("100"));
         }
     }
 }

@@ -38,16 +38,16 @@ namespace Main.Www
 
         /// <param name="timeoutSec">Se omesso o 0 si prende il valore defaultTimeoutSec dell'oggetto di tipo ConfigDownload, non può essere infinito</param>
         public UploadItem(string urlFolder, object oggettoUpload, byte priority = 128, string nomeFile = "", string suffFileCorrotto = "", string idSubsetOperaz = "", UploadType tipoUpload = UploadType.Ftp, string utente = "", string password = "",
-        int timeoutSec = 0, Tipi tipoLogTimeout = Tipi.Warn, Tipi tipoLogEccezione = Tipi.ERR, Progressione progressione = null) : base(urlFolder, priority, idSubsetOperaz, timeoutSec, progressione, tipoLogTimeout, tipoLogEccezione)
+        int timeoutSec = 0, LogType tipoLogTimeout = LogType.Warn, LogType tipoLogEccezione = LogType.ERR, Progressione progressione = null) : base(urlFolder, priority, idSubsetOperaz, timeoutSec, progressione, tipoLogTimeout, tipoLogEccezione)
         {
 
             if (oggettoUpload.GetType() == typeof(byte)) {
                 Data = (byte[])oggettoUpload;
             } else if (oggettoUpload.GetType() == typeof(String)) {
-                if (File.Exists((string)oggettoUpload) == false) throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto oggettoUpload di tipo con tipo String ma il file non esiste, oggettoUpload:<" + oggettoUpload + ">")));
+                if (File.Exists((string)oggettoUpload) == false) throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto oggettoUpload di tipo con tipo String ma il file non esiste, oggettoUpload:<" + oggettoUpload + ">")));
                 Data = File.ReadAllBytes((string)oggettoUpload);
             } else {
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto oggettoUpload di tipo disatteso, oggettoUpload.GetType:<" + oggettoUpload.GetType().ToString() + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto oggettoUpload di tipo disatteso, oggettoUpload.GetType:<" + oggettoUpload.GetType().ToString() + ">")));
             }
 
             if (nomeFile != "") {
@@ -56,7 +56,7 @@ namespace Main.Www
                 if (oggettoUpload.GetType() == typeof(string)) {
                     this.FileName = Path.GetFileName((string)oggettoUpload);
                 } else {
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto nomeFile vuoto e oggettoUpload non è una stringa, impossibile ricavare nome file, oggettoUpload.GetType:<" + oggettoUpload.GetType().ToString() + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto nomeFile vuoto e oggettoUpload non è una stringa, impossibile ricavare nome file, oggettoUpload.GetType:<" + oggettoUpload.GetType().ToString() + ">")));
                 }
             }
 

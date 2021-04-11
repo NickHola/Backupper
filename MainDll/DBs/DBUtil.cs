@@ -62,7 +62,7 @@ namespace Main.DBs
                     if (durataProc >= App.Config.MainDbConnString.KillQryBloccanteMs)
                     {
 
-                        Log.main.Add(new Mess(Tipi.Warn, "", "query bloccante sarà terminata, id:<" + procIdToKill + ">, query:<" + queryBloccante + ">"));
+                        Log.main.Add(new Mess(LogType.Warn, "", "query bloccante sarà terminata, id:<" + procIdToKill + ">, query:<" + queryBloccante + ">"));
 
                         //è stato usato una shell CMD poichè l'istruzione kill se lanciata direttamente de questo programma tramite una semplice query o una stored procedure generava errore(come se non si avessero i diritti)
                         //invece se viene lanciata da un cmdShell(soluzione attuale) oppure da un .bat(soluzione adottata precedentemente) va a buon fine.

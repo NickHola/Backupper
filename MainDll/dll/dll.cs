@@ -65,7 +65,7 @@ namespace Main
             //                                                                ...quando si usa l'istruzione "Main.My.Resources"
             if (nomeDllDaCaricare == "")
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricavato nomeDllDaCaricare vuoto da args.Name:<" + args.Name + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricavato nomeDllDaCaricare vuoto da args.Name:<" + args.Name + ">"));
                 App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
             }
 
@@ -99,13 +99,13 @@ namespace Main
 
             if (nomeRisorsa.Count() == 0)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "nomeDllDaCaricare:<" + nomeDllDaScrivere + "> non trovato"));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "nomeDllDaCaricare:<" + nomeDllDaScrivere + "> non trovato"));
                 if (terminaAppSeErr == true) App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                 return false;
             }
             else if (nomeRisorsa.Count() > 1)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "trovati " + nomeRisorsa.Count() + " di nomeDllDaCaricare:<" + nomeDllDaScrivere + ">"));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "trovati " + nomeRisorsa.Count() + " di nomeDllDaCaricare:<" + nomeDllDaScrivere + ">"));
                 if (terminaAppSeErr == true) App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
                 return false;
             }
@@ -134,7 +134,7 @@ namespace Main
             {
                 if (flusso == null)
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, nomeRisorsaEmbedded + " is not found in Embedded Resources."));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, nomeRisorsaEmbedded + " is not found in Embedded Resources."));
                     return false;
                 }
                 arrayByte = new byte[flusso.Length];

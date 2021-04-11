@@ -23,7 +23,7 @@ namespace Main
 
             if (data1.GetType() != data2.GetType())
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "data1.GetType:<" + data1.GetType().Name + "> diverso da data2.GetType:<" + data2.GetType().Name + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "data1.GetType:<" + data1.GetType().Name + "> diverso da data2.GetType:<" + data2.GetType().Name + ">", visualMsgBox: false));
                 return false;
             }
 

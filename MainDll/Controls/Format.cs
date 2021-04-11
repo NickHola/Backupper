@@ -29,7 +29,7 @@ namespace Main.Controls
                         txt.Text = MMsldd(txt.Text, ref cursorPos, format);
                         break;
                     default:
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto valore disatteso per format:<" + format + ">"));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto valore disatteso per format:<" + format + ">"));
                         break;
                 }
                 txt.SelectionStart = cursorPos;

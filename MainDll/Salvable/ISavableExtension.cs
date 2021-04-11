@@ -26,7 +26,7 @@ namespace Main //namespace Main.Salvable
             {
                 if (App.CurrentUserId == 0)
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "for the config: " + errDesc + ", there is no logged in user"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "for the config: " + errDesc + ", there is no logged in user"));
                     return false;
                 }
 
@@ -83,7 +83,7 @@ namespace Main //namespace Main.Salvable
                 }
                 else
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "in the table:<" + settingsTab.Nm + ">, there are more than one setting with: " + errDesc + ", the setting will not be saved"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "in the table:<" + settingsTab.Nm + ">, there are more than one setting with: " + errDesc + ", the setting will not be saved"));
                     return false;
                 }
 
@@ -95,7 +95,7 @@ namespace Main //namespace Main.Salvable
             }
             else
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "unexpected value for DestinationType:<" + destination.GetType().ToString() + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "unexpected value for DestinationType:<" + destination.GetType().ToString() + ">"));
                 return false;
             }
             return true;
@@ -104,19 +104,19 @@ namespace Main //namespace Main.Salvable
         public static ISavable Load(this ISavable obj, object source, out bool inErr, Mess logMess = null)
         {
             inErr = true;
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (String.IsNullOrEmpty(obj.SavableName))
             {
                 logMess.testoDaLoggare = "received null or void SavableName";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));
                 return obj;
             }
 
             if (obj == null)
             {
                 logMess.testoDaLoggare = "received null savable object";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));
                 return obj;
             }
 
@@ -131,7 +131,7 @@ namespace Main //namespace Main.Salvable
                 if (App.CurrentUserId == 0)
                 {
                     logMess.testoDaLoggare = "for the config: " + errDesc + ", there is no logged in user";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));
                     return obj;
                 }
                 errDesc += ", id utente:<" + App.CurrentUserId + ">";
@@ -173,7 +173,7 @@ namespace Main //namespace Main.Salvable
                 else if (sql.ResDt.Rows.Count > 1)
                 {
                     logMess.testoDaLoggare = "in the table:" + settingsTab.Nm + ">, there are more than one setting with: " + errDesc + ", sarà preso il primo valore";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));
                 }
 
                 text = (string)sql.ResDt.Rows[0][settingsTab.valore.Nm];
@@ -188,7 +188,7 @@ namespace Main //namespace Main.Salvable
             }
             else
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "unexpected value for source type:<" + source.GetType().ToString() + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "unexpected value for source type:<" + source.GetType().ToString() + ">"));
             }
             inErr = false; 
             return obj;

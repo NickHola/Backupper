@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Main.FSes
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    [TypeConverter(typeof(EnumToStringa))]
+    [TypeConverter(typeof(EnumToString))]
     [Serializable]
     public enum DirectoryDepth
     {

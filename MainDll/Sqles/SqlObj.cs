@@ -34,7 +34,7 @@ namespace Main.SQLes
 
         public bool ConnettiDB(Mess logMess = null) //StrConnection strConn = null, 
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             this.DisconnettiDB();  //Seve perchè se riutilizzo più volte ConnettiDB dentro una stessa funzione devo chiudere la connessione precedente
             bool esito; Thread thread; string testoTmp;
@@ -74,7 +74,7 @@ namespace Main.SQLes
                 }
                 catch
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, logMess.testoDaVisual, "Non è stato possibile connettersi al DataBase locale, strConn.completa:<" + connStr.Completa + ">", visualMsgBox: false));
+                    Log.main.Add(new Mess(LogType.ERR, logMess.testoDaVisual, "Non è stato possibile connettersi al DataBase locale, strConn.completa:<" + connStr.Completa + ">", visualMsgBox: false));
                     return false;
                 }
             }
@@ -133,7 +133,7 @@ namespace Main.SQLes
                 else
                 {
                     logMess.testoDaLoggare = "ricevuto strConn a nothing, Me.strConn è nothing e App.Db.ConnString è nothing, nessuna stringa di connessione disponibile";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));  //Qui ci vuole sempre errore indipendentemente da tipoLog, per questo faccio un nuovo mess
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));  //Qui ci vuole sempre errore indipendentemente da tipoLog, per questo faccio un nuovo mess
                     return false;
                 }
             }
@@ -154,7 +154,7 @@ namespace Main.SQLes
             else if (timeOutQuery < -1)
             {
                 logMess.testoDaLoggare = "ricevuto timeOutQuery inferiore a -1";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci vuole sempre errore indipendentemente da tipoLog, per questo faccio un nuovo mess
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci vuole sempre errore indipendentemente da tipoLog, per questo faccio un nuovo mess
                 return false;
             }
 
@@ -168,14 +168,14 @@ namespace Main.SQLes
                     if (cmd.Connection == null)
                     {
                         logMess.testoDaLoggare = "nuovaConn = no ma cmd.Connection.State è nothing";
-                        Log.main.Add(new Mess(Tipi.ERR, "", logMess.testoDaLoggare));
+                        Log.main.Add(new Mess(LogType.ERR, "", logMess.testoDaLoggare));
                         return false;
                     }
 
                     if (cmd.Connection.State != ConnectionState.Open)
                     {
                         logMess.testoDaLoggare = "nuovaConn = no ma cmd.Connection.State diverso da open, state:<" + cmd.Connection.State.ToString() + ">";
-                        Log.main.Add(new Mess(Tipi.Warn, "", logMess.testoDaLoggare));
+                        Log.main.Add(new Mess(LogType.Warn, "", logMess.testoDaLoggare));
                         return false;
                     }
                     break;
@@ -187,7 +187,7 @@ namespace Main.SQLes
 
                 default:
                     logMess.testoDaLoggare = "valore disatteso per nuovaConn:<" + nuovaConn.ToString() + ">";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci vuole sempre errore indipendentemente da tipoLog
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci vuole sempre errore indipendentemente da tipoLog
                     return false;
             }
 
@@ -222,7 +222,7 @@ namespace Main.SQLes
         //ATTENZIONE res se non è un ref non funziona
         public bool ExecQuery<T1>(string query, ref T1 res, QryOut @out = QryOut.dataTable, NuovaConn nuovaConn = NuovaConn.seNecessario, StrConnection strConn = null, int timeOutQuery = 0, Mess logMess = null)
         {   //Attenzione: l'out come Datatable costa di più in termini di cpu, dataReader costa meno
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
             logMess.testoDaLoggare = "";
 
             Thread thread; Exception thrEx = null; bool esito; string testoTmp;
@@ -263,7 +263,7 @@ namespace Main.SQLes
                     if (FiltraEccezioniQuery(thrEx) == true)
                     {
                         logMess.testoDaVisual = "";
-                        logMess.tipo = Tipi.Warn;
+                        logMess.tipo = LogType.Warn;
                     }
                     testoTmp = "ex.mess:<" + thrEx.Message + ">";
                 }
@@ -322,7 +322,7 @@ namespace Main.SQLes
         public bool ExecNoQuery(string query, CommitRoll commitRollback = CommitRoll.commitRollback, NuovaConn nuovaConn = NuovaConn.seNecessario, StrConnection strConn = null, Int32 timeOutQuery = 0, Mess logMess = null)
         {
 
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
             logMess.testoDaLoggare = "";
 
             Thread thread; Exception thrEx = null; bool esito; string testoTmp;
@@ -361,7 +361,7 @@ namespace Main.SQLes
                     if (FiltraEccezioniQuery(thrEx) == true)
                     {
                         logMess.testoDaVisual = "";
-                        logMess.tipo = Tipi.Warn;
+                        logMess.tipo = LogType.Warn;
                     }
                     testoTmp = "ex.mess:<" + thrEx.Message + ">";
                 }
@@ -387,7 +387,7 @@ namespace Main.SQLes
                 if (FiltraEccezioniCommit(ex) == true)
                 {
                     logMess.testoDaVisual = "";
-                    logMess.tipo = Tipi.Warn;
+                    logMess.tipo = LogType.Warn;
                 }
 
                 logMess.testoDaLoggare = "errore durante 'sqlTra.Commit()', ex.Mess:<" + ex.Message + ">, query:<" + query + ">";

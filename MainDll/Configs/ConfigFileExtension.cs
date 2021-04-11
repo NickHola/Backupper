@@ -35,7 +35,7 @@ namespace Main
 
         public static ConfigFile LoadFromFile(this ConfigFile config, out bool fileEsiste, ref string testo, byte cicli, out bool encrypted, out bool inErr, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             byte[] byteStream; string logErrPrefix;
             encrypted = false;
@@ -58,13 +58,13 @@ namespace Main
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", logErrPrefix + "Eccezione in ReadAllBytes, ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", logErrPrefix + "Eccezione in ReadAllBytes, ex.mess:<" + ex.Message + ">"));
                 return config;
             }
 
             if (byteStream.Length == 0)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", logErrPrefix + " the file is empty"));
+                Log.main.Add(new Mess(LogType.ERR, "", logErrPrefix + " the file is empty"));
                 return config;
             }
 
@@ -73,7 +73,7 @@ namespace Main
                 testo = Encoding.Unicode.GetString(byteStream);
                 if (testo.Substring(0, 3) != "{\r\n")
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, logErrPrefix + "Lettura file fallita sia tramite Crypto.Decripta che file in chiaro, errore in Crypto.Decripta:<" + logMess.testoDaLoggare + ">"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, logErrPrefix + "Lettura file fallita sia tramite Crypto.Decripta che file in chiaro, errore in Crypto.Decripta:<" + logMess.testoDaLoggare + ">"));
                     return config;
                 }
             }

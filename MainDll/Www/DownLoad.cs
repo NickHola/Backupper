@@ -38,7 +38,7 @@ namespace Main.Www
         {
             if (elemDownload == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto elemDownload a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto elemDownload a nothing"));
                 return;
             }
 
@@ -178,7 +178,7 @@ namespace Main.Www
                 {
                     if (DataOra.AttesaTempo(ref tmpAttesa, 1000) == true)
                     {
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Da quando client non è Busy, lo statoDownload non si è aggiornato in tempo utile, elemDownload.url:<" + elemDownload.url + ">", visualMsgBox: false));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Da quando client non è Busy, lo statoDownload non si è aggiornato in tempo utile, elemDownload.url:<" + elemDownload.url + ">", visualMsgBox: false));
                         elemDownload.DownloadState = DwlItemState.Eccezione;
                         break;
                     }
@@ -229,7 +229,7 @@ namespace Main.Www
                 if (elem.DownloadState == DwlItemState.DwlAvviato) elem.DownloadState = DwlItemState.Eccezione;
                 messToLog = "TargetInvocationException, ex.mess:<" + ex.Message + ">";
                 if (ex.InnerException != null) messToLog += ", inner ex.mess:<" + ex.InnerException.Message + ">";
-                Log.main.Add(new Mess(Tipi.Warn, "", messToLog));
+                Log.main.Add(new Mess(LogType.Warn, "", messToLog));
                 return;
 
             }
@@ -238,7 +238,7 @@ namespace Main.Www
                 if (elem.DownloadState == DwlItemState.DwlAvviato) elem.DownloadState = DwlItemState.Eccezione;
                 messToLog = "Eccezione ex.mess:<" + ex.Message + ">";
                 if (ex.InnerException != null) messToLog += ", inner ex.mess:<" + ex.InnerException.Message + ">";
-                Log.main.Add(new Mess(Tipi.Warn, "", messToLog));
+                Log.main.Add(new Mess(LogType.Warn, "", messToLog));
                 return;
             }
         }

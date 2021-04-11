@@ -66,7 +66,7 @@ namespace Main.Wnds
             ConfigWnd parentConfig = null; //TODO
 
             if (this.Content == null) {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Me.Content è nothing, aggiungere il figlio alla window tramite la prop. .content"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Me.Content è nothing, aggiungere il figlio alla window tramite la prop. .content"));
                 return false;
             }
 
@@ -93,7 +93,7 @@ namespace Main.Wnds
         private bool SalvaImpostazioni() {
 
             if (this.Content == null) {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Me.Content è nothing"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Me.Content è nothing"));
                 return false;
             }
 
@@ -164,7 +164,7 @@ namespace Main.Wnds
             }
 
             if (deltaPerSchermo.Count == 0) { //Nessuno monitor disponibile
-                Log.main.Add(new Mess(Tipi.Warn, "Nessuno schermo disponibile"));
+                Log.main.Add(new Mess(LogType.Warn, "Nessuno schermo disponibile"));
                 return;
             }
             this.Left += deltaFinale.X;

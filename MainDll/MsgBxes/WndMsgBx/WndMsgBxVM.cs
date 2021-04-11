@@ -98,7 +98,7 @@ namespace Main.MsgBxes
                     MsgBxResult = MsgBxButton.Cancel;
                     break;
                 default:
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto txbAction.Name disatteso:<" + txbAction.Name + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto txbAction.Name disatteso:<" + txbAction.Name + ">")));
             }
         }
 

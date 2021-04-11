@@ -13,10 +13,10 @@ namespace Main.Binds
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter == null) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto parameter a null")));
+            if (parameter == null) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto parameter a null")));
 
             if (parameter.GetType().FullName != "System.RuntimeType")
-                throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto parameter di tipo:<" + parameter.GetType().ToString() + ">, deve essere di tipo Type")));
+                throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto parameter di tipo:<" + parameter.GetType().ToString() + ">, deve essere di tipo Type")));
 
             try
             {
@@ -35,13 +35,13 @@ namespace Main.Binds
             }
             catch (Exception ex)
             {
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">")));
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "", Converters.errCnvBackNotImpl)));
+            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(LogType.ERR, "", Converters.errCnvBackNotImpl)));
         }
     }
 }

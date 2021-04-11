@@ -14,7 +14,7 @@ namespace Main
         {
             if (str == null) //Serve controllare che sia null
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
                 return null;
             }
 
@@ -33,7 +33,7 @@ namespace Main
         {                       
             if (str == null)  //Serve controllare che sia null
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
                 return null;
             }
 
@@ -52,7 +52,7 @@ namespace Main
         {
             if (str == null) //Serve controllare che sia null
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
                 return null;
             }
 
@@ -72,7 +72,7 @@ namespace Main
         {
             if (str == null) //Serve controllare che sia null
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
                 return null;
             }
 
@@ -97,7 +97,7 @@ namespace Main
         {
             if (str == null) //Serve controllare che sia null
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, "", "ricevuta str a nothing, sarà restituita a nothing"));
                 return null;
             }
 

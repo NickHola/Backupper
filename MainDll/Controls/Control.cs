@@ -16,14 +16,14 @@ namespace Main.Controls
         public static List<UIElement> DammiFigli(DependencyObject oggPadre, Type tipoDaCercare = null, string nomeDaCercare = "", Str.TipiRicerca tipoRicerca = Str.TipiRicerca.uguale,
                                                      bool piuDi1 = true, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             List<UIElement> listaFigli = new List<UIElement>();
 
             if (oggPadre == null)
             {
                 logMess.testoDaLoggare = "Ricevuto parametro oggPadre a null";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                 return listaFigli;
             }
 
@@ -73,7 +73,7 @@ namespace Main.Controls
                                 break;
                             default:
                                 logMess.testoDaLoggare = "Ricevuto valore disatteso per il parametro tipoRicerca:<" + tipoRicerca.ToString() + ">";
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                                 return listaFigli;
                         }
                     }
@@ -89,7 +89,7 @@ namespace Main.Controls
                 else
                 { //Non posso restituire tutti gli elementi 
                     logMess.testoDaLoggare = "Criterio di ricerca disatteso, parametro nome vuoto e tipo a nothing";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                     return listaFigli;
                 }
 
@@ -110,14 +110,14 @@ namespace Main.Controls
         public static List<UIElement> DammiPadri(DependencyObject oggFiglio, Type tipoDaCercare = null, string nomeDaCercare = "", Str.TipiRicerca tipoRicerca = Str.TipiRicerca.uguale,
                                                      bool piuDi1 = false, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             List<UIElement> listaPadri = new List<UIElement>();
 
             if (oggFiglio == null)
             {
                 logMess.testoDaLoggare = "Ricevuto parametro oggFiglio a null";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                 return listaPadri;
             }
 
@@ -168,7 +168,7 @@ namespace Main.Controls
                             break;
                         default:
                             logMess.testoDaLoggare = "Ricevuto valore disatteso per il parametro tipoRicerca:<" + tipoRicerca.ToString() + ">";
-                            Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                            Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                             return listaPadri;
                     }
                 }
@@ -183,7 +183,7 @@ namespace Main.Controls
                 else
                 { //Non posso restituire tutti gli elementi 
                     logMess.testoDaLoggare = "Criterio di ricerca disatteso, parametro nome vuoto e tipo a null";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui deve essere sempre errore
                     return listaPadri;
                 }
 

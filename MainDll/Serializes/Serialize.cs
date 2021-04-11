@@ -60,7 +60,7 @@ namespace Main.Serializes
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "Eccezione " + prefissoErrLog + "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "Eccezione " + prefissoErrLog + "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return false;
             }
             return true;
@@ -84,7 +84,7 @@ namespace Main.Serializes
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "Eccezione in sezione file, ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "Eccezione in sezione file, ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return false;
             }
 
@@ -101,7 +101,7 @@ namespace Main.Serializes
 
             if (obj == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "Ricevuto oggetto a nothing, impossibile determinarne il tipo", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "Ricevuto oggetto a nothing, impossibile determinarne il tipo", visualMsgBox: false));
                 return false;
             }
 
@@ -131,7 +131,7 @@ namespace Main.Serializes
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "Eccezione " + prefissoErrLog + "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "Eccezione " + prefissoErrLog + "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return false;
             }
             return true;
@@ -148,7 +148,7 @@ namespace Main.Serializes
             try {
                 testo = File.ReadAllText(fileFullPath);
             } catch (Exception ex) {
-                Log.main.Add(new Mess(Tipi.ERR, errUte, "Eccezione in sezione file, ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, errUte, "Eccezione in sezione file, ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return false;
             }
 

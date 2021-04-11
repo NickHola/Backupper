@@ -29,11 +29,11 @@ namespace Main.Logs2
 
             coloreCellaTipo = new Dictionary<string, Color>();
 
-            foreach (string tipo in Enum.GetNames(typeof(Tipi)))
+            foreach (string tipo in Enum.GetNames(typeof(LogType)))
             {
                 Color colore;
-                if (tipo == Tipi.Warn.ToString()) { colore = Colors.Yellow; }
-                else if (tipo == Tipi.ERR.ToString()) { colore = Colors.OrangeRed; }
+                if (tipo == LogType.Warn.ToString()) { colore = Colors.Yellow; }
+                else if (tipo == LogType.ERR.ToString()) { colore = Colors.OrangeRed; }
                 else { colore = Colors.White; }
 
                 coloreCellaTipo.Add(tipo, colore);
@@ -60,7 +60,7 @@ namespace Main.Logs2
 
                     if (FS.ValidaPercorsoFile(value, false, out _, logMess: mess) == false)
                     {
-                        throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi._Nothing, ""))); //Viene già loggato in ValidaPercorsoFile
+                        throw new Exception(Excep.ScriviLogInEx(new Mess(LogType._Nothing, ""))); //Viene già loggato in ValidaPercorsoFile
                     }
 
                     percorsoFile = value;

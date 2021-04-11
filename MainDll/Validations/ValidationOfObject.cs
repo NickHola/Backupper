@@ -17,7 +17,7 @@ namespace Main.Validations
             object ogg = bindingExpr.DataItem;
 
             if (typeof(IValidation).IsAssignableFrom(ogg.GetType()) == false) { //Verifico se il tipo degli oggetti T implementa l'interfaccia Validation
-                Log.main.Add(new Mess(Tipi.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement IValidation", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement IValidation", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
 
@@ -25,7 +25,7 @@ namespace Main.Validations
                 ValidationResult validationResult = (ogg as IValidation).ValidMySelf(nomeProp: nomeProp); //New ValidationResult(False, "Non va bene")
                 return validationResult;
             } catch (Exception ex) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
         }

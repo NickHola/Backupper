@@ -7,14 +7,14 @@ using Main.DBs;
 
 namespace Main.DBTabs
 {
-    public class Utenti : Anags.Tabella
+    public class Utenti : Anags.Table
     {
-        public Colonna nome, password;
+        public Column nome, password;
 
         internal Utenti() : base(nomeUtente: "utente")  //Non istanziabile fuori dall'assembly
         {
-            nome = new Colonna(this, "nome", new TipiColonna.NVarChar("100"));
-            password = new Colonna(this, "password", new TipiColonna.NVarChar(TipiColonna.NVarChar.Formati.Password, "20"));
+            nome = new Column(this, "nome", new ColumnTypes.NVarChar("100"));
+            password = new Column(this, "password", new ColumnTypes.NVarChar(ColumnTypes.NVarChar.Formati.Password, "20"));
         }
     }
 }

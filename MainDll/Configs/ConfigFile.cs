@@ -58,7 +58,7 @@ namespace Main.Configs
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione in WriteAllBytes, ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione in WriteAllBytes, ex.mess:<" + ex.Message + ">"));
                 return false;
             }
 
@@ -90,7 +90,7 @@ namespace Main.Configs
             else if (configFiltrate.Count() > 1)
             {
                 logMess.testoDaLoggare = "nel file di configurazione:<" + fullFilePath + ">, ho trovato più di una impostazione con " + logMess.testoDaLoggare + ", sarà preso il primo valore";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //In questo caso deve essere sempre errore per questo ho utilizzato un nuovo mess
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //In questo caso deve essere sempre errore per questo ho utilizzato un nuovo mess
             }
 
             config = configFiltrate.ElementAt(0).config;
@@ -124,7 +124,7 @@ namespace Main.Configs
             }
             else
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "nel file di configurazione:<" + fullFilePath + ">, ho trovato più di una impostazione con " + descErr + ", l'impostazione non sarà salvata"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "nel file di configurazione:<" + fullFilePath + ">, ho trovato più di una impostazione con " + descErr + ", l'impostazione non sarà salvata"));
                 return false;
             }
             return true;

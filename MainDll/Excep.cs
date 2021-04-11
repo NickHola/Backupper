@@ -36,12 +36,12 @@ namespace Main
 
             if (exMessage.Left(exVolontaria.Length) == exVolontaria)
             { //Se è una eccezione di tipo volontaria allora deserializzo 
-                logMess = new Mess(Tipi.Warn, "");  //Lo devo inizializzare così è noto il tipo per il deserializzatore
+                logMess = new Mess(LogType.Warn, "");  //Lo devo inizializzare così è noto il tipo per il deserializzatore
                 testoDeserial = exMessage.Right(exVolontaria.Length * -1);
                 if (Serialize.DeserializeFromText(testoDeserial, ref logMess) == true) logFound = true;
             }
 
-            if (logFound == false) logMess = new Mess(Tipi.Warn, Log.main.warnUserText, "Ecc. non gestita, Messaggio: " + exMessage + Util.crLf + ", Tipo ecc: " + exGetType + Util.crLf + "Sub: " + exStackTrace);
+            if (logFound == false) logMess = new Mess(LogType.Warn, Log.main.warnUserText, "Ecc. non gestita, Messaggio: " + exMessage + Util.crLf + ", Tipo ecc: " + exGetType + Util.crLf + "Sub: " + exStackTrace);
         }
 
 
@@ -68,7 +68,7 @@ namespace Main
             }
             catch (Exception ex2)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Errore in sezione Catch, ex2.mess:<" + ex2.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Errore in sezione Catch, ex2.mess:<" + ex2.Message + ">"));
             }
         }
     }

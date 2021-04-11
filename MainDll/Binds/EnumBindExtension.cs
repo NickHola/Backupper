@@ -23,7 +23,7 @@ namespace Main.Binds
                     if (value != null)
                     {
                         Type enumType = Nullable.GetUnderlyingType(value) ?? value;
-                        if (!enumType.IsEnum) throw new ArgumentException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Type must be for an Enum.")));
+                        if (!enumType.IsEnum) throw new ArgumentException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Type must be for an Enum.")));
                     }
                     this._enumType = value;
                 }
@@ -58,7 +58,7 @@ namespace Main.Binds
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (this._enumType == null) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "The EnumType must be specified.")));
+            if (this._enumType == null) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "The EnumType must be specified.")));
             Type actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
             Array enumValues = Enum.GetValues(actualEnumType);
 

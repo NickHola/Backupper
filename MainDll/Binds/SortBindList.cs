@@ -40,14 +40,14 @@ namespace Main.Binds
         private SortBindList() : this(default)
         { }
 
-        public SortBindList(List<Ordinamenti> ordinamenti = null, bool oggConValidazione = true) : base(oggConValidazione: oggConValidazione)
+        public SortBindList(List<Sorting> ordinamenti = null, bool oggConValidazione = true) : base(oggConValidazione: oggConValidazione)
         {
             if (typeof(ISortBindObj).IsAssignableFrom(typeof(T)) == false)
             { //Verifico se il tipo degli oggetti ha l'interfaccia ISortBindObj
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "T di tipo:<" + typeof(T).Name + "> non implementa l'interfaccia ISortBindObj")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "T di tipo:<" + typeof(T).Name + "> non implementa l'interfaccia ISortBindObj")));
             }
 
-            if (ordinamenti == null) ordinamenti = new List<Ordinamenti> { new Ordinamenti("IndiceOrd", ListSortDirection.Ascending) };
+            if (ordinamenti == null) ordinamenti = new List<Sorting> { new Sorting("IndiceOrd", ListSortDirection.Ascending) };
             GeneraListaOrdinamenti(ordinamenti);
 
             T oggTmp = (T)Activator.CreateInstance(typeof(T));
@@ -58,16 +58,16 @@ namespace Main.Binds
         //    MyBase.New(list.ToList())
         //End Sub
 
-        private void GeneraListaOrdinamenti(List<Ordinamenti> ordinamenti)
+        private void GeneraListaOrdinamenti(List<Sorting> ordinamenti)
         {
             listaOrdinamenti = new List<ListSortDescription>();
 
-            foreach (Ordinamenti ordinamento in ordinamenti)
+            foreach (Sorting ordinamento in ordinamenti)
             {
                 var proprieta = TypeDescriptor.GetProperties(typeof(T))[ordinamento.nomeProprietà];
                 if (proprieta == null)
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ordinamento.nomeProprietà:<" + ordinamento.nomeProprietà + "> non trovato nel tipo T, t.GetType:<" + typeof(T).Name + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ordinamento.nomeProprietà:<" + ordinamento.nomeProprietà + "> non trovato nel tipo T, t.GetType:<" + typeof(T).Name + ">"));
                     continue;
                 }
                 listaOrdinamenti.Add(new ListSortDescription(proprieta, ordinamento.direzione));
@@ -188,7 +188,7 @@ namespace Main.Binds
             }
             catch (Exception ex)
             {
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">")));
             }
             finally
             {
@@ -226,7 +226,7 @@ namespace Main.Binds
             }
             if ((oggT as ISortBindObj).SincroValidazioneRiordino != SincroValidazioneRiordino.ValidazioneTerminata)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "SincroValidazioneRiordino non è ancora ValidazioneTerminata dopo:<" + (oggT as ISortBindObj).TimeOutValidazionMs + "> ms, valore SincroValidazioneRiordino:<" + (oggT as ISortBindObj).SincroValidazioneRiordino.ToString() + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "SincroValidazioneRiordino non è ancora ValidazioneTerminata dopo:<" + (oggT as ISortBindObj).TimeOutValidazionMs + "> ms, valore SincroValidazioneRiordino:<" + (oggT as ISortBindObj).SincroValidazioneRiordino.ToString() + ">"));
             }
 
             if ((oggT as IValidation).IsValid == false) return;

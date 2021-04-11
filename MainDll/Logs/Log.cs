@@ -52,7 +52,7 @@ namespace Main.Logs
 
         internal bool LoadConfigAndStartThread(object SaveLocation)
         {
-            Mess logMess = new Mess(Tipi.ERR, this.errUserText);
+            Mess logMess = new Mess(LogType.ERR, this.errUserText);
 
             this.config = (ConfigLog)this.config.Load(App.Config, out bool inErr, logMess: logMess);
             //Return False  //La prima volta che faccio il DB o il fle config(a seconda di dove salvo le impostazioni) ritornerà false quindi lo segnalo come errore ma non ritorno false
@@ -89,12 +89,12 @@ namespace Main.Logs
 
         public void Add(Mess mess)
         { //Accoda: si aggiungono messaggi tramite metodo così l'oggetto coda è isolato dall'esterno e non c'è bisogno di appendere nel testo di tracciamaneto la sub SubName
-            if (mess == null) mess = new Mess(Tipi.ERR, "", "ricevuto mess a nothing");
+            if (mess == null) mess = new Mess(LogType.ERR, "", "ricevuto mess a nothing");
             if (mess.oraCreazione == DateTime.MinValue) mess.oraCreazione = DateTime.Now;
             logQueue.Enqueue(mess);
         }
 
-        public void Add(Tipi tipoLog, string userMessage, List<string> logsList)
+        public void Add(LogType tipoLog, string userMessage, List<string> logsList)
         {
             if (logsList == null) logsList = new List<string> { "ricevuto logsList a nothing" }; //ATTENZIONE Deve essere il primo controllo
 
@@ -157,7 +157,7 @@ namespace Main.Logs
 
         private void Logger(Mess mess)
         {
-            if (mess.tipo == Tipi._Nothing) mess.loggato = true; //Si verifica nel caso in cui un metodo ne richiama un altro passondogli logMess con tipo log a nothing poichè non vuole che un eventuale errore venga loggato
+            if (mess.tipo == LogType._Nothing) mess.loggato = true; //Si verifica nel caso in cui un metodo ne richiama un altro passondogli logMess con tipo log a nothing poichè non vuole che un eventuale errore venga loggato
             if (mess.loggato == true) return;
             StreamWriter logFile; string strInizioLog = "";
 
@@ -209,7 +209,7 @@ namespace Main.Logs
 
         private void Viewer(ref Mess mess)
         {
-            if (mess.tipo == Tipi._Nothing) mess.visualiz = true; //Si verifica nel caso in cui un metodo ne richiama un altro passondogli logMess con tipo log a nothing poichè non vuole che un eventuale errore venga loggato
+            if (mess.tipo == LogType._Nothing) mess.visualiz = true; //Si verifica nel caso in cui un metodo ne richiama un altro passondogli logMess con tipo log a nothing poichè non vuole che un eventuale errore venga loggato
             if (App.DebugMode == true) mess.visualiz = true;
             if (mess.visualiz == true) return;
 

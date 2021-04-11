@@ -14,9 +14,9 @@ namespace Main.Binds
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType != typeof(Visibility)) throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "The target must be a Visibility"))); 
+            if (targetType != typeof(Visibility)) throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "The target must be a Visibility"))); 
 
-            if (value == null) throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Rcevuto param value a nothing")));
+            if (value == null) throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Rcevuto param value a nothing")));
 
 
             if (value.GetType() == typeof(Boolean))
@@ -27,7 +27,7 @@ namespace Main.Binds
 
             if (value.IsNumeric() == false)
             {
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Rcevuto param value non booleano ne numerico")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Rcevuto param value non booleano ne numerico")));
             }
             switch (value)
             {
@@ -38,13 +38,13 @@ namespace Main.Binds
                 case 2:
                     return Visibility.Collapsed;
                 default:
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto valore numerico disatteso per param value:<" + value.ToString() + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto valore numerico disatteso per param value:<" + value.ToString() + ">")));
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "", Converters.errCnvBackNotImpl)));
+            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(LogType.ERR, "", Converters.errCnvBackNotImpl)));
         }
     }
 }

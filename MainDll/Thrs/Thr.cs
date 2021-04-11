@@ -42,7 +42,7 @@ namespace Main.Thrs
 
             if (segnaleAttesa.WaitOne(1000) == false)
             { //Significa che è andato in timeout e quindi il thread chiamato non ha eseguito la set sull'AutoResetEvent contenuto nella listaAttesaThr
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Il thr figlio non ha eseguito la .set() sull'AutoResetEvent contenuto nella listaAttesaThr"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Il thr figlio non ha eseguito la .set() sull'AutoResetEvent contenuto nella listaAttesaThr"));
             }
             return thr;
         }
@@ -52,7 +52,7 @@ namespace Main.Thrs
             var idThrFiglio = Thread.CurrentThread.ManagedThreadId;
             if (listaAttesaThr.ContainsKey(idThrFiglio) == false)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Nella listaAttesaThr non c'è il seguente thrId:<" + idThrFiglio + ">"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Nella listaAttesaThr non c'è il seguente thrId:<" + idThrFiglio + ">"));
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace Main.Thrs
 
             if (visualLog == false) testeUteLog = "";
 
-            Log.main.Add(new Mess(Tipi.Warn, testeUteLog, "Eccezione in thrCiclo:<" + nomeThrCiclo + ">, ex.mess:<" + ex.Message + ">, ex.type:<" + ex.GetType().ToString() + ">"));
+            Log.main.Add(new Mess(LogType.Warn, testeUteLog, "Eccezione in thrCiclo:<" + nomeThrCiclo + ">, ex.mess:<" + ex.Message + ">, ex.type:<" + ex.GetType().ToString() + ">"));
 
         }
     }

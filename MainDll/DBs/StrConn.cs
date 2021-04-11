@@ -51,7 +51,7 @@ namespace Main.DBs
 
             if (parametriValori.Count() < 4)
             { //Ci deve essere almeno: Provider=SQL Server Native Client XX.X;Server=XXX\XXX,XX;Database=XXX;Trusted_Connection=Yes;
-                Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "ci sono meno di 4 parametri"));
+                Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "ci sono meno di 4 parametri"));
                 return false;
             }
 
@@ -76,14 +76,14 @@ namespace Main.DBs
 
                         if (this.IndirServer == "")
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "manca il nome del server sql"));
+                            Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "manca il nome del server sql"));
                             return false;
                         }
                         ipHostENomeServer = this.IndirServer.Split('\\');
 
                         if (ipHostENomeServer.Count() < 2)
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "nella parte server manca il simbolo '\'"));
+                            Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "nella parte server manca il simbolo '\'"));
                             return false;
                         }
 
@@ -91,7 +91,7 @@ namespace Main.DBs
 
                         if (this.Ip_Host == "")
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "manca il nome IP o Host"));
+                            Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "manca il nome IP o Host"));
                             return false;
                         }
 
@@ -109,7 +109,7 @@ namespace Main.DBs
 
                         if (this.Database == "")
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "manca il nome del database sql"));
+                            Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "manca il nome del database sql"));
                             return false;
                         }
                         break;
@@ -133,12 +133,12 @@ namespace Main.DBs
 
             if (this.TrustedConn == false) {
                 if (this.UserId == "") {
-                    Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "manca lo userId per l'accesso al DB"));
+                    Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "manca lo userId per l'accesso al DB"));
                     return false;
                 }
 
                 if (this.Password == "") {
-                    Log.main.Add(new Mess(Tipi.ERR, "", prefissoErrLog + "manca la password per l'accesso al DB"));
+                    Log.main.Add(new Mess(LogType.ERR, "", prefissoErrLog + "manca la password per l'accesso al DB"));
                     return false;
                 }
             }

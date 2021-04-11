@@ -10,7 +10,7 @@ namespace Main.Logs
     [Serializable]
     public class Mess
     {
-        public Tipi tipo;
+        public LogType tipo;
         public string testoDaVisual;
         public string testoDaLoggare;
         [NonSerialized]
@@ -25,7 +25,7 @@ namespace Main.Logs
         //JsonConstructor: I parametri obbligatori devono avere lo stesso nome delle variabili/proprietà
 
         [JsonConstructor]
-        public Mess(Tipi tipo, string testoDaVisual, string testoDaLoggare = "", DateTime oraCreazione = default(DateTime), bool visualMsgBox = true)
+        public Mess(LogType tipo, string testoDaVisual, string testoDaLoggare = "", DateTime oraCreazione = default(DateTime), bool visualMsgBox = true)
         {
             this.tipo = tipo;
             this.testoDaVisual = testoDaVisual;

@@ -7,14 +7,14 @@ using Main.DBs;
 
 namespace Main.DBTabs
 {
-    public class UtentiGruppi : Anags.Tabella
+    public class UtentiGruppi : Anags.Table
     {
-        public Colonna fk_utenti, fk_gruppiUtente;
+        public Column fk_utenti, fk_gruppiUtente;
 
         internal UtentiGruppi() : base(nomeUtente: "gruppi dell'utente") //Non istanziabile fuori dall'assembly
         {
-            fk_utenti = new Colonna(this, "fk_utenti", new TipiColonna.BigInt(), tabFk: new List<Type> { typeof(DBTabs.Utenti) }, univoca: true, nomeUtente: "utente");
-            fk_gruppiUtente = new Colonna(this, "fk_gruppiUtente", new TipiColonna.BigInt(), tabFk: new List<Type> { typeof(DBTabs.GruppiUtente) }, univoca: true, nomeUtente: "gruppo");
+            fk_utenti = new Column(this, "fk_utenti", new ColumnTypes.BigInt(), tabFk: new List<Type> { typeof(DBTabs.Utenti) }, univoca: true, nomeUtente: "utente");
+            fk_gruppiUtente = new Column(this, "fk_gruppiUtente", new ColumnTypes.BigInt(), tabFk: new List<Type> { typeof(DBTabs.GruppiUtente) }, univoca: true, nomeUtente: "gruppo");
         }
     }
 }

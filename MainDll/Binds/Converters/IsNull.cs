@@ -18,7 +18,7 @@ namespace Main.Binds
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "", Converters.errCnvBackNotImpl)));
+            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(LogType.ERR, "", Converters.errCnvBackNotImpl)));
         }
     }
 }

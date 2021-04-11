@@ -35,13 +35,13 @@ namespace Main.Thrs
         {
             if (maxParallelThrs < 0)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto maxParallelThrs minore di 0"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto maxParallelThrs minore di 0"));
                 return false;
             }
 
             if (thrTimeOutSec <= 0)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto thrTimeOutSec minore uguale a 0"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto thrTimeOutSec minore uguale a 0"));
                 return false;
             }
 

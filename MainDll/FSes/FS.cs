@@ -14,7 +14,7 @@ namespace Main.FSes
         public static bool ValidaPercorsoFile(string percorsoFile, bool contieneNomeFile, out string percFileFormattato, CheckExistenceOf verEsistenza = CheckExistenceOf.Nothing,
                                            Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
 
             percFileFormattato = percorsoFile;
 
@@ -142,7 +142,7 @@ namespace Main.FSes
         public static bool ValidaNomeFile(string file, bool contienePercorso, CheckExistenceOf verificaEsistenza = CheckExistenceOf.Nothing, Mess logMess = null) {
 
             if (file == null) return false;
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
 
             string prefissoErrLog, percorsoFile, nomeFile;
             percorsoFile = "";
@@ -182,7 +182,7 @@ namespace Main.FSes
                     break;
                 default:
                     logMess.testoDaLoggare = "ricevuto valore disatteso per il parametro verificaEsistenza:<" + verificaEsistenza + ">";
-                    logMess.tipo = Tipi.Warn;
+                    logMess.tipo = LogType.Warn;
                     Log.main.Add(logMess);     //Non ritorno false, poichè non è grave;
                     break;
             }

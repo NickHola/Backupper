@@ -363,7 +363,7 @@ namespace Main.Controls
         {
             if (dtgRow == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto dtgRow a null"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto dtgRow a null"));
                 return false;
             }
             try
@@ -374,7 +374,7 @@ namespace Main.Controls
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"));
                 return false;
             }
             return true;

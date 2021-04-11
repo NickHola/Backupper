@@ -33,7 +33,7 @@ namespace Main.DBs
                 {
                     //descErr = "nomeColIdentity è già stato settato con il valore:<" & nomeColIdentity_ & ">"
                     //log.Acc(New Mess(Tipi.err, log.errUserText, "nomeColIdentity è già stato settato con il valore:<" & nomeColIdentity_ & ">"))
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "nomeColIdentity è già stato settato con il valore:<" + nomeColIdentity + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "nomeColIdentity è già stato settato con il valore:<" + nomeColIdentity + ">")));
                 }
                 else { nomeColIdentity = value; }
 
@@ -50,28 +50,28 @@ namespace Main.DBs
 
         public void PulisciValoriColonne(bool ancheEsprSql = true)
         {
-            Type tipoTabella; Colonna col;
+            Type tipoTabella; Column col;
 
             tipoTabella = this.GetType();
 
             foreach (FieldInfo proprietàCol in tipoTabella.GetFields())
             {  //Scorro tutti i field della classe che eredita da TabellaBase alla ricerca delle colonne
-                if (proprietàCol.FieldType != typeof(Colonna)) continue;
-                col = (Colonna)proprietàCol.GetValue(this);
+                if (proprietàCol.FieldType != typeof(Column)) continue;
+                col = (Column)proprietàCol.GetValue(this);
                 col.PulisciValori();
             }
         }
 
-        internal bool AggiungiAListaFK(Colonna col, List<Colonna> colonneFk)
+        internal bool AggiungiAListaFK(Column col, List<Column> colonneFk)
         {
-            foreach (Colonna colFk in colonneFk)
+            foreach (Column colFk in colonneFk)
             {
                 if (AggiungiAListaFK(col, colFk.Padre.Nm, colFk.Nm) == false) return false;
             }
             return true;
         }
 
-        internal bool AggiungiAListaFK(Colonna col, List<Type> tabsFk, string nomeCol = "id")
+        internal bool AggiungiAListaFK(Column col, List<Type> tabsFk, string nomeCol = "id")
         {
             foreach (Type tabFk in tabsFk)
             {
@@ -80,13 +80,13 @@ namespace Main.DBs
             return true;
         }
 
-        private bool AggiungiAListaFK(Colonna col, string nomeTabFk, string nomeColFk)
+        private bool AggiungiAListaFK(Column col, string nomeTabFk, string nomeColFk)
         {
             string nomeFK; //, i As Byte
 
             if (col.Nm.Left(3) != "fk_")
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "la colonna:<" + col.Nm + ">, della tabella:<" + col.Padre.Nm + "> è una Fk ma il suo nome non inizia con fk_"));
+                Log.main.Add(new Mess(LogType.ERR, "", "la colonna:<" + col.Nm + ">, della tabella:<" + col.Padre.Nm + "> è una Fk ma il suo nome non inizia con fk_"));
                 App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
             }
 
@@ -94,7 +94,7 @@ namespace Main.DBs
 
             if ((from tmp in listaFK where tmp.nome == nomeFK select tmp).Count() > 0)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "per la tabella:<" + col.Padre.Nm + "> esistono già esiste una Fk di nome:<" + nomeFK + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "per la tabella:<" + col.Padre.Nm + "> esistono già esiste una Fk di nome:<" + nomeFK + ">"));
                 App.ClosingProcedure(salvaConfigApp: false, tSleepMs: Log.main.tStimatoPerLoggareMs);
             }
 
@@ -122,7 +122,7 @@ namespace Main.DBs
 
         public bool Insert(string selecDeiValori, ref SqlObj sql, NuovaConn nuovaConn, StrConnection strConn, CommitRoll commitRollback, Int32 timeOutQuery, Mess logMess)
         {
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
             if (sql == null) sql = new SqlObj();
 
             string query;
@@ -130,15 +130,15 @@ namespace Main.DBs
             if (selecDeiValori == null || selecDeiValori == "")
             {
 
-                Colonna col; string qryTestata, qryValori; List<string> valori = new List<String>(); bool primaCol; List<string> valXqry;
+                Column col; string qryTestata, qryValori; List<string> valori = new List<String>(); bool primaCol; List<string> valXqry;
                 primaCol = true;
                 qryTestata = qryValori = "";
 
                 foreach (FieldInfo proprietàCol in this.GetType().GetFields())
                 {  //Scorro tutti i field della classe che eredita da TabellaBase alla ricerca delle colonne
-                    if (proprietàCol.FieldType != typeof(Colonna)) continue;
+                    if (proprietàCol.FieldType != typeof(Column)) continue;
 
-                    col = (Colonna)proprietàCol.GetValue(this);
+                    col = (Column)proprietàCol.GetValue(this);
                     if (col.Ident == true) continue;  //Se è identity non va nella insert
 
                     qryTestata += col.Nm + ", ";
@@ -159,7 +159,7 @@ namespace Main.DBs
                         valXqry = col.ValXqryList; //valXqryList al suo interno cicla i valori per renderli compatibili con sql, quindi la richiamo solamente una volta per le prestazioni 
                         if (valori.Count != valXqry.Count)
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "per la tabella:<" + Nm + ">, la colonna:<" + col.Nm + "> ha un numero valori di:<" + valXqry.Count + "> mentre la prima colonna ne prevedeva:<" + valori.Count + "> la insert sarà annullata"));
+                            Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "per la tabella:<" + Nm + ">, la colonna:<" + col.Nm + "> ha un numero valori di:<" + valXqry.Count + "> mentre la prima colonna ne prevedeva:<" + valori.Count + "> la insert sarà annullata"));
                             return false;
                         }
                         for (int i = 0; i < valori.Count; i++)
@@ -279,20 +279,20 @@ namespace Main.DBs
         public bool UpdateWithPKValue(ref SqlObj sql, NuovaConn nuovaConn = NuovaConn.seNecessario, StrConnection strConn = null, CommitRoll commitRollback = CommitRoll.commitRollback,
      Int32 timeOutQuery = 0, Mess logMess = null)
         {
-            string where, val; Colonna col;
+            string where, val; Column col;
             where = "";
 
             foreach (FieldInfo proprietàCol in this.GetType().GetFields())
             {  //Scorro tutti i field della classe che eredita da TabellaBase alla ricerca delle colonne
-                if (proprietàCol.FieldType != typeof(Colonna)) continue;
-                col = (Colonna)proprietàCol.GetValue(this);
+                if (proprietàCol.FieldType != typeof(Column)) continue;
+                col = (Column)proprietàCol.GetValue(this);
 
                 if (col.PrimKey == false) continue;  //Se non è PrimKey la scarto
                 val = col.ValXqry;
 
                 if (val == "NULL" || val == "DEFAULT")
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Non è stata valorizzata la colonna chiave:<" + col.Nm + ">"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Non è stata valorizzata la colonna chiave:<" + col.Nm + ">"));
                     return false;
                 }
 
@@ -301,7 +301,7 @@ namespace Main.DBs
 
             if (where == "")
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Nella tabella non sono presenti campi chiave"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Nella tabella non sono presenti campi chiave"));
                 return false;
             }
 
@@ -323,23 +323,23 @@ namespace Main.DBs
 
         public bool Update(string where, bool wherePresente, ref SqlObj sql, NuovaConn nuovaConn, StrConnection strConn, CommitRoll commitRollback, Int32 timeOutQuery, Mess logMess)
         {
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
             if (where == null) where = "";
 
             if (wherePresente == true && where == "") { //Serve poichè inibisce la possibilità di eseguire la query senza la parte where 
                 logMess.testoDaLoggare = "ricevuto 'wherePresente' a true, ma ricevuto 'where' a nothing o vuoto";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare));
                 return false;
             }
 
             if (sql == null) sql = new SqlObj();
 
-            string query, qrySet, val; Colonna col;
+            string query, qrySet, val; Column col;
             qrySet = "";
 
             foreach (FieldInfo proprietàCol in this.GetType().GetFields()) {  //Scorro tutti i field della classe che eredita da TabellaBase alla ricerca delle colonne
-                if (proprietàCol.FieldType != typeof(Colonna)) continue;
-                col = (Colonna)proprietàCol.GetValue(this);
+                if (proprietàCol.FieldType != typeof(Column)) continue;
+                col = (Column)proprietàCol.GetValue(this);
 
                 if (col.Ident == true) continue;  //Se è identity non va nella Update
                 val = col.ValXqry;
@@ -420,11 +420,11 @@ namespace Main.DBs
         public bool Delete(string where, bool wherePresente, ref SqlObj sql, NuovaConn nuovaConn, StrConnection strConn, CommitRoll commitRollback, Int32 timeOutQuery, Mess logMess)
         {
 
-            if (logMess == null) logMess = new Mess(Tipi.ERR, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.ERR, Log.main.errUserText);
             if (where == null) where = "";
 
             if (wherePresente == true && where == "") { //Serve poichè inibisce la possibilità di eseguire la query senza la parte where 
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "ricevuto 'wherePresente' a true, ma ricevuto 'where' a nothing o vuoto"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "ricevuto 'wherePresente' a true, ma ricevuto 'where' a nothing o vuoto"));
                 return false;
                 }
 

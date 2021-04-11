@@ -176,7 +176,7 @@ namespace Main.FSes
 
         public bool CalculateFileList(Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi._Nothing, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType._Nothing, Log.main.warnUserText);
             FilesSelected = new BindingList<string>();
 
             ValidMySelf();

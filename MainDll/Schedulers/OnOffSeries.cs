@@ -16,7 +16,7 @@ namespace Main.Schedulers
         public OnOffSeries(params UInt16[] onOffTuple)
         {
             if (onOffTuple.Length % 2 > 0)
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "L'array onOffTuple contiene un numero di on off non pari, onOffTuple.Length:<" + onOffTuple.Length + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "L'array onOffTuple contiene un numero di on off non pari, onOffTuple.Length:<" + onOffTuple.Length + ">")));
 
             for (int i = 0; i < onOffTuple.Length; i += 2)
                 this.Items.Add(new OnOff(onOffTuple[i], onOffTuple[i + 1]));

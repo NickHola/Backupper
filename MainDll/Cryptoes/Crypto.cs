@@ -35,7 +35,7 @@ namespace Main.Cryptoes
             }
             else
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto oggetto testoOFlusso di tipo sconosciuto, type:<" + testoOFlusso.GetType().Name + ">, baseType:<" + testoOFlusso.GetType().BaseType.Name + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto oggetto testoOFlusso di tipo sconosciuto, type:<" + testoOFlusso.GetType().Name + ">, baseType:<" + testoOFlusso.GetType().BaseType.Name + ">"));
                 return false;
             }
 
@@ -53,7 +53,7 @@ namespace Main.Cryptoes
         {
             DES des;
             byte[] tmpCripto1, tmpCripto2;
-            if (logMess == null) logMess = new Mess(Tipi.ERR, "");
+            if (logMess == null) logMess = new Mess(LogType.ERR, "");
 
             des = keyDes == "" ? new DES("", true) : new DES(keyDes, false);
 
@@ -93,7 +93,7 @@ namespace Main.Cryptoes
 
             if (sovraScrivi == false && File.Exists(percorsoENomeFile))
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> è già esistente"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> è già esistente"));
                 return false;
             }
 
@@ -107,7 +107,7 @@ namespace Main.Cryptoes
             }
             catch (Exception ex)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione ex.mess:<" + ex.Message + ">"));
                 return false;
             }
 

@@ -40,9 +40,9 @@ namespace Main.DBs
 
         private class AnalisiColonna
         {
-            public readonly Colonna colonna;
+            public readonly Column colonna;
             public bool controllato;
-            public AnalisiColonna(Colonna colonna)
+            public AnalisiColonna(Column colonna)
             {
                 this.colonna = colonna;
                 controllato = false;
@@ -90,9 +90,9 @@ namespace Main.DBs
 
                     foreach (FieldInfo proprietaCampo in tipoTabella.GetFields())
                     {
-                        if (proprietaCampo.FieldType == typeof(Colonna))
+                        if (proprietaCampo.FieldType == typeof(Column))
                         {
-                            Colonna col = (Colonna)proprietaCampo.GetValue(tab);
+                            Column col = (Column)proprietaCampo.GetValue(tab);
                             if (col == null)
                             {
                                 listaErr.Add("In definizione nella tab:<" + tab.Nm + "> è definita la colonna " + proprietaCampo.Name + " ma il valore è null, manca quindi l'instanza della colonna nel costruttore della tabella");
@@ -115,7 +115,7 @@ namespace Main.DBs
             DataTable sqlIdent = new DataTable();
             DataTable sqlFK = new DataTable();
             string nomeTabInSql, nomeColInSql, testoErrTab, testoErrCol;
-            TipiColonna.Base tipoColInSql;
+            ColumnTypes.Base tipoColInSql;
 
 
             if (sql.ExecQuery(Sql.sel + "table_name FROM information_schema.tables", res: ref sqlTab) == false) return false; //Recupera sia tabelle che viste
@@ -174,7 +174,7 @@ namespace Main.DBs
                     //*****verifica esistenza colonne in definizione
 
                     var listaColInDef = from tmp in analisiTabDef.colonne where tmp.colonna.Nm == nomeColInSql select tmp;
-                    Colonna colInDef;
+                    Column colInDef;
 
                     if (listaColInDef.Count() == 0)
                     {
@@ -201,7 +201,7 @@ namespace Main.DBs
                             if (colInDef.ValNull == false) listaErr.Add("In sql " + testoErrTab + testoErrCol + " può essere null, in definizione no"); //Non serve Continue For cos' controllo anche altri errori
                             break;
                         default:
-                            Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " ha il valore IS_NULLABLE sconosciuto, valore:<" + colInSql["IS_NULLABLE"].ToString() + ">"));
+                            Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " ha il valore IS_NULLABLE sconosciuto, valore:<" + colInSql["IS_NULLABLE"].ToString() + ">"));
                             continue;
                     }
 
@@ -221,7 +221,7 @@ namespace Main.DBs
                         }
                         else
                         {
-                            Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " ha il valore COLUMN_DEFAULT con formato sconosciuto, valore:<" + colInSql["COLUMN_DEFAULT"].ToString() + ">"));
+                            Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " ha il valore COLUMN_DEFAULT con formato sconosciuto, valore:<" + colInSql["COLUMN_DEFAULT"].ToString() + ">"));
                             continue;
                         }
                     }
@@ -242,26 +242,26 @@ namespace Main.DBs
                         case "nvarchar":
                             if (Convert.IsDBNull(colInSql["CHARACTER_MAXIMUM_LENGTH"]))
                             {   //se è NVarChar(MAX) la colonna CHARACTER_MAXIMUM_LENGTH vale -1 
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH è null"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH è null"));
                                 continue;
                             }
                             else if (colInSql["CHARACTER_MAXIMUM_LENGTH"].IsNumeric() == false)
                             {
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH non è numerico, valore:<" + colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString() + ">"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH non è numerico, valore:<" + colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString() + ">"));
                                 continue;
                             }
                             else if (Num.ContieneCaratNum(colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString(), ctrlSegno: false))
                             {
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH contiene caratteri disattesi, valore:<" + colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString() + ">"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo NVarChar ma il valore di CHARACTER_MAXIMUM_LENGTH contiene caratteri disattesi, valore:<" + colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString() + ">"));
                                 continue;
                             }
                             else if (colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString() == "-1")
                             { //-1 è NVarChar(MAX)
-                                tipoColInSql = new TipiColonna.NVarChar("MAX");
+                                tipoColInSql = new ColumnTypes.NVarChar("MAX");
                             }
                             else
                             {
-                                tipoColInSql = new TipiColonna.NVarChar(colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString());
+                                tipoColInSql = new ColumnTypes.NVarChar(colInSql["CHARACTER_MAXIMUM_LENGTH"].ToString());
                             }
                             break;
 
@@ -269,28 +269,28 @@ namespace Main.DBs
 
                             if (Convert.IsDBNull(colInSql["NUMERIC_PRECISION"]) || Convert.IsDBNull(colInSql["NUMERIC_SCALE"]))
                             {
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE è null, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE è null, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
                                 continue;
                             }
                             else if (colInSql["NUMERIC_PRECISION"].IsNumeric() == false || colInSql["NUMERIC_SCALE"].IsNumeric() == false)
                             {
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE non è numerico, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE non è numerico, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
                                 continue;
                             }
                             else if (Num.ContieneCaratNum(colInSql["NUMERIC_PRECISION"].ToString()) || Num.ContieneCaratNum(colInSql["NUMERIC_SCALE"].ToString()))
                             {
-                                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE contiene caratteri disattesi, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
+                                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "In sql " + testoErrTab + testoErrCol + " è di tipo Decimal ma il valore di NUMERIC_PRECISION o NUMERIC_SCALE contiene caratteri disattesi, NUMERIC_PRECISION:<" + colInSql["NUMERIC_PRECISION"].ToString() + ">, NUMERIC_SCALE:<" + colInSql["NUMERIC_SCALE"].ToString() + ">"));
                                 continue;
                             }
                             else
                             {
-                                tipoColInSql = new TipiColonna.Decimal(Convert.ToUInt32(colInSql["NUMERIC_PRECISION"]), Convert.ToUInt32(colInSql["NUMERIC_SCALE"]));
+                                tipoColInSql = new ColumnTypes.Decimal(Convert.ToUInt32(colInSql["NUMERIC_PRECISION"]), Convert.ToUInt32(colInSql["NUMERIC_SCALE"]));
                             }
                             break;
 
                         default:  //Tipo di colonna senza costruttore
                             var tipo = from tmp in Assembly.GetExecutingAssembly().GetTypes()
-                                       where tmp.IsClass == true && tmp.BaseType == typeof(TipiColonna.Base) && tmp.Name.ToLower() == (string)colInSql["DATA_TYPE"].ToString().ToLower()
+                                       where tmp.IsClass == true && tmp.BaseType == typeof(ColumnTypes.Base) && tmp.Name.ToLower() == (string)colInSql["DATA_TYPE"].ToString().ToLower()
                                        select tmp;
 
                             if (tipo.Count() == 0)
@@ -298,7 +298,7 @@ namespace Main.DBs
                                 listaErr.Add("In sql " + testoErrTab + testoErrCol + " è di tipo sconoscito, DATA_TYPE:<" + colInSql["DATA_TYPE"].ToString() + ">");
                                 continue;
                             }
-                            tipoColInSql = (TipiColonna.Base)Activator.CreateInstance(tipo.ElementAt(0));
+                            tipoColInSql = (ColumnTypes.Base)Activator.CreateInstance(tipo.ElementAt(0));
                             break;
                     }
 

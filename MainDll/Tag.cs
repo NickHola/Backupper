@@ -29,7 +29,7 @@ namespace Main
             if (ogg.Tag == null) ogg.Tag = new ConcurrentDictionary<string, object>();
             if (Concur.Dictionary_TryAddOrUpdate((ConcurrentDictionary<string, object>)ogg.Tag, tag) == false)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Non sono riuscito a scrivere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Non sono riuscito a scrivere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
                 return false;
             }
             return true;
@@ -40,17 +40,17 @@ namespace Main
 
             if (ogg.Tag == null)
             {
-                if (errSeMancante == true) Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Nel controllo ogg.Name:<" + ogg.Name + "> manca la tag di nome:<" + tag.Key + ">, ogg.Tag è a nothing "));
+                if (errSeMancante == true) Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Nel controllo ogg.Name:<" + ogg.Name + "> manca la tag di nome:<" + tag.Key + ">, ogg.Tag è a nothing "));
                 return false;
             }
             bool esiste;
             if (Concur.Dictionary_TryGet((ConcurrentDictionary<string, object>)ogg.Tag, tag.Key, ref valore, out esiste) == false)
             {
                 if (esiste == true)
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Non sono riuscito a leggere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Non sono riuscito a leggere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
                 else
                 {
-                    if (errSeMancante == true) Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Nel controllo ogg.Name:<" + ogg.Name + "> manca la tag di nome:<" + tag.Key + ">"));
+                    if (errSeMancante == true) Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Nel controllo ogg.Name:<" + ogg.Name + "> manca la tag di nome:<" + tag.Key + ">"));
                 }
                 return false;
             }
@@ -62,7 +62,7 @@ namespace Main
 
             if (Concur.Dictionary_TryRemove((ConcurrentDictionary<string, object>)ogg.Tag, tag) == false)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Non sono riuscito a rimuovere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Non sono riuscito a rimuovere la tag di nome:<" + tag.Key + "> sul controllo ogg.Name:<" + ogg.Name + ">"));
                 return false;
             }
             return true;
@@ -71,7 +71,7 @@ namespace Main
         {
             if (ogg == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto parametro ogg a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto parametro ogg a nothing"));
                 return false;
             }
             //Una struttura non può essere null
@@ -81,7 +81,7 @@ namespace Main
 
             if (tag.Key == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "La key del parametro tag è nothing"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "La key del parametro tag è nothing"));
                 return false;
             }
 

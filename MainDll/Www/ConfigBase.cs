@@ -24,7 +24,7 @@ namespace Main.Www
                 if (value == 0)
                 {
                     value = 1;
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "ricevuto value a 0, valore minimo 1"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "ricevuto value a 0, valore minimo 1"));
                 }
                 maxParallelStreams = value;
             }
@@ -49,7 +49,7 @@ namespace Main.Www
                 Validation.CtrlValue(value);
                 if (value == 0)
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 1 impostato"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 1 impostato"));
                     value = 1;
                 }
                 defaultTimeoutSec = value;
@@ -65,7 +65,7 @@ namespace Main.Www
                 if (value < 10)
                 {
                     value = 10;
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 10 impostato"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 10 impostato"));
                 }
                 maxItemInStatisticsQueue = value;
             }
@@ -80,7 +80,7 @@ namespace Main.Www
                 if (value < 8)
                 {
                     value = 8;
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 8 impostato"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "ricevuto valore value:<" + value + ">, valore minimo 8 impostato"));
                 }
                 checkKBSecInterval = value;
             }

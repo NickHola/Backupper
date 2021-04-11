@@ -16,7 +16,7 @@ namespace Main.Schedulers
         public MonthsAndDays(params byte[] coppieGiornoMese)
         {
             if (coppieGiornoMese.Length % 2 > 0)
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "L'array coppieGiornoMese contiene un numero di giorni mesi non pari, coppieGiornoMese.Length:<" + coppieGiornoMese.Length + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "L'array coppieGiornoMese contiene un numero di giorni mesi non pari, coppieGiornoMese.Length:<" + coppieGiornoMese.Length + ">")));
 
             for (int i = 0; i < coppieGiornoMese.Length; i += 2)
                 this.Items.Add(new MonthAndDay(coppieGiornoMese[i], coppieGiornoMese[i + 1]));
@@ -37,9 +37,9 @@ namespace Main.Schedulers
             set
             {
                 if (value > 12)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "Il mese non può essere maggiore di 12", "Rcevuto value maggiore di 12, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "Il mese non può essere maggiore di 12", "Rcevuto value maggiore di 12, value:<" + value + ">")));
                 if (ItemValidation(value, day) == false)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "Mese e giorno non validi", "Combinazione di mese e giorno non validi, mese:<" + value + ">, giorno:<" + Day + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "Mese e giorno non validi", "Combinazione di mese e giorno non validi, mese:<" + value + ">, giorno:<" + Day + ">")));
 
                 month = value;
                 OnPropertyChanged();
@@ -51,9 +51,9 @@ namespace Main.Schedulers
             set
             {
                 if (value > 31)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "Il giorno non può essere maggiore di 31", "Rcevuto value maggiore di 31, value:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "Il giorno non può essere maggiore di 31", "Rcevuto value maggiore di 31, value:<" + value + ">")));
                 if (ItemValidation(month, value) == false)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "Mese e giorno non validi", "Combinazione di mese e giorno non validi, mese:<" + Month + ">, giorno:<" + value + ">")));
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, "Mese e giorno non validi", "Combinazione di mese e giorno non validi, mese:<" + Month + ">, giorno:<" + value + ">")));
 
                 day = value;
                 OnPropertyChanged();
@@ -68,7 +68,7 @@ namespace Main.Schedulers
             {
                 Validation.CtrlValue(value);
 
-                Mess logMess = new Mess(Tipi._Nothing, Log.main.errUserText);
+                Mess logMess = new Mess(LogType._Nothing, Log.main.errUserText);
                 if (ChkStringSyntax(value, aggiornaProprietà: true, logMess: logMess) == false)
                 {
                     bool logFound;
@@ -109,7 +109,7 @@ namespace Main.Schedulers
 
         private bool ChkStringSyntax(string strMonthDay, MonthAndDay monthDay = null, bool aggiornaProprietà = false, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi._Nothing, "");
+            if (logMess == null) logMess = new Mess(LogType._Nothing, "");
 
             string[] splitProp;
 

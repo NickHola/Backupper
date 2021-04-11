@@ -15,7 +15,7 @@ namespace Main
         public static bool CreaBloccoAnimazioni(Style stile, List<Condition> condizioni, List<Timeline> animazioniEntrata, List<Timeline> animazioniUscita = null,
                                      bool RemoveStbInUscita = true, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (stile == null)
             {

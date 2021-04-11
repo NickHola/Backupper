@@ -238,7 +238,7 @@ namespace Main.Schedulers
                     if (PeriodicCycle.VerificaSeEseguibile(lastTimeExec, dataAtt, WeekStartsDay, ref firmaEsecuzioneAttuale) == false)
                         return false;
                     else
-                        Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto PeriodicCycle a null ma isPeriodicCycleEnabled a true"));
+                        Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto PeriodicCycle a null ma isPeriodicCycleEnabled a true"));
             }
 
             //Attenzione: i vari Exec possono ritornare anche null
@@ -277,7 +277,7 @@ namespace Main.Schedulers
         {
             if (hourlyPeriods == null)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto hourlyPeriods a null ma isPeriodicCycleEnabled a true"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto hourlyPeriods a null ma isPeriodicCycleEnabled a true"));
                 return null;      //Non ci sono filtri per periodi di orari quindi torno null
             }
             if (hourlyPeriods.Count == 0) return null;
@@ -295,7 +295,7 @@ namespace Main.Schedulers
                 else if (oraInizio > oraFine) { if (dataAtt >= oraInizio || dataAtt <= oraFine) esitoControllo = true; } //Significa che l'ora fine VA OLTRE la mezzanotte, esempio oraInizio = 20:00 - oraFine = 00:30
                 else
                 { //Date uguali 
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Inserite date identiche nel periodo orario"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Inserite date identiche nel periodo orario"));
                     if (dataAtt == oraInizio) esitoControllo = true;
                 }
 
@@ -315,7 +315,7 @@ namespace Main.Schedulers
         {
             if (weekDays == null)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto weekDays a null ma isWeekDaysEnabled a true"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto weekDays a null ma isWeekDaysEnabled a true"));
                 return null;     //Non ci sono filtri per GiorniSett
             }
             if (weekDays.Count == 0) return null;
@@ -335,7 +335,7 @@ namespace Main.Schedulers
         {
             if (monthsAndDays == null)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto monthsAndDays a null ma isMonthsAndDaysEnabled a true"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto monthsAndDays a null ma isMonthsAndDaysEnabled a true"));
                 return null;
             }
             if (monthsAndDays.Count == 0) return null;
@@ -361,7 +361,7 @@ namespace Main.Schedulers
         {
             if (yearWeeks == null)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto yearWeeks a null ma isYearWeeksEnabled a true"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto yearWeeks a null ma isYearWeeksEnabled a true"));
                 return null;
             }
             if (yearWeeks.Count == 0) return null;
@@ -386,7 +386,7 @@ namespace Main.Schedulers
         {
             if (yearDays == null)
             {
-                Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "oggetto yearDays a null ma isYearDaysEnabled a true"));
+                Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "oggetto yearDays a null ma isYearDaysEnabled a true"));
                 return null;     //Non ci sono filtri per GiorniSett
             }
             if (yearDays.Count == 0) return null;

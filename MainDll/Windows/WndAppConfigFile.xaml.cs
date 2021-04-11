@@ -105,7 +105,7 @@ namespace Main
                 App.config = (Apps.AppConfigFile)App.config.LoadFromFile(out bool inErr);
                 if  (inErr == false)
                 {
-                    Log.main.Add(new Mess(Tipi.info, "Configurazione salvata correttamente"));
+                    Log.main.Add(new Mess(LogType.info, "Configurazione salvata correttamente"));
                     this.Close();
                 }
                 else

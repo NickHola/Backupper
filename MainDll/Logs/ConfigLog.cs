@@ -22,7 +22,7 @@ namespace Main.Logs2
 
                 Validation.CtrlValue(value);
                 if (FS. ValidaPercorsoFile(value, false, out _) == false)
-                    throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi._Nothing, ""))); //Viene già loggato in ValidaPercorsoFile
+                    throw new Exception(Excep.ScriviLogInEx(new Mess(LogType._Nothing, ""))); //Viene già loggato in ValidaPercorsoFile
 
                 percorsoFile = value;
             }

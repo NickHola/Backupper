@@ -15,7 +15,7 @@ namespace Main.DataOre
         public HourlyPeriods(params Orario[] coppieOnOff)
         {
             if (coppieOnOff.Length % 2 > 0)
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "L'array coppieOnOff contiene un numero di orari non pari, coppieOnOff.Length:<" + coppieOnOff.Length + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "L'array coppieOnOff contiene un numero di orari non pari, coppieOnOff.Length:<" + coppieOnOff.Length + ">")));
 
             for (int i = 0; i < coppieOnOff.Length - 1; i += 2)
                 this.Items.Add(new PeriodoOrario(coppieOnOff[i], coppieOnOff[i + 1]));
@@ -23,7 +23,7 @@ namespace Main.DataOre
         public HourlyPeriods(params string[] coppieOnOff)
         {
             if (coppieOnOff.Length % 2 > 0)
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "L'array coppieOnOff contiene un numero di orari non pari, coppieOnOff.Length:<" + coppieOnOff.Length + ">")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "L'array coppieOnOff contiene un numero di orari non pari, coppieOnOff.Length:<" + coppieOnOff.Length + ">")));
 
             for (int i = 0; i < coppieOnOff.Length - 1; i += 2)
                 this.Items.Add(new PeriodoOrario(new Orario(coppieOnOff[i]), new Orario(coppieOnOff[i + 1])));

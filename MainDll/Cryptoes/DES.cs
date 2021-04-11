@@ -43,7 +43,7 @@ namespace Main.Cryptoes
 
             if (flussoDecript == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoDecript a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoDecript a null"));
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace Main.Cryptoes
 
             if (flussoCript == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoCript a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoCript a null"));
                 return false;
             }
 
@@ -72,7 +72,7 @@ namespace Main.Cryptoes
                 oggDecript.Write(flussoCript, 0, flussoCript.Length);
                 oggDecript.FlushFinalBlock();
             } catch (Exception ex) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Eccezione flussoCript:<" + flussoCript.ToString() + "> ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Eccezione flussoCript:<" + flussoCript.ToString() + "> ex.mess:<" + ex.Message + ">"));
                 return false;
             }
 
@@ -85,12 +85,12 @@ namespace Main.Cryptoes
 
             if (testoDecript == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto testoDecript a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto testoDecript a null"));
                 return false;
             }
 
             if (testoDecript.Length == 0) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto testoDecript vuoto"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto testoDecript vuoto"));
                 return false;
             }
 
@@ -110,12 +110,12 @@ namespace Main.Cryptoes
 
             if (flussoCript == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoCript a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoCript a null"));
                 return false;
             }
 
             if (flussoCript.Length == 0) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoCript vuoto"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoCript vuoto"));
                 return false;
             }
 
@@ -144,7 +144,7 @@ namespace Main.Cryptoes
             testoDecript = "";
 
             if (File.Exists(percorsoENomeFile) == false) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Il file in percorsoENomeFile:<" + percorsoENomeFile + "> non esiste"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Il file in percorsoENomeFile:<" + percorsoENomeFile + "> non esiste"));
                 return false;
             }
 
@@ -164,7 +164,7 @@ namespace Main.Cryptoes
             flussoDecript = new byte[0];
 
             if (File.Exists(percorsoENomeFile) == false) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> non esistente"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> non esistente"));
                 return false;
             }
 
@@ -184,7 +184,7 @@ namespace Main.Cryptoes
             flussoCript = new byte[0];
 
             if (File.Exists(percorsoENomeFile) == false) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> non esistente"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Il percorsoENomeFile:<" + percorsoENomeFile + "> non esistente"));
                 return false;
             }
 
@@ -204,12 +204,12 @@ namespace Main.Cryptoes
 
             if (flussoCript == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoCript a null"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoCript a null"));
                 return false;
             }
 
             if (flussoCript.Length == 0) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "Ricevuto flussoCript vuoto"));
+                Log.main.Add(new Mess(LogType.ERR, "", "Ricevuto flussoCript vuoto"));
                 return false;
             }
 

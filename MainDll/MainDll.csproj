@@ -72,7 +72,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anags\Tabella.cs" />
+    <Compile Include="Anags\Table.cs" />
     <Compile Include="Anim.cs" />
     <Compile Include="Apps\App.cs" />
     <Compile Include="Apps\AppConfigFile.cs" />
@@ -149,7 +149,7 @@
     <Compile Include="Binds\Converters\BooleanToVisible.cs" />
     <Compile Include="Binds\Converters\ObjTypeNameIs.cs" />
     <Compile Include="Binds\Converters\Converters.cs" />
-    <Compile Include="Binds\Converters\EnumToStringa.cs" />
+    <Compile Include="Binds\Converters\EnumToString.cs" />
     <Compile Include="Binds\Converters\InvertiBoolean.cs" />
     <Compile Include="Binds\Converters\NullToCollapsed.cs" />
     <Compile Include="Binds\Converters\ParamEnumToStringa.cs" />
@@ -165,13 +165,13 @@
     <Compile Include="DBTabs\ImpostApp.cs" />
     <Compile Include="DBTabs\Utenti.cs" />
     <Compile Include="DBTabs\UtentiGruppi.cs" />
-    <Compile Include="DBs\Colonna.cs" />
+    <Compile Include="DBs\Column.cs" />
     <Compile Include="DBs\DBUtil.cs" />
     <Compile Include="DBs\DBBase.cs" />
     <Compile Include="DBs\ForeignKey.cs" />
     <Compile Include="DBs\StrConn.cs" />
     <Compile Include="DBs\TabBase.cs" />
-    <Compile Include="DBs\TipiColonna.cs" />
+    <Compile Include="DBs\ColumnTypes.cs" />
     <Compile Include="dll\dll.cs" />
     <Compile Include="Excep.cs" />
     <Compile Include="DotNetClassExtension\Object.cs" />
@@ -196,14 +196,14 @@
     <Compile Include="Logs\ConfigMess.cs" />
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Mess.cs" />
-    <Compile Include="Logs\Tipi.cs" />
+    <Compile Include="Logs\LogType.cs" />
     <Compile Include="Logs\TipiUscMessaggi.cs" />
     <Compile Include="Logs\UscMessaggi.cs" />
     <Compile Include="Logs\WndMessaggi.cs" />
     <Compile Include="MsgBxes\MsgBxM.cs" />
     <Compile Include="MsgBxes\MsgBxButtonSet.cs" />
     <Compile Include="MsgBxes\MsgBxPicture.cs" />
-    <Compile Include="Ordinamenti.cs" />
+    <Compile Include="Sorting.cs" />
     <Compile Include="Regexes\Regex.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="SelectionBehavior.cs" />

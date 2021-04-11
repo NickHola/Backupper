@@ -7,7 +7,7 @@ using Main.Binds;
 namespace Main
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    [TypeConverter(typeof(EnumToStringa))]
+    [TypeConverter(typeof(EnumToString))]
     [Serializable]
     public enum SelectionBehavior
     {

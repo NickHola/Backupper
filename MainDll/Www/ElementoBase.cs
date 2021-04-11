@@ -15,7 +15,7 @@ namespace Main.Www
 
         public readonly string url, idSubsetInList;
         public Progressione progressione;
-        internal Tipi tipoLogTimeout, tipoLogEccezione;
+        internal LogType tipoLogTimeout, tipoLogEccezione;
 
                
         public event EventHandler SubsetOperationEnded;
@@ -90,7 +90,7 @@ namespace Main.Www
             { //Si può settare solamente 1 volta per sicurezza
                 if (idItemInList != 0)
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "idInList già è stato settato, non si può modificare", visualMsgBox: false));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "idInList già è stato settato, non si può modificare", visualMsgBox: false));
                     return;
                 }
                 idItemInList = value;
@@ -100,7 +100,7 @@ namespace Main.Www
 
         /// <param name="idSubsetOperaz">Serve per far scatenare l'evento SubsetOperationEnded, quando tutti gli elementi di download con un certo id sono terminati</param>  
         /// <param name="timeoutSec">Se omesso o 0 si prende il valore defaultTimeoutSec dell'oggetto di tipo ConfigDownload, non può essere infinito</param>
-        public ItemBase(string url, byte priority = 128, string idSubsetOperaz = "", int timeoutSec = 0, Progressione progressione = null, Tipi tipoLogTimeout = Tipi.Warn, Tipi tipoLogEccezione = Tipi.ERR) {
+        public ItemBase(string url, byte priority = 128, string idSubsetOperaz = "", int timeoutSec = 0, Progressione progressione = null, LogType tipoLogTimeout = LogType.Warn, LogType tipoLogEccezione = LogType.ERR) {
             this.url = url;
             this.Priority = priority;
             this.idSubsetInList = idSubsetOperaz;

@@ -18,18 +18,18 @@ namespace Main.Validations
             BindingGroup bindingGrp = (BindingGroup)value;
 
             if (bindingGrp.Items.Count == 0) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "bindingGrp.Items.Count == 0", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "bindingGrp.Items.Count == 0", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
 
             object ogg = bindingGrp.Items[0];
 
             if (typeof(ISortBindObj).IsAssignableFrom(ogg.GetType()) == false) { //Verifico se il tipo dell'oggetto implementa ISortBindObj
-                Log.main.Add(new Mess(Tipi.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement ISortBindObj", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement ISortBindObj", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
             if (typeof(IValidation).IsAssignableFrom(ogg.GetType()) == false) { //Verifico se il tipo degli oggetti T implementa l'interfaccia SortBindObj
-                Log.main.Add(new Mess(Tipi.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement IValidation", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "ogg.GetType():<" + ogg.GetType().ToString() + "> doesn't implement IValidation", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
 
@@ -39,7 +39,7 @@ namespace Main.Validations
                 (ogg as ISortBindObj).SincroValidazioneRiordino = SincroValidazioneRiordino.InValidazione;
                 validationResult = (ogg as IValidation).ValidMySelf();
             } catch (Exception ex) {
-                Log.main.Add(new Mess(Tipi.ERR, "", "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
+                Log.main.Add(new Mess(LogType.ERR, "", "ex.mess:<" + ex.Message + ">", visualMsgBox: false));
                 return new ValidationResult(false, "Internal exception, see log");
             }
              finally {

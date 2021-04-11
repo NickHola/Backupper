@@ -16,7 +16,7 @@ namespace Main.Concurs
             T1 key; T2 value, currentValue;
             currentValue = default(T2);
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (dizionario == null)
             {
@@ -99,7 +99,7 @@ namespace Main.Concurs
             DateTime oraInizio = DateTime.MinValue;
             esiste = false;
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (dizionario == null)
             {
@@ -140,7 +140,7 @@ namespace Main.Concurs
         { //Concurrent.ConcurrentDictionary(Of Object, Object)
             T1 key; DateTime oraInizio = DateTime.MinValue; T2 tmpObj;
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (dizionario == null)
             {
@@ -203,7 +203,7 @@ namespace Main.Concurs
         { //queue As Concurrent.ConcurrentQueue(Of Object)
             DateTime oraInizio = DateTime.MinValue;
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (queue == null)
             {
@@ -232,7 +232,7 @@ namespace Main.Concurs
         public static bool Queue_TryDequeue<T1>(ConcurrentQueue<T1> queue, ref T1 oggetto, UInt32 timeOutMs = 150, Mess logMess = null)
         { //queue As Concurrent.ConcurrentQueue(Of Object)
             DateTime oraInizio = DateTime.MinValue;
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (queue == null)
             {

@@ -14,7 +14,7 @@ namespace Main.Binds
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (targetType != typeof(Visibility)) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Il target deve essere Visibility")));
+            if (targetType != typeof(Visibility)) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Il target deve essere Visibility")));
 
             if (value == null) {
                 return Visibility.Collapsed;
@@ -29,7 +29,7 @@ namespace Main.Binds
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, "", Converters.errCnvBackNotImpl)));
+            throw new NotImplementedException(Excep.ScriviLogInEx(new Mess(LogType.ERR, "", Converters.errCnvBackNotImpl)));
         }
     }
 }

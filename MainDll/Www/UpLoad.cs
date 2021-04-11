@@ -33,7 +33,7 @@ namespace Main.Www
         {
             if (elemUpload == null)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto elemUpload a nothing"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto elemUpload a nothing"));
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace Main.Www
                 {
                     if (DataOra.AttesaTempo(ref tmpAttesa, 1000) == true)
                     {
-                        Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Da quando client non è Busy, lo statoUpload non si è aggiornato in tempo utile, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + ">", visualMsgBox: false));
+                        Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Da quando client non è Busy, lo statoUpload non si è aggiornato in tempo utile, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + ">", visualMsgBox: false));
                         elemUpload.UploadState = UplItemState.Eccezione;
                         client.Dispose();
                         break;
@@ -183,7 +183,7 @@ namespace Main.Www
 
                     if (elemUpload.Data.Length != ftpResponse.ContentLength)
                     {
-                        Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Rilevate dimensioni differenti tra dati da inviare e dati inviati, elemUpload.dati.Length:<" + elemUpload.Data.Length + ">, ftpResponse.ContentLength:<" + ftpResponse.ContentLength + ">, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + ">"));
+                        Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Rilevate dimensioni differenti tra dati da inviare e dati inviati, elemUpload.dati.Length:<" + elemUpload.Data.Length + ">, ftpResponse.ContentLength:<" + ftpResponse.ContentLength + ">, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + ">"));
                         ftpResponse.Close();
                         return;
                     }
@@ -200,7 +200,7 @@ namespace Main.Www
 
                     if (ftpStatusCode != FtpStatusCode.FileActionOK)
                     {
-                        Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Non sono riuscito a rinominare il file, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + "> in elemUpload.nomeFile:<" + elemUpload.FileName + ">"));
+                        Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "Non sono riuscito a rinominare il file, fullUrlIniziale:<" + fullUrlIniziale.OriginalString + "> in elemUpload.nomeFile:<" + elemUpload.FileName + ">"));
                         ftpResponse.Close();
                         return;
                     }
@@ -247,14 +247,14 @@ namespace Main.Www
             catch (TargetInvocationException ex)
             {  //Si verifica quando il threadDownload viene stoppat mentre si sta ancora effettuando il download
                 if (elem.UploadState == UplItemState.UplAvviato) elem.UploadState = UplItemState.Eccezione;
-                Log.main.Add(new Mess(Tipi.Warn, "", "TargetInvocationException, ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.Warn, "", "TargetInvocationException, ex.mess:<" + ex.Message + ">"));
                 return;
 
             }
             catch (Exception ex)
             {
                 if (elem.UploadState == UplItemState.UplAvviato) elem.UploadState = UplItemState.Eccezione;
-                Log.main.Add(new Mess(Tipi.Warn, "", "ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.Warn, "", "ex.mess:<" + ex.Message + ">"));
                 return;
             }
         }

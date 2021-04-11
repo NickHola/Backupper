@@ -9,18 +9,18 @@ namespace Main.DBTabs
 {
     public class ImpostApp : TabellaBase
     {
-        public Colonna id, tipo, padre, nomePc, nome, valore, fk_utentiUte, ultData;
+        public Column id, tipo, padre, nomePc, nome, valore, fk_utentiUte, ultData;
         
         internal ImpostApp() : base(nomeUtente: "impostazioni dell'aplicazione") //Non istanziabile fuori dall'assembly
         {
-            id = new Colonna(this, "id", new TipiColonna.BigInt(), primKey: true, ident: true);
-            tipo = new Colonna(this, "tipo", new TipiColonna.NVarChar("100"));
-            padre = new Colonna(this, "padre", new TipiColonna.NVarChar("150"));
-            nomePc = new Colonna(this, "nomePc", new TipiColonna.NVarChar("255"));
-            nome = new Colonna(this, "nome", new TipiColonna.NVarChar("150"));
-            valore = new Colonna(this, "valore", new TipiColonna.NVarChar("max"));  //Conterrà la serializzazione del suo configXXX in json 
-            fk_utentiUte = new Colonna(this, "fk_utentiUte", new TipiColonna.BigInt(), tabFk: new List<Type>() { typeof(DBTabs.Utenti) }, nomeUtente: "utente");
-            ultData = new Colonna(this, "ultData", new TipiColonna.DateTime(), nomeUtente: "ultima data di modifica");
+            id = new Column(this, "id", new ColumnTypes.BigInt(), primKey: true, ident: true);
+            tipo = new Column(this, "tipo", new ColumnTypes.NVarChar("100"));
+            padre = new Column(this, "padre", new ColumnTypes.NVarChar("150"));
+            nomePc = new Column(this, "nomePc", new ColumnTypes.NVarChar("255"));
+            nome = new Column(this, "nome", new ColumnTypes.NVarChar("150"));
+            valore = new Column(this, "valore", new ColumnTypes.NVarChar("max"));  //Conterrà la serializzazione del suo configXXX in json 
+            fk_utentiUte = new Column(this, "fk_utentiUte", new ColumnTypes.BigInt(), tabFk: new List<Type>() { typeof(DBTabs.Utenti) }, nomeUtente: "utente");
+            ultData = new Column(this, "ultData", new ColumnTypes.DateTime(), nomeUtente: "ultima data di modifica");
         }
 
     }

@@ -29,7 +29,7 @@ namespace Main
 
         public static object GetResource(string nome, Uri uriPath = null, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             try
             { return Application.Current.FindResource(nome); }
@@ -43,7 +43,7 @@ namespace Main
 
         public static object GetResourceFromDictionary(string nome, string uriPath, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             try
             {
@@ -62,14 +62,14 @@ namespace Main
         public static Color DammiColoreDaEsadec(string esaDec)
         {
             if (esaDec == null)
-                throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Ricevuto esaDec a nothing")));
+                throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Ricevuto esaDec a nothing")));
             try
             {
                 Color colore = Color.FromRgb(Convert.ToByte(esaDec.Substring(0, 2), 16), Convert.ToByte(esaDec.Substring(2, 2), 16), Convert.ToByte(esaDec.Substring(4, 2), 16));
                 return colore;
             }
             catch (Exception ex)
-            { throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"))); }
+            { throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"))); }
         }
 
         public static SolidColorBrush DammiBrushDaEsadec(string esaDec)
@@ -79,7 +79,7 @@ namespace Main
                 return new SolidColorBrush(DammiColoreDaEsadec(esaDec));
             }
             catch (Exception ex)
-            { throw new Exception(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"))); }
+            { throw new Exception(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "Eccezione ex.mess:<" + ex.Message + ">"))); }
         }
 
         public static void DoEvents(int sleep = 1)
@@ -184,7 +184,7 @@ namespace Main
         {
             if (Util.IsDesignTime == true) return currentStyle; //Xaml rendering goes in error with code line: "(Style)XamlReader.Parse(XamlWriter.Save(stileAttuale.BasedOn));", to avoid this check IsDesignTime
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (stylesToAdd == null)
             {
@@ -245,7 +245,7 @@ namespace Main
                     currentStyle.Resources.MergedDictionaries.Add((ResourceDictionary)resorces);
 
                 else
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Trovato nuovo resorces.GetType:<" + resorces.GetType().ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Trovato nuovo resorces.GetType:<" + resorces.GetType().ToString() + ">"));
             }
             foreach (TriggerBase trigger in styleToAdd.Triggers)
             {

@@ -15,18 +15,18 @@ namespace Main.Binds
     //Scrivere "[TypeConverter(Typeof(EnumToStringa))]" prima di Public Enum
     //Se si vogliono modificare i paramtri di default scrive: "[ParamEnumToStringa(lett1Maiu: false)]" prima di Public Enum
     //Se si vuole associare un scritta diversa ad una singola voce dell'enum scrivere : <Description("XX XXX...")> prima della singola voce
-    public class EnumToStringa : EnumConverter
+    public class EnumToString : EnumConverter
     {
-        public EnumToStringa(Type type) : base(type) { }
+        public EnumToString(Type type) : base(type) { }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
 
             string valore, stringaFormattata; bool letteraPrecMaiu;
             stringaFormattata = "";
             ParamEnumToStringa attributo = new ParamEnumToStringa(); //La new serve così ce l'ho inizializzato
-            if (value.GetType().IsEnum == false) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "value non è di tipo IEnumerable")));
+            if (value.GetType().IsEnum == false) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "value non è di tipo IEnumerable")));
 
-            if (destinationType != typeof(string) && destinationType != typeof(object)) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(Tipi.ERR, Log.main.errUserText, "The target must be a boolean")));
+            if (destinationType != typeof(string) && destinationType != typeof(object)) throw new InvalidOperationException(Excep.ScriviLogInEx(new Mess(LogType.ERR, Log.main.errUserText, "The target must be a boolean")));
 
             object[] tmpAttr = value.GetType().GetCustomAttributes(typeof(ParamEnumToStringa), false);
             if (tmpAttr.Count() > 0) attributo = (ParamEnumToStringa)tmpAttr[0];

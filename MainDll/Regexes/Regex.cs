@@ -10,7 +10,7 @@ namespace Main.Regexes
         {
             match = false;
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             if (daValidare == null)
             {
@@ -62,7 +62,7 @@ namespace Main.Regexes
 
         public static bool CheckRegexSyntax(string expression, Mess logMess = null)
         {
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.errUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.errUserText);
 
             try
             {

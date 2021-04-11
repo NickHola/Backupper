@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Main.Logs
 {
     [Serializable]
-    public enum Tipi
+    public enum LogType
     {
         _Nothing,
         info,

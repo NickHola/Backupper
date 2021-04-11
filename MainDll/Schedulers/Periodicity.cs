@@ -102,7 +102,7 @@ namespace Main.Schedulers
                 }
                 else
                 {
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "IsEveryFewUnitEnabled è a true ma everyFewUnit è a 0"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, "IsEveryFewUnitEnabled è a true ma everyFewUnit è a 0"));
                 }
             }
 
@@ -110,11 +110,11 @@ namespace Main.Schedulers
             {
                 if (IsEveryFewUnitEnabled == true)
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Sia IsOnOffUnitSeriesEnabled che IsEveryFewUnitEnabled sono a true"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Sia IsOnOffUnitSeriesEnabled che IsEveryFewUnitEnabled sono a true"));
                 }
                 else if (OnOffUnitSeries == null || OnOffUnitSeries.Count == 0)
                 {
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "IsOnOffUnitSeriesEnabled a true ma OnOffUnitSeries a null o con 0 elementi"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "IsOnOffUnitSeriesEnabled a true ma OnOffUnitSeries a null o con 0 elementi"));
                 }
 
                 firmaEsecuzione += "SerieOnOffDiUnità;" + unit.ToString() + ";";
@@ -133,7 +133,7 @@ namespace Main.Schedulers
 
             if (IsEveryFewUnitEnabled == false && IsOnOffUnitSeriesEnabled == false)
             {
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Sia IsEveryFewUnitEnabled che IsOnOffUnitSeriesEnabled sono a false"));
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Sia IsEveryFewUnitEnabled che IsOnOffUnitSeriesEnabled sono a false"));
                 return false;
             }
 
@@ -190,7 +190,7 @@ namespace Main.Schedulers
                     break;
 
                 default:
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, "Valore disatteso per unità:<" + unita.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, "Valore disatteso per unità:<" + unita.ToString() + ">"));
                     break;
             }
 

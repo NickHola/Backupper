@@ -19,7 +19,7 @@ namespace Main.Zips
         internal static bool inizializza(Mess logMess = null)
         {
 
-            if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+            if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
             SevenZipBase.SetLibraryPath(dll.percorso + nomeDll7Zip);
             progressioniAttuali = new Dictionary<int, Progressione>();
@@ -60,7 +60,7 @@ namespace Main.Zips
 
             try
             {
-                if (logMess == null) logMess = new Mess(Tipi.Warn, Log.main.warnUserText);
+                if (logMess == null) logMess = new Mess(LogType.Warn, Log.main.warnUserText);
 
                 if ((Zip.inizializzato == false) && inizializza(logMess) == false) return false;
 
@@ -72,7 +72,7 @@ namespace Main.Zips
 
                 if (dizionario.Count == 0)
                 {
-                    Log.main.Add(new Mess(Tipi.info, "Non ci sono file da comprimere"));
+                    Log.main.Add(new Mess(LogType.info, "Non ci sono file da comprimere"));
                     return true;
                 }
 
@@ -103,7 +103,7 @@ namespace Main.Zips
             if (oggDaCompr == null)
             {
                 logMess.testoDaLoggare = "ricevuto oggDaCompr a nothing";
-                Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
+                Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
                 return false;
             }
 
@@ -112,7 +112,7 @@ namespace Main.Zips
                 if ((string)oggDaCompr == "")
                 {
                     logMess.testoDaLoggare = "ricevuto oggDaCompr vuoto";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
                     return false;
                 }
                 if (AnalisiOggDaCompr((string)oggDaCompr, ref dizionario, logMess) == false) return false;
@@ -121,7 +121,7 @@ namespace Main.Zips
             {
                 if ((oggDaCompr as List<string>).Count == 0) {
                     logMess.testoDaLoggare = "ricevuto oggDaCompr come lista vuota";
-                    Log.main.Add(new Mess(Tipi.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
+                    Log.main.Add(new Mess(LogType.ERR, Log.main.errUserText, logMess.testoDaLoggare)); //Qui ci va sempre err
                     return false;
                     }
 
