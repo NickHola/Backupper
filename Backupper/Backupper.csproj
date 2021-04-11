@@ -225,12 +225,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MainDll\_C#Dev\MainDll\MainDll.csproj">
-      <Project>{1e18b63d-a3bb-434d-bb38-4fa14ad1d673}</Project>
-      <Name>MainDll</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
