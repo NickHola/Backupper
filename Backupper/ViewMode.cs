@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backupper
 {
-    public enum ViewModes
+    public enum ViewMode
     {
         Compact,
         Full

@@ -23,7 +23,10 @@ namespace Backupper
 
         public string SavableName
         {
-            get { return savableName; }
+            get
+            {
+                return savableName;
+            }
             set
             {
                 CtrlValue(value);
@@ -33,7 +36,10 @@ namespace Backupper
 
         public string SavableParentName
         {
-            get { return savableParentName; }
+            get
+            {
+                return savableParentName;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
@@ -43,7 +49,7 @@ namespace Backupper
 
         #endregion
 
-        static BackupsM instance;
+        private static Lazy<BackupsM> instance = new Lazy<BackupsM>(() => new BackupsM()); //Thread-safe singleton
         bool isEnabled;
         static private bool inLoading;
 
@@ -51,9 +57,7 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new BackupsM();
-                return instance;
+                return instance.Value;
             }
         }
         public bool IsEnabled
@@ -83,20 +87,20 @@ namespace Backupper
             {
                 BackupBaseM backup = ((BackupsM)sender)[e.NewIndex];
                 backup.PropertyChanged += BackupBasePropertyChanged;
-                if (inLoading == false) SaveBackupsAsync();
+                if (inLoading == false) Task.Run(() => SaveBackups());
             }
             if (e.ListChangedType == ListChangedType.ItemDeleted)
             {
-                SaveBackupsAsync();
+                Task.Run(() => SaveBackups());
             }
         }
 
         private void BackupBasePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            SaveBackupsAsync();
+            Task.Run(() => SaveBackups());
         }
 
-        private async Task SaveBackupsAsync()
+        private void SaveBackups()
         {
             switch (SettingsM.Instance.SaveBackupIn)
             {
@@ -108,8 +112,6 @@ namespace Backupper
                     string serialization = "";
                     if (Serialize.SerializeInText(this, ref serialization) == false) return;
                     RESTBackups restBackups = new RESTBackups();
-                    //restBackups.PutBackupsAsync(serialization);
-
                     //restBackups.PutBackupsAsync(serialization);
 
                     Task put = restBackups.PutBackupsAsync(serialization);
@@ -126,14 +128,14 @@ namespace Backupper
                 case BackupsSaveLocation.Db:
                     break;
                 default:
-                    Log.main.Add(new Mess(Tipi.ERR, "", "Received unexpected value for SettingsM.Instance.SaveBackupIn:<" + SettingsM.Instance.SaveBackupIn.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, "", $"Received unexpected value for SettingsM.Instance.SaveBackupIn:<{SettingsM.Instance.SaveBackupIn}>"));
                     break;
             }
         }
 
         public bool CheckIfBackupNameExist(string backupName)
         {
-            //if ((from tmp in this where tmp.Backup.Name.ToLower() == backupName.ToLower() select tmp).Count() > 0) return true;
+            //if ((from tmp in this where tmp.Model.Name.ToLower() == backupName.ToLower() select tmp).Count() > 0) return true;
             if ((from tmp in this where tmp.Name.ToLower() == backupName.ToLower() select tmp).Count() > 0) return true;
 
             return false;
@@ -164,27 +166,27 @@ namespace Backupper
                     inErr = Serialize.DeserializeFromText(backups, ref instance);
                 }
                 else
-                { instance = (BackupsM)this.Load(source, out inErr, logMess); }
+                {
+                    instance = new Lazy<BackupsM>(() => (BackupsM)this.Load(source, out inErr, logMess));
+                }
             }
             catch (Exception ex)
             {
                 inErr = true;
-                Log.main.Add(new Mess(Tipi.Warn, "", "Exception ex.mess:<" + ex.Message + ">"));
+                Log.main.Add(new Mess(LogType.Warn, "", $"Exception ex.mess:<{ex.Message}>"));
             }
             finally
             {
                 inLoading = false;
-            }   
+            }
 
             return inErr;
         }
 
-        static public bool DeserializeFromText(string stringaSerializatta, SerializerType tipoSerial = SerializerType.ntsJson, bool visualErr = true)
-        {
-            return Serialize.DeserializeFromText(stringaSerializatta, ref instance);
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

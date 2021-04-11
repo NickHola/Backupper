@@ -11,24 +11,25 @@ namespace Backupper
 {
     public class SettingsVM : INotifyPropertyChanged //Singleton class
     {
-        static SettingsVM instance;
+        private static readonly Lazy<SettingsVM> instance = new Lazy<SettingsVM>(() => new SettingsVM()); //Thread-safe singleton
 
         public static SettingsVM Instance
         {
             get
             {
-                if (instance == null)
-                    instance = new SettingsVM();
-                return instance;
+                return instance.Value;
             }
         }
         public SettingsM SettingsM { get { return SettingsM.Instance; } }
-      
+
 
         private SettingsVM()
         { }
-    
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -134,8 +134,8 @@ namespace Backupper
                 filesSelectorM = value;
                 if (filesSelectorM != null)
                 {
-                    filesSelectorM.PropertyChanged -= filesSelectorMPropertyChanged;
-                    filesSelectorM.PropertyChanged += filesSelectorMPropertyChanged;
+                    filesSelectorM.PropertyChanged -= FilesSelectorMPropertyChanged;
+                    filesSelectorM.PropertyChanged += FilesSelectorMPropertyChanged;
                 }
                 OnPropertyChanged();
             }
@@ -161,14 +161,14 @@ namespace Backupper
             this.DestinationFolder = @"C:\";
         }
 
-        private void filesSelectorMPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void FilesSelectorMPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(filesSelectorM));
         }
 
         public void Delete()
         {
-            if (MsgBx.Show("", "Do you want to delete " + Name + " backup?", MsgBxPicture.Question, MsgBxButtonSet.YesNo) == MsgBxButton.Yes)
+            if (MsgBx.Show("", $"Do you want to delete {Name} backup?", MsgBxPicture.Question, MsgBxButtonSet.YesNo) == MsgBxButton.Yes)
                 BackupsM.Instance.Remove(this);
         }
 
@@ -186,6 +186,9 @@ namespace Backupper
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

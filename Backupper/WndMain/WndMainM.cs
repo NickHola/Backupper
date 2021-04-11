@@ -37,7 +37,7 @@ namespace Backupper
         }
         #endregion
 
-        static WndMainM instance;
+        private static readonly Lazy<WndMainM> instance = new Lazy<WndMainM>(() => new WndMainM()); //Thread-safe singleton
 
         private double zoomLevel;
 
@@ -45,7 +45,9 @@ namespace Backupper
         public double ZoomLevel
         {
             get
-            { return zoomLevel; }
+            {
+                return zoomLevel;
+            }
             set
             {
                 zoomLevel = value;
@@ -58,9 +60,7 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new WndMainM();
-                return instance;
+                return instance.Value;
             }
         }
 
@@ -76,6 +76,9 @@ namespace Backupper
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        { 
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

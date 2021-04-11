@@ -23,7 +23,10 @@ namespace Backupper
 
         public string SavableName
         {
-            get { return savableName; }
+            get
+            {
+                return savableName;
+            }
             set
             {
                 CtrlValue(value);
@@ -32,7 +35,10 @@ namespace Backupper
         }
         public string SavableParentName
         {
-            get { return savableParentName; }
+            get
+            {
+                return savableParentName;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
@@ -42,14 +48,17 @@ namespace Backupper
 
         #endregion
 
-        static SettingsM instance;
+        private static Lazy<SettingsM> instance = new Lazy<SettingsM>(() => new SettingsM()); //Thread-safe singleton
         RESTsettingM restSetting;
         BackupsSaveLocation saveBackupIn;
         int timeoutStopCompressingSignalMs;
 
         public BackupsSaveLocation SaveBackupIn
         {
-            get { return saveBackupIn; }
+            get
+            {
+                return saveBackupIn;
+            }
             set
             {
                 saveBackupIn = value;
@@ -58,7 +67,10 @@ namespace Backupper
         }
         public RESTsettingM RestSetting
         {
-            get { return restSetting; }
+            get
+            {
+                return restSetting;
+            }
             set
             {
                 restSetting = value;
@@ -67,7 +79,10 @@ namespace Backupper
         }
         public int TimeoutStopCompressingSignalMs
         {
-            get { return timeoutStopCompressingSignalMs; }
+            get
+            {
+                return timeoutStopCompressingSignalMs;
+            }
             set
             {
                 CtrlValue(value);
@@ -79,9 +94,7 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new SettingsM();
-                return instance;
+                return instance.Value;
             }
         }
 
@@ -96,18 +109,25 @@ namespace Backupper
             this.RestSetting = new RESTsettingM();
         }
 
-        static public bool DeserializeFromText(string stringaSerializatta, SerializerType tipoSerial = SerializerType.ntsJson, bool visualErr = true)
-        {
-            return Serialize.DeserializeFromText(stringaSerializatta, ref instance);
-        }
+        //static public bool DeserializeFromText(string stringaSerializatta, SerializerType tipoSerial = SerializerType.ntsJson, bool visualErr = true)
+        //{
+        //    SettingsM tmpDeserialized = null;
+        //    bool result = Serialize.DeserializeFromText(stringaSerializatta, ref tmpDeserialized);
+        //    instance = new Lazy<SettingsM>(() => tmpDeserialized);
+        //    return result;
+        //}
 
         public bool Load(object source, Mess logMess = null)
         {
-            instance = (SettingsM)this.Load(source, out bool inErr, logMess);
+            bool inErr = true;
+            instance = new Lazy<SettingsM>(() => (SettingsM)this.Load(source, out inErr, logMess));
             return inErr;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

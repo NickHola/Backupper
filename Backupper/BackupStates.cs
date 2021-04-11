@@ -11,7 +11,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Backupper
 {
-    [TypeConverter(typeof(EnumToStringa))]
+    [TypeConverter(typeof(EnumToString))]
     public enum BackupStates
     {
         Idle,

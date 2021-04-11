@@ -13,7 +13,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="BackupResource.xaml" />
+                <ResourceDictionary Source="../BackupResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -24,28 +24,28 @@
             <ColumnDefinition Width="83*"/>
             <ColumnDefinition Width="35*"/>
         </Grid.ColumnDefinitions>
-        <mainCtrl:GroupBoxCheck  HorizontalAlignment="Left" Text="ciao io sono" Height="91" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"   >
+        <!--<mainCtrl:GroupBoxCheck  HorizontalAlignment="Left" Text="Test" Height="91" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"   >
             <mainCtrl:ButtonM x:Name="sdfsdf" Content="Button" HorizontalAlignment="Left" Height="35" Margin="10,21,0,0" VerticalAlignment="Top" Width="74" />
-        </mainCtrl:GroupBoxCheck>
+        </mainCtrl:GroupBoxCheck>-->
         <!--<mainCtrl:ToggleButton IsChecked="True" TextOff="Disattivo" TextOn="Attivo" ColoreToggleOn="Violet" HorizontalAlignment="Left" Margin="61,252,0,0" VerticalAlignment="Top" Height="53" Width="94"/>-->
-        <mainCtrl:ToggleButton TextOn="Active" Foreground="#00AA00" ColoreStelo="#00C100"  TextOff="Off" IsChecked="True" HorizontalAlignment="Left" Height="60" Margin="250,10,0,0" VerticalAlignment="Top" Width="91" >
-            <!--<mainCtrl:ToggleButton.Style>
+        <!--<mainCtrl:ToggleButton TextOn="Active" Foreground="#00AA00" ColoreStelo="#00C100"  TextOff="Off" IsChecked="True" HorizontalAlignment="Left" Height="60" Margin="250,10,0,0" VerticalAlignment="Top" Width="91" >
+            <mainCtrl:ToggleButton.Style>
                 <Style TargetType="mainCtrl:ToggleButton" >
                     <Setter Property="IsEnabled" Value="True" />
                 </Style>
-            </mainCtrl:ToggleButton.Style>-->
-        </mainCtrl:ToggleButton>
-        <mainCtrl:ButtonM Content="ButtonM" BorderBrush="DarkSeaGreen" HorizontalAlignment="Left" Margin="60,365,0,0" VerticalAlignment="Top" Width="92" Height="27" >
+            </mainCtrl:ToggleButton.Style>
+        </mainCtrl:ToggleButton>-->
+        <!--<mainCtrl:ButtonM Content="ButtonM" BorderBrush="DarkSeaGreen" HorizontalAlignment="Left" Margin="60,365,0,0" VerticalAlignment="Top" Width="92" Height="27" >
             <mainCtrl:ButtonM.Style>
                 <Style TargetType="mainCtrl:ButtonM" >
                     <Setter Property="Opacity" Value="0.3" />
                 </Style>
             </mainCtrl:ButtonM.Style>
-        </mainCtrl:ButtonM>
+        </mainCtrl:ButtonM>-->
 
-        <mainSch:SrcSchedulerV DataContext="{Binding SchedulerVM}" Height="200" Margin="10,128,10,91" Grid.ColumnSpan="2" />
+        <!--<mainSch:SrcSchedulerV DataContext="{Binding SchedulerVM}" Height="200" Margin="10,128,10,91" Grid.ColumnSpan="2" />
         <Button Content="Button" HorizontalAlignment="Left" Height="65" Margin="388,36,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click_1"/>
-        <Slider HorizontalAlignment="Left" Height="27" Margin="214,390,0,0" VerticalAlignment="Top" Width="192" TickPlacement="TopLeft" TickFrequency="0" />
+        <Slider HorizontalAlignment="Left" Height="27" Margin="214,390,0,0" VerticalAlignment="Top" Width="192" TickPlacement="TopLeft" TickFrequency="0" />-->
 
         <!--<MetroCtrl: />-->
         <!--<mainCtrl:ToggleButton ColoreTestoOn="Violet" Content="ToggleButton" HorizontalAlignment="Left" Height="28" Margin="316,301,0,0" VerticalAlignment="Top" Width="84"/>-->

@@ -16,9 +16,9 @@ namespace Backupper
     {
         bool isViewInEdit;
 
-        ViewModes viewMode;
+        ViewMode viewMode;
 
-        public BackupBaseM Backup { get; set; }
+        public BackupBaseM Model { get; set; }
 
         public bool IsViewInEdit
         {
@@ -31,7 +31,7 @@ namespace Backupper
             }
         }
 
-        public ViewModes ViewMode
+        public ViewMode ViewMode
         {
             get { return viewMode; }
             set
@@ -49,34 +49,37 @@ namespace Backupper
 
         public BackupBaseVM(BackupBaseM backupBase) : this()
         {
-            Backup = backupBase;
+            Model = backupBase;
         }
-        
+
         public void SetDestinationFolder()
         {
-            Backup.SetDestinationFolder();
+            Model.SetDestinationFolder();
         }
 
         public void StartStopCompression()
         {
-            Thread thrStartStopCompression = new Thread(() => Backup.StartStopCompression());
+            Thread thrStartStopCompression = new Thread(() => Model.StartStopCompression());
             thrStartStopCompression.SetApartmentState(ApartmentState.STA);
             thrStartStopCompression.IsBackground = true;
             thrStartStopCompression.Start();
         }
-        
+
         public void SrcBackupBaseSwitchViewMode()
         {
-            if (ViewMode == ViewModes.Compact)
-                ViewMode = ViewModes.Full;
+            if (ViewMode == ViewMode.Compact)
+                ViewMode = ViewMode.Full;
 
-            else if (ViewMode == ViewModes.Full)
-                ViewMode = ViewModes.Compact;
+            else if (ViewMode == ViewMode.Full)
+                ViewMode = ViewMode.Compact;
         }
 
         abstract public void ShowFilesSelector();
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

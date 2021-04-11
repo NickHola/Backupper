@@ -39,14 +39,14 @@ namespace Backupper
                     catch (Exception ex)
                     {
                         string innerEx = ex.InnerException != null ? " inner ex:<" + ex.InnerException.Message + ">" : "" ;
-                        Log.main.Add(new Mess(Tipi.ERR, "", "GetBackupsAsync return exception:<" + ex.Message + ">" + innerEx));
+                        Log.main.Add(new Mess(LogType.ERR, "", "GetBackupsAsync return exception:<" + ex.Message + ">" + innerEx));
                     }
                     break;
 
                 case BackupsSaveLocation.Db:
                     break;
                 default:
-                    Log.main.Add(new Mess(Tipi.ERR, "", "Received unexpected value for SettingsM.Instance.SaveBackupIn:<" + SettingsM.Instance.SaveBackupIn.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.ERR, "", "Received unexpected value for SettingsM.Instance.SaveBackupIn:<" + SettingsM.Instance.SaveBackupIn.ToString() + ">"));
                     break;
             }
             var wndMain = new WndMainV();

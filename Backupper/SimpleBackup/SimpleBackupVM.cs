@@ -21,7 +21,7 @@ namespace Backupper
 
         override public void ShowFilesSelector()
         {
-            BackupsVM.Instance.ShowOrHideSelectedSetting(((SimpleBackupM)Backup).FilesSelectorM);
+            BackupsVM.Instance.ShowOrHideSelectedSetting(((SimpleBackupM)Model).FilesSelectorM);
         }
     }
 }

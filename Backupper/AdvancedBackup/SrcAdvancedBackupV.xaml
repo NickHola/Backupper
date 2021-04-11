@@ -43,7 +43,7 @@
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewModes.Full}">
+                            <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewMode.Full}">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard Storyboard="{StaticResource stbSoftOpenInVertical}" />
                                 </DataTrigger.EnterActions>
@@ -57,14 +57,14 @@
 
                 <local:SrcBackupBaseFooter Margin="3,0,0,3" HorizontalAlignment="Stretch" />
 
-                <mainCtrl:ToggleButton x:Name="tbtCheckMD5Files" TextOff="Check last MD5" IsChecked="{Binding Backup.CheckMD5Files, Mode=TwoWay}"
+                <mainCtrl:ToggleButton x:Name="tbtCheckMD5Files" TextOff="Check last MD5" IsChecked="{Binding Model.CheckMD5Files, Mode=TwoWay}"
                                    Margin="{StaticResource thkTitleTopMargin}" Style="{StaticResource stlDisableWhenNotIdle}" />
                 <Grid x:Name="grdScheduler" Margin="{StaticResource thkTitleTopMargin}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="clmToggle" Width="auto" />
                         <ColumnDefinition x:Name="clmButton" />
                     </Grid.ColumnDefinitions>
-                    <mainCtrl:ToggleButton x:Name="tbtScheduler" TextOff="Scheduler" IsChecked="{Binding Backup.SchedulerM.IsEnabled, Mode=TwoWay}" Style="{StaticResource stlDisableWhenNotIdle}" />
+                    <mainCtrl:ToggleButton x:Name="tbtScheduler" TextOff="Scheduler" IsChecked="{Binding Model.SchedulerM.IsEnabled, Mode=TwoWay}" Style="{StaticResource stlDisableWhenNotIdle}" />
                     <mainCtrl:ButtonM x:Name="btnModifyScheduler" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Center" MouseOverBackground="Transparent" BorderThickness="0"
                                   AddStyle="{StaticResource stlDisableWhenNotIdle}" Click="BtnModifyScheduler_Click" >
                         <mainCtrl:ButtonM.Style>
@@ -80,7 +80,7 @@
                                             <Condition Value="True">
                                                 <Condition.Binding>
                                                     <MultiBinding  Converter="{StaticResource cnvCheckIfSameObjs}">
-                                                        <Binding Path="Backup.SchedulerM" Mode="OneWay" />
+                                                        <Binding Path="Model.SchedulerM" Mode="OneWay" />
                                                         <!--ATTENZIONE non so per quale strano motivo la stringa Source="{x:Static local:BackupsVM.Instance}" Path="SelectedSetting" non funziona poichè
                                                 andava a cercare il SelectedSetting nel DataContext dello usercontrol
                                                 usare PresentationTraceSources.TraceLevel="High" nel caso si voglia vedere tutti i step del binding che xaml esegue-->

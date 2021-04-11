@@ -10,16 +10,19 @@ namespace Backupper
 {
     public class AddNewDeviceVM : INotifyPropertyChanged
     {
-        static AddNewDeviceVM instance;
-        private AddNewDeviceM addNewDeviceM;
+        private static readonly Lazy<AddNewDeviceVM> instance = new Lazy<AddNewDeviceVM>(() => new AddNewDeviceVM()); //Thread-safe singleton
+        private AddNewDeviceM model;
         bool isSelectionNewDevice;
 
-        public AddNewDeviceM AddNewDeviceM
+        public AddNewDeviceM Model
         {
-            get { return addNewDeviceM; }
+            get
+            {
+                return model;
+            }
             set
             {
-                addNewDeviceM = value;
+                model = value;
                 OnPropertyChanged();
             }
         }
@@ -28,15 +31,16 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new AddNewDeviceVM();
-                return instance;
+                return instance.Value;
             }
         }
 
         public bool IsSelectionNewDevice
         {
-            get { return isSelectionNewDevice; }
+            get
+            {
+                return isSelectionNewDevice;
+            }
             set
             {
                 isSelectionNewDevice = value;
@@ -46,10 +50,13 @@ namespace Backupper
 
         private AddNewDeviceVM()
         {
-            AddNewDeviceM = new AddNewDeviceM();
+            Model = new AddNewDeviceM();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

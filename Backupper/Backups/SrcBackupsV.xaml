@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="BackupsCollection" Source="{Binding BackupsM}">
                 <!--<CollectionViewSource.SortDescriptions>
-                    <scm:SortDescription PropertyName="Backup.Name" Direction="Ascending" />
+                    <scm:SortDescription PropertyName="Model.Name" Direction="Ascending" />
                 </CollectionViewSource.SortDescriptions>-->
             </CollectionViewSource>
             <CollectionViewSource x:Key="AddNewDeviceCollection" Source="{Binding AddNewDevice}"/>

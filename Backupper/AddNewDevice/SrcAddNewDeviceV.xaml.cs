@@ -36,7 +36,7 @@ namespace Backupper
         private void BtnBackupsType_Click(object sender, RoutedEventArgs e)
         {
             ButtonM button = (ButtonM)sender;
-            ((AddNewDeviceVM)this.DataContext).AddNewDeviceM.AddNewBackupAtList((string)button.Content);
+            ((AddNewDeviceVM)this.DataContext).Model.AddNewBackupAtList((string)button.Content);
             ((AddNewDeviceVM)this.DataContext).IsSelectionNewDevice = false;
         }
 

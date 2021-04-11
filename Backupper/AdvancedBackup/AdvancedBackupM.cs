@@ -24,7 +24,10 @@ namespace Backupper
 
         public SchedulerM SchedulerM
         {
-            get { return schedulerM; }
+            get
+            {
+                return schedulerM;
+            }
             set
             {
                 schedulerM = value;
@@ -35,7 +38,10 @@ namespace Backupper
         }
         public bool CheckMD5Files
         {
-            get { return checkMD5Files; }
+            get
+            {
+                return checkMD5Files;
+            }
             set
             {
                 CtrlValue(value);
@@ -57,17 +63,18 @@ namespace Backupper
 
         private void Scheduler_Esegui(object sender, EventArgs e)
         {
-            if (this.State == BackupStates.Idle) StartStopCompression();
+            if (this.State == BackupStates.Idle)
+            {
+                StartStopCompression();
+            }
         }
 
         public override BackupCompressionResult StartStopCompression(Guid guid = default)
         {
-            if (guid == null) guid = Guid.NewGuid();
-
-            switch (this.State)
+             switch (this.State)
             {
                 case BackupStates.Idle:
-                    return StartCompression(guid);
+                    return StartCompression();
 
                 case BackupStates.Compressing:
                     if (this.ThrCompression != null && this.ThrCompression.IsAlive == true)
@@ -102,12 +109,12 @@ namespace Backupper
                     return null;
 
                 default:
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Unexpected value for State:<" + State.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, $"Unexpected value for State:<{State}>"));
                     return null;
             }
         }
 
-        private BackupCompressionResult StartCompression(Guid guid)
+        private BackupCompressionResult StartCompression()
         {
             BackupCompressionResult args;
             bool filesAreChanged = false;
@@ -190,12 +197,22 @@ namespace Backupper
                 byte[] hash = md5.ComputeHash(tmpFile);
                 newMD5Files.Add(fileSelected, hash);
 
-                if (filesAreChanged == true) continue;
+                if (filesAreChanged == true)
+                {
+                    continue;
+                }
 
                 if (this.MD5Files.ContainsKey(fileSelected) == false)
+                {
                     filesAreChanged = true;
+                }
                 else
-                    if (!this.MD5Files[fileSelected].SequenceEqual(hash)) filesAreChanged = true;
+                {
+                    if (!this.MD5Files[fileSelected].SequenceEqual(hash))
+                    {
+                        filesAreChanged = true;
+                    }
+                }
             }
         }
 

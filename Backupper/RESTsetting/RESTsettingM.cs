@@ -17,7 +17,10 @@ namespace Backupper
         private bool isValid;
         public bool IsValid
         { //Implements IValidation.isValid
-            get { return isValid; }
+            get
+            {
+                return isValid;
+            }
 
             private set
             {
@@ -32,21 +35,30 @@ namespace Backupper
             string errDesc = "";
 
             if (propName == "" || propName == nameof(RootAddress))
-                result = validateRootAddress(this.RootAddress, out errDesc);
+            {
+                result = ValidateRootAddress(this.RootAddress, out errDesc);
+            }
 
             if (propName == "" || propName == nameof(RoutePrefix))
-                result = validateRoutePrefix(this.RoutePrefix, out errDesc);
-
+            {
+                result = ValidateRoutePrefix(this.RoutePrefix, out errDesc);
+            }
             if (propName == "" || propName == nameof(RouteOfGetBackups))
-                result = validateRouteOfGetBackups(this.RouteOfGetBackups, out errDesc);
-
+            {
+                result = ValidateRouteOfGetBackups(this.RouteOfGetBackups, out errDesc);
+            }
             if (propName == "" || propName == nameof(RouteOfPutBackups))
-                result = validateRouteOfPutBackups(this.RouteOfPutBackups, out errDesc);
-
+            {
+                result = ValidateRouteOfPutBackups(this.RouteOfPutBackups, out errDesc);
+            }
             if (propName == "")
+            {
                 this.IsValid = result;
+            }
             else
+            {
                 if (result == false) this.IsValid = result;
+            }
 
             return new ValidationResult(result, errDesc);
         }
@@ -56,44 +68,56 @@ namespace Backupper
 
         public string RootAddress
         {
-            get { return rootAddress; }
+            get
+            {
+                return rootAddress;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
-                if (validateRootAddress(value, out string errMess) == false) throw new Exception(errMess);
+                if (ValidateRootAddress(value, out string errMess) == false) throw new Exception(errMess);
                 rootAddress = value;
                 OnPropertyChanged();
             }
         }
         public string RoutePrefix
         {
-            get { return routePrefix; }
+            get
+            {
+                return routePrefix;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
-                if (validateRoutePrefix(value, out string errMess) == false) throw new Exception(errMess);
+                if (ValidateRoutePrefix(value, out string errMess) == false) throw new Exception(errMess);
                 routePrefix = value;
                 OnPropertyChanged();
             }
         }
         public string RouteOfGetBackups
         {
-            get { return routeOfGetBackups; }
+            get
+            {
+                return routeOfGetBackups;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
-                if (validateRouteOfGetBackups(value, out string errMess) == false) throw new Exception(errMess);
+                if (ValidateRouteOfGetBackups(value, out string errMess) == false) throw new Exception(errMess);
                 routeOfGetBackups = value;
                 OnPropertyChanged();
             }
         }
         public string RouteOfPutBackups
         {
-            get { return routeOfPutBackups; }
+            get
+            {
+                return routeOfPutBackups;
+            }
             set
             {
                 CtrlValue(value, ctrlVoid: false);
-                if (validateRouteOfPutBackups(value, out string errMess) == false) throw new Exception(errMess);
+                if (ValidateRouteOfPutBackups(value, out string errMess) == false) throw new Exception(errMess);
                 routeOfPutBackups = value;
                 OnPropertyChanged();
             }
@@ -107,7 +131,7 @@ namespace Backupper
             routeOfPutBackups = "";
         }
 
-        private bool validateRootAddress(string value, out string errMessage)
+        private bool ValidateRootAddress(string value, out string errMessage)
         {
             errMessage = "";
             if (value == "") return true;
@@ -118,7 +142,7 @@ namespace Backupper
             }
             return true;
         }
-        private bool validateRoutePrefix(string value, out string errMessage)
+        private bool ValidateRoutePrefix(string value, out string errMessage)
         {
             errMessage = "";
             if (value == "") return true;
@@ -129,7 +153,7 @@ namespace Backupper
             }
             return true;
         }
-        private bool validateRouteOfGetBackups(string value, out string errMessage)
+        private bool ValidateRouteOfGetBackups(string value, out string errMessage)
         {
             errMessage = "";
             if (value == "") return true;
@@ -140,7 +164,7 @@ namespace Backupper
             }
             return true;
         }
-        private bool validateRouteOfPutBackups(string value, out string errMessage)
+        private bool ValidateRouteOfPutBackups(string value, out string errMessage)
         {
             errMessage = "";
             if (value == "") return true;
@@ -153,6 +177,9 @@ namespace Backupper
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

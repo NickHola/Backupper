@@ -42,7 +42,7 @@
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewModes.Full}">
+                            <DataTrigger Binding="{Binding ViewMode}" Value="{x:Static local:ViewMode.Full}">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard Storyboard="{StaticResource stbSoftOpenInVertical}" />
                                 </DataTrigger.EnterActions>

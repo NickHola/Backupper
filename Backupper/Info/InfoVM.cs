@@ -8,15 +8,13 @@ namespace Backupper
 {
     public class InfoVM
     {
-        static InfoVM instance;
+        private static readonly Lazy<InfoVM> instance = new Lazy<InfoVM>(() => new InfoVM()); //Thread-safe singleton
 
         public static InfoVM Instance
         {
             get
             {
-                if (instance == null)
-                    instance = new InfoVM();
-                return instance;
+                return instance.Value;
             }
         }
 

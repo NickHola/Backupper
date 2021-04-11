@@ -25,12 +25,12 @@ namespace Backupper
 
         override public void ShowFilesSelector()
         {
-            BackupsVM.Instance.ShowOrHideSelectedSetting(((AdvancedBackupM)Backup).FilesSelectorM);
+            BackupsVM.Instance.ShowOrHideSelectedSetting(((AdvancedBackupM)Model).FilesSelectorM);
         }
 
         public void ShowScheduler()
         {
-            BackupsVM.Instance.ShowOrHideSelectedSetting(((AdvancedBackupM)Backup).SchedulerM);
+            BackupsVM.Instance.ShowOrHideSelectedSetting(((AdvancedBackupM)Model).SchedulerM);
         }
     }
 }

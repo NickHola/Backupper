@@ -11,7 +11,7 @@ namespace Backupper
 {
     public class BackupsVM : INotifyPropertyChanged //Singleton class
     {
-        static BackupsVM instance;
+        private static readonly Lazy<BackupsVM> instance = new Lazy<BackupsVM>(() => new BackupsVM()); //Thread-safe singleton
 
         private object selectedSetting;
         private bool showSelectedSetting;
@@ -21,19 +21,20 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new BackupsVM();
-                return instance;
+                return instance.Value;
             }
         }
         public BackupsM BackupsM { get { return BackupsM.Instance; } }
-        public List<AddNewDeviceVM> AddNewDevice { get { return addNewDevice; }
-            private set { 
+        public List<AddNewDeviceVM> AddNewDevice
+        {
+            get { return addNewDevice; }
+            private set
+            {
                 addNewDevice = value;
                 OnPropertyChanged();
             }
         } //For display SrcAddNewDeviceV in last place in ItemsControl.ItemsSource CompositeCollection
-        
+
         public object SelectedSetting
         {
             get { return selectedSetting; }
@@ -53,8 +54,8 @@ namespace Backupper
             }
         }
 
-        private BackupsVM() {
-            var x = BackupsM.Instance;
+        private BackupsVM()
+        {
             AddNewDevice = new List<AddNewDeviceVM>() { AddNewDeviceVM.Instance }; //Add one AddNewDeviceVM in list
         }
 
@@ -70,6 +71,9 @@ namespace Backupper
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

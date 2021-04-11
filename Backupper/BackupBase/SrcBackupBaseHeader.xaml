@@ -32,12 +32,12 @@
                     <ColumnDefinition x:Name="clmDelete" Width="auto" />
                 </Grid.ColumnDefinitions>
 
-                <mainCtrl:ToggleButton x:Name="bttEnabled" TextOn="On" TextOff="Off" IsChecked="{Binding Backup.IsEnabled, Mode=TwoWay}" AddStyle="{StaticResource stlDisableWhenNotIdle}">
+                <mainCtrl:ToggleButton x:Name="bttEnabled" TextOn="On" TextOff="Off" IsChecked="{Binding Model.IsEnabled, Mode=TwoWay}" AddStyle="{StaticResource stlDisableWhenNotIdle}">
                     <mainCtrl:ToggleButton.Style>
                         <Style TargetType="mainCtrl:ToggleButton" >
                             <Setter Property="IsEnabled" Value="False" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.Idle}">
+                                <DataTrigger Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.Idle}">
                                     <Setter Property="IsEnabled" Value="True" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -68,7 +68,7 @@
             <!---->
             <mainCtrl:TextBoxM x:Name="txtNameValue" MouseDoubleClick="TxtNameValue_MouseDoubleClick" KeyDown="TxtNameValue_KeyDown" 
                                AddStyle="{StaticResource stlTxtErrorTemplate}" AddStyle2="{StaticResource stlDisableWhenNotIdle}" ToolTip="Press enter to save"
-                               Text="{Binding Path=Backup.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions='True'}" LostFocus="TxtNameValue_LostFocus">
+                               Text="{Binding Path=Model.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnExceptions='True'}" LostFocus="TxtNameValue_LostFocus">
 
                 <mainCtrl:TextBoxM.Style>
                     <Style TargetType="mainCtrl:TextBoxM" BasedOn="{StaticResource stlTxtValue}" >
@@ -103,20 +103,20 @@
         </Grid.RowDefinitions>
         <mainCtrl:TextBlockM x:Name="txbStateTitle" Text="State:" Style="{StaticResource stlTxbTitle}" />
 
-        <mainCtrl:TextBlockM x:Name="txbStateValue" Grid.Row="1" Text="{Binding Backup.State}" Style="{StaticResource stlTxbValue}" />
+        <mainCtrl:TextBlockM x:Name="txbStateValue" Grid.Row="1" Text="{Binding Model.State}" Style="{StaticResource stlTxbValue}" />
         <!--Foreground="#7DE07D" -->
         <mainCtrl:ButtonM x:Name="btnStartStop" Height="20" Grid.RowSpan="2" Grid.Column="1" Margin="0,7,0,0" FontSize="25" BorderThickness="0" 
-                                  FontFamily="Segoe MDL2 Assets" IsEnabled="{Binding Backup.IsEnabled}" DisabledForegroundColor="LightGray" Click="BtnStartStop_Click">
+                                  FontFamily="Segoe MDL2 Assets" IsEnabled="{Binding Model.IsEnabled}" DisabledForegroundColor="LightGray" Click="BtnStartStop_Click">
             <mainCtrl:ButtonM.Style>
                 <Style TargetType="mainCtrl:ButtonM" >
                     <Setter Property="Template" Value="{StaticResource cttStopSymbol}" />
                     <Setter Property="Foreground" Value="{StaticResource clrDefaultGray}"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.Idle}">
+                        <DataTrigger Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.Idle}">
                             <Setter Property="Template" Value="{StaticResource cttStartSymbol}" />
                         </DataTrigger>
-                        <!--<DataTrigger Binding="{Binding Backup.IsInWaitToStop}" Value="True">-->
-                        <DataTrigger Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.WaitToStop}">
+                        <!--<DataTrigger Binding="{Binding Model.IsInWaitToStop}" Value="True">-->
+                                <DataTrigger Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.WaitToStop}">
                             <Setter Property="Template" Value="{StaticResource cttProgressRing}" />
                         </DataTrigger>
                         <Trigger  Property="IsMouseOver" Value="True">
@@ -124,15 +124,15 @@
                         </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.Idle}"/>
+                                        <Condition Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.Idle}"/>
                                 <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Foreground" Value="{StaticResource clrHighLightsItem}" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <!--<Condition Binding="{Binding Backup.IsInWaitToStop}" Value="True"/>-->
-                                <Condition Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.WaitToStop}" />
+                                        <!--<Condition Binding="{Binding Model.IsInWaitToStop}" Value="True"/>-->
+                                        <Condition Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.WaitToStop}" />
                                 <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Foreground" Value="{StaticResource clrDefaultGray}" />
@@ -145,7 +145,7 @@
     </Grid>
     <!--DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"-->
     <mainCtrl:ProgressBarRing x:Name="prgRngComprPerc" Colore0Perc="#FF841F" Colore100Perc="#00C221" Width="80" HorizontalAlignment="Center" Padding="0,8,0,0" 
-                              Value="{Binding Backup.Progress.Percentage, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" >
+                              Value="{Binding Model.Progress.Percentage, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" >
         <mainCtrl:ProgressBarRing.Style>
             <Style TargetType="mainCtrl:ProgressBarRing">
                 <Setter Property="Opacity" Value="0"/>
@@ -155,7 +155,7 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.Idle}">
+                            <DataTrigger Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.Idle}">
                         <DataTrigger.EnterActions>
                             <BeginStoryboard Storyboard="{StaticResource stbSoftCloseInVertical}"/>
                         </DataTrigger.EnterActions>

@@ -102,7 +102,8 @@
     <Compile Include="Backups\BackupsVM.cs" />
     <Compile Include="GetBackupsTypeUserName.cs" />
     <Compile Include="Info\InfoVM.cs" />
-    <Compile Include="RESTBackups.cs" />
+    <Compile Include="REST\RESTBackups.cs" />
+    <Compile Include="REST\RESTBackupsEA.cs" />
     <Compile Include="RESTsetting\RESTsettingM.cs" />
     <Compile Include="RESTsetting\RESTsettingVM.cs" />
     <Compile Include="RESTsetting\SrcRESTsettingV.xaml.cs">
@@ -125,7 +126,7 @@
     <Compile Include="Info\SrcInfoV.xaml.cs">
       <DependentUpon>SrcInfoV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModes.cs" />
+    <Compile Include="ViewMode.cs" />
     <Compile Include="WndMain\WndMainM.cs" />
     <Compile Include="WndMain\WndMainV.xaml.cs">
       <DependentUpon>WndMainV.xaml</DependentUpon>
@@ -133,9 +134,6 @@
     <Compile Include="WndMain\WndMainVM.cs" />
     <Compile Include="TestFile\wndTest.xaml.cs">
       <DependentUpon>wndTest.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestFile\WndTest2.xaml.cs">
-      <DependentUpon>WndTest2.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -225,16 +223,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestFile\WndTest2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MainDll\_C#Dev\MainDll\MainDll.csproj">
       <Project>{1e18b63d-a3bb-434d-bb38-4fa14ad1d673}</Project>
       <Name>MainDll</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

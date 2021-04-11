@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Backupper
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    [TypeConverter(typeof(EnumToStringa))]
+    [TypeConverter(typeof(EnumToString))]
     [Serializable]
     public enum BackupsSaveLocation
     {

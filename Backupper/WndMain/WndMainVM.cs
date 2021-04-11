@@ -11,7 +11,7 @@ namespace Backupper
 {
     public class WndMainVM : INotifyPropertyChanged
     {
-        static WndMainVM instance;
+        private static readonly Lazy<WndMainVM> instance = new Lazy<WndMainVM>(() => new WndMainVM()); //Thread-safe singleton
         object selectedContent;
         private bool showZoomLevel;
 
@@ -20,16 +20,17 @@ namespace Backupper
         {
             get
             {
-                if (instance == null)
-                    instance = new WndMainVM();
-                return instance;
+                return instance.Value;
             }
         }
 
         [JsonIgnore]
         public object SelectedContent
         {
-            get { return selectedContent; }
+            get
+            {
+                return selectedContent;
+            }
             set
             {
                 selectedContent = value;
@@ -41,7 +42,9 @@ namespace Backupper
         public bool ShowZoomLevel
         {
             get
-            { return showZoomLevel; }
+            {
+                return showZoomLevel;
+            }
             set
             {
                 showZoomLevel = value;
@@ -51,12 +54,16 @@ namespace Backupper
 
         public WndMainM WndMainM { get { return WndMainM.Instance; } }
 
-        [JsonConstructor] private WndMainVM()
+        [JsonConstructor]
+        private WndMainVM()
         {
             SelectedContent = BackupsVM.Instance;
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

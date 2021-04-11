@@ -33,7 +33,7 @@
     <Style x:Key="stlDisableWhenNotIdle" TargetType="Control" >
         <Setter Property="IsEnabled" Value="False" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Backup.State}" Value="{x:Static local:BackupStates.Idle}">
+            <DataTrigger Binding="{Binding Model.State}" Value="{x:Static local:BackupStates.Idle}">
                 <Setter Property="IsEnabled" Value="True" />
             </DataTrigger>
         </Style.Triggers>

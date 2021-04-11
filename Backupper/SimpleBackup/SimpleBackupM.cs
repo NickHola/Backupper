@@ -25,12 +25,12 @@ namespace Backupper
 
         public override BackupCompressionResult StartStopCompression(Guid guid = default)
         {
-            if (guid == null) guid = Guid.NewGuid();
+
 
             switch (this.State)
             {
                 case BackupStates.Idle:
-                    return StartCompression(guid);
+                    return StartCompression();
 
                 case BackupStates.Compressing:
                     if (this.ThrCompression != null && this.ThrCompression.IsAlive == true)
@@ -60,12 +60,12 @@ namespace Backupper
                     return null;
 
                 default:
-                    Log.main.Add(new Mess(Tipi.Warn, Log.main.warnUserText, "Unexpected value for State:<" + State.ToString() + ">"));
+                    Log.main.Add(new Mess(LogType.Warn, Log.main.warnUserText, $"Unexpected value for State:<{State}>"));
                     return null;
             }
         }
 
-        private BackupCompressionResult StartCompression(Guid guid)
+        private BackupCompressionResult StartCompression()
         {
             BackupCompressionResult args;
             bool filesAreChanged = false;
@@ -93,10 +93,13 @@ namespace Backupper
                 this.State = BackupStates.Compressing;
 
                 if (Zip.Comprimi(FilesSelectorM.FilesSelected.ToList(), fullPath, out this.thrCompression, progressione: this.Progress) == true)
+                {
                     args = new BackupCompressionResult(compressionResult: true, filesAreChanged: filesAreChanged, filesToBackup: FilesSelectorM.FilesSelected.Count);
+                }
                 else
+                {
                     args = new BackupCompressionResult(compressionResult: false, filesAreChanged: filesAreChanged, filesToBackup: FilesSelectorM.FilesSelected.Count);
-
+                }
                 this.CompressionEnd?.Invoke(this, args);
                 return args;
             }

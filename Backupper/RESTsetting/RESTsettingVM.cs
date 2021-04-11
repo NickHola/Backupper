@@ -15,7 +15,10 @@ namespace Backupper
 
         public RESTsettingM RESTsettingM
         {
-            get { return restSettingM; }
+            get
+            {
+                return restSettingM;
+            }
             set
             {
                 CtrlValue(value);
@@ -24,12 +27,15 @@ namespace Backupper
             }
         }
 
-        public RESTsettingVM(RESTsettingM restSettingM) 
+        public RESTsettingVM(RESTsettingM restSettingM)
         {
             this.RESTsettingM = restSettingM;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        protected void OnPropertyChanged([CallerMemberName()] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

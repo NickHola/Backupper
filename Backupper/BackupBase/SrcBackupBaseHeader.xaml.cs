@@ -50,7 +50,7 @@ namespace Backupper
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            ((BackupBaseVM)this.DataContext).Backup.Delete();
+            ((BackupBaseVM)this.DataContext).Model.Delete();
         }
 
         private void BtnStartStop_Click(object sender, RoutedEventArgs e)

@@ -14,15 +14,13 @@ namespace Backupper
     {
         public bool IsEncrypted { get; set; }
 
-        static BackupsConfigFile instance;
+        private static Lazy<BackupsConfigFile> instance = new Lazy<BackupsConfigFile>(() => new BackupsConfigFile()); //Thread-safe singleton
 
         public static BackupsConfigFile Instance
         {
             get
             {
-                if (instance == null)
-                    instance = new BackupsConfigFile();
-                return instance;
+                return instance.Value;
             }
         }
 
@@ -41,7 +39,8 @@ namespace Backupper
 
         public bool Load(Mess logMess = null)
         {
-            instance = (BackupsConfigFile)this.LoadFromFile(out bool inErr, logMess);
+            bool inErr = true;
+            instance = new Lazy<BackupsConfigFile>(() => (BackupsConfigFile)this.LoadFromFile(out inErr, logMess));
             return inErr;
         }
     }

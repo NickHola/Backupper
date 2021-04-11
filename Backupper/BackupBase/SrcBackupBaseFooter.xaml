@@ -22,7 +22,7 @@
 
             <mainCtrl:TextBlockM x:Name="txbDestinationFolder" Text="Destination folder:" Style="{StaticResource stlTxbTitle}"  />
             <mainCtrl:TextBlockM x:Name="txtNameValue" MouseDown="TxtNameValue_MouseDown" AddStyle="{StaticResource stlTxtValue}"  AddStyle2="{StaticResource stlDisableWhenNotIdle}" TextWrapping="NoWrap"
-                               Text="{Binding Path=Backup.DestinationFolder, Mode=TwoWay, ValidatesOnExceptions='True'}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Path=Backup.DestinationFolder}"
+                               Text="{Binding Path=Model.DestinationFolder, Mode=TwoWay, ValidatesOnExceptions='True'}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Path=Model.DestinationFolder}"
                                  Cursor="Hand" />
             <mainCtrl:ButtonM x:Name="btnFilesSelector" Grid.Column="1" Margin="3,8,0,0" MouseOverBackground="Transparent" BorderThickness="0"
                                   AddStyle="{StaticResource stlDisableWhenNotIdle}" Click="BtnFilesSelector_Click" >
@@ -39,7 +39,7 @@
                                     <Condition Value="True">
                                         <Condition.Binding>
                                             <MultiBinding  Converter="{StaticResource cnvCheckIfSameObjs}">
-                                                <Binding Path="Backup.FilesSelectorM" Mode="OneWay" />
+                                                <Binding Path="Model.FilesSelectorM" Mode="OneWay" />
                                                 <!--ATTENZIONE non so per quale strano motivo la stringa Source="{x:Static local:BackupsVM.Instance}" Path="SelectedSetting" non funziona poichè
                                                 andava a cercare il SelectedSetting nel DataContext dello usercontrol
                                                 usare PresentationTraceSources.TraceLevel="High" nel caso si voglia vedere tutti i step del binding che xaml esegue-->
