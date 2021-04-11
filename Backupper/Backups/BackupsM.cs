@@ -83,20 +83,20 @@ namespace Backupper
             {
                 BackupBaseM backup = ((BackupsM)sender)[e.NewIndex];
                 backup.PropertyChanged += BackupBasePropertyChanged;
-                if (inLoading == false) SaveBackups();
+                if (inLoading == false) SaveBackupsAsync();
             }
             if (e.ListChangedType == ListChangedType.ItemDeleted)
             {
-                SaveBackups();
+                SaveBackupsAsync();
             }
         }
 
         private void BackupBasePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            SaveBackups();
+            SaveBackupsAsync();
         }
 
-        private void SaveBackups()
+        private async Task SaveBackupsAsync()
         {
             switch (SettingsM.Instance.SaveBackupIn)
             {
@@ -110,7 +110,10 @@ namespace Backupper
                     RESTBackups restBackups = new RESTBackups();
                     //restBackups.PutBackupsAsync(serialization);
 
+                    //restBackups.PutBackupsAsync(serialization);
+
                     Task put = restBackups.PutBackupsAsync(serialization);
+                    //await put;
                     try { put.Wait(); }
                     catch (Exception ex)
                     {

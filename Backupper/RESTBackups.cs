@@ -33,7 +33,7 @@ namespace Backupper
 
             var task = httpClient.GetAsync(url, timeoutCancellationTokenSource.Token);
 
-            int taskIndex = Task.WaitAny(task, Task.Delay(timeoutRequestMs, timeoutCancellationTokenSource.Token));
+            int taskIndex = Task.WaitAny(task, Task.Delay(timeoutRequestMs, timeoutCancellationTokenSource.Token)); //Si sblocca quando il 1° tra il task vero o il task.delay finisce, se finisce prima il task.delay significa che quello vero è andato in timeout
 
             if (taskIndex == 0)
             {

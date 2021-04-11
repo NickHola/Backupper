@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backupper", "Backupper\Backupper.csproj", "{A58AF85E-A405-4441-863A-DFF20FFFE504}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainDll", "MainDll\MainDll.csproj", "{1E18B63D-A3BB-434D-BB38-4FA14AD1D673}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainDll", "..\..\MainDll\_C#Dev\MainDll\MainDll.csproj", "{1E18B63D-A3BB-434D-BB38-4FA14AD1D673}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
