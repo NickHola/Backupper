@@ -33,7 +33,7 @@
 
 
         <ScrollViewer x:Name="sclVwrBackups" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-            <ItemsControl x:Name="tmsCtrlBackups"  >
+            <ItemsControl x:Name="tmsCtrlBackups">
                 <ItemsControl.ItemsSource>
                     <!--CompositeCollection serve perchè se si eliminava da DeviceVMCollection un device, quando poi si rimuoveva il device AddNew e si reinseriva alla fine del metodo (per metterlo alla... 
                     ...fine del dizionario) l'AddNew non risultava essere alla fine ma prendeva la posizione del device eliminato precedentemente, questo perchè il Dictionary è un tipo unordered-->
